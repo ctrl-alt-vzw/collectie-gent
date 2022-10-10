@@ -1,0 +1,115 @@
+version: "3.8"
+
+services:
+  
+  collageStore:
+    image: "postgres:latest"
+    ports:
+      - 5432:5432
+    command: postgres -c stats_temp_directory=/tmp
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE "]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ./_volumes/collageStore:/var/lib/postgresql/data
+
+
+  api:
+    build: ./images/api
+    image: "$OWNER/collageapi:$VERSION"
+    command: ["npm", "run", "dev"]
+    restart: always
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST: collageStore
+      MQTT_ADDR: 
+      MQTT_PORT: 1883
+      LIFELINE_TIME:
+      LOG_LIFELINE:
+    ports:
+      - 3000:3000
+    depends_on:
+      collageStore:
+        condition: service_healthy
+    volumes:
+      - ./images/api/src:/usr/app/src
+
+  filestore:
+    build: ./images/filestore
+    image: "$OWNER/collagefilestore:$VERSION"
+    command: ["npm", "run", "dev"]
+    restart: always
+    ports:
+      - 3030:3000
+    volumes:
+      - ./images/filestore/src:/usr/app/src
+      - ./_uploads:/usr/app/uploads
+
+  seeder:
+    build: ./images/seeder
+    image: "$OWNER/collageseeder:$VERSION"
+    command: ["npm", "run", "dev"]
+    restart: always
+    ports:
+      - 3333:3000
+    volumes:
+      - ./images/seeder/src:/usr/app/src
+      - ./_logs/seeder:/usr/app/logs
+
+  web:
+    build: ./images/web
+    image: "$OWNER/collageweb:$VERSION"
+    restart: always
+    command: ["npm", "run", "start"]
+    environment: 
+      REACT_APP_API_ADDR:
+      REACT_APP_MEDIA_ADDR:
+    ports:
+      - 8080:3000
+      - 8081:80
+    volumes:
+      - ./images/web/src:/usr/app/src
+      - ./images/web/build:/usr/app/build
+
+
+  manager:
+    build: ./images/manager
+    image: "$OWNER/manager:$VERSION"
+    command: ["npm", "run", "dev"]
+    environment:
+      MQTT_ADDR: 
+      MQTT_PORT: 1883
+    networks:
+      - mqtt
+    ports:
+      - 3003:3000
+      - 3004:3001
+    restart: always
+    volumes:
+      - ./images/manager/src:/usr/app/src
+
+  mqttBroker:
+    image: "eclipse-mosquitto:latest"
+    volumes:
+      - ./images/mqtt/config:/mosquitto/config
+      - ./images/mqtt/data:/mosquitto/data
+      - ./images/mqtt/log:/mosquitto/log
+    ports:
+      - 9001:9001
+      - 1883:1883
+    restart: always
+    networks:
+      - mqtt
+
+
+networks:
+  mqtt:
+    driver: bridge

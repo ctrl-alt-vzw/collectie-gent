@@ -1,0 +1,98 @@
+version: "3.8"
+
+services:
+  
+  collageStore:
+    image: "postgres:latest"
+    ports:
+      - 5432:5432
+    command: postgres -c stats_temp_directory=/tmp
+    environment:
+      POSTGRES_HOST:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_DB:
+      POSTGRES_PASSWORD:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE "]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ./_volumes/collageStore:/var/lib/postgresql/data
+
+  api:
+    image: "$OWNER/collageapi:$VERSION"
+    command: ["npm", "run", "start"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST: collageStore
+    depends_on:
+      collageStore:
+        condition: service_healthy
+
+
+
+  filestore:
+    image: "$OWNER/collagefilestore:$VERSION"
+    command: ["npm", "run", "start"]
+    restart: unless-stopped
+    ports:
+      - 3030:3000
+    volumes:
+      - ./_uploads:/usr/app/uploads
+
+
+  web:
+    image: "$OWNER/collageweb:$VERSION"
+    restart: unless-stopped
+    ports:
+      - 8081:3000
+      - 8080:80
+
+  caddy:
+    image: caddy/caddy:2.2.1-alpine
+    container_name: caddy-service
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+
+
+  # filestore:
+  #   build: ./images/filestore
+  #   image: "$OWNER/collagefilestore:$VERSION"
+  #   command: ["npm", "run", "dev"]
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER:
+  #     POSTGRES_DATABASE:
+  #     POSTGRES_PASSWORD:
+  #     POSTGRES_HOST: collageStore
+  #   ports:
+  #     - 3030:3000
+  #   depends_on:
+  #     collageStore:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./images/filestore/src:/usr/app/src
+  #     - ./_uploads:/usr/app/uploads

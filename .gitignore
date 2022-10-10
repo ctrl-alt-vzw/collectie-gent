@@ -1,0 +1,8 @@
+/.DS_Store
+.DS_Store
+/_volumes
+/_uploads
+.env
+.VSCodeCounter/
+package-*.json
+*/*/node_modules/

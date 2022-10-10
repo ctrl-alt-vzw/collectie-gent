@@ -1,0 +1,17 @@
+api.datacratie.cc {
+    reverse_proxy api:3000 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}
+
+media.datacratie.cc {
+    reverse_proxy filestore:3000 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}
+
+web.datacratie.cc {
+    reverse_proxy web:80 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}

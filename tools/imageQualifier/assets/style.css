@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    background: #000;
+    color:  #0f0;
+    font-family: console, sans-serif;
+}
+
+#container {
+    width: 600px;
+    margin:  auto;
+    margin-top:  20px;
+}
+.block {
+    padding:  10px;
+    box-sizing:  border-box;
+    margin-top:  10px;
+}
+.error {
+    border:  1px solid #f00;
+    color:  #f00;
+}
+.log {
+    border:  1px solid #0f0;
+}
+
+.preview {
+    width:  200px;
+    height:  200px;
+    border:  1px solid #eee;
+}
+
+img {
+    border: 1px solid #fff;
+}
+
+.placeholder {
+    border:  1px solid #eee;
+    display:  block;
+    min-height:  20px;
+}

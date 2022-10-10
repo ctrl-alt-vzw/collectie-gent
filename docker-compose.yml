@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  
+  collageStore:
+    image: "postgres:latest"
+    ports:
+      - 5432:5432
+    networks:
+      - mqtt
+    command: postgres -c stats_temp_directory=/tmp
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE "]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ./_volumes/collageStore:/var/lib/postgresql/data
+
+
+  api:
+    build: ./images/api
+    image: "$OWNER/api:$VERSION"
+    command: ["npm", "run", "dev"]
+    restart: always
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST: collageStore
+      MQTT_ADDR: 
+      MQTT_PORT: 1883
+      LIFELINE_TIME:
+      LOG_LIFELINE:
+    networks:
+      - mqtt
+    ports:
+      - 3000:3000
+    depends_on:
+      collageStore:
+        condition: service_healthy
+    volumes:
+      - ./images/api/src:/usr/app/src
+
+  filestore:
+    build: ./images/filestore
+    image: "$OWNER/filestore:$VERSION"
+    command: ["npm", "run", "dev"]
+    restart: always
+    environment:
+      POSTGRES_USER:
+      POSTGRES_DATABASE:
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST: collageStore
+    networks:
+      - mqtt
+    ports:
+      - 3030:3000
+    depends_on:
+      collageStore:
+        condition: service_healthy
+    volumes:
+      - ./images/filestore/src:/usr/app/src
