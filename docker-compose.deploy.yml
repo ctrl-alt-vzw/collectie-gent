@@ -54,6 +54,18 @@ services:
     volumes:
       - ./_uploads:/usr/app/uploads
 
+  manager:
+    image: "$OWNER/collagemanager:$VERSION"
+    command: ["npm", "run", "start"]
+    environment:
+      MQTT_ADDR: 
+      MQTT_PORT: 1883
+    networks:
+      - mqtt
+    ports:
+      - 3003:3000
+      - 3004:3001
+    restart: unless-stopped
 
   web:
     image: "$OWNER/collageweb:$VERSION"
