@@ -10,7 +10,7 @@ import Viewer from './Viewer/Viewer.jsx'
 import { ManagerContext } from "./Manager/index.js"
 
 if(!process.env.REACT_APP_API_ADDR) {
-  process.env.REACT_APP_API_ADDR = "https://api.datacratie.cc/"
+  process.env.REACT_APP_API_ADDR = "https://api.datacratie.cc"
 }
 
 function App(props) {

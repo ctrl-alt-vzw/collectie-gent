@@ -15,6 +15,7 @@ function Viewer(props) {
   const scale = 1
 
   useEffect(() => {
+    console.log(`${process.env.REACT_APP_API_ADDR}/clipping`)
     fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
       .then(r => r.json())
       .then((data) => {

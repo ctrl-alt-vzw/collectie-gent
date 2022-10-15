@@ -29,7 +29,7 @@ function Dropper(props) {
           if(e.UUID === state.clipping.UUID) {
             return {
               ...e,
-              y: window.innerHeight - 200,
+              y: window.innerHeight /2 + 200 + yOff,
               x: window.innerWidth / 2
             }
           }

@@ -6,7 +6,7 @@ services:
     image: "postgres:latest"
     ports:
       - 5432:5432
-    command: postgres -c stats_temp_directory=/tmp
+    command: postgres
     environment:
       POSTGRES_HOST:
       POSTGRES_USER:
@@ -61,6 +61,9 @@ services:
     ports:
       - 8081:3000
       - 8080:80
+    environment: 
+      REACT_APP_API_ADDR:
+      REACT_APP_MEDIA_ADDR:
 
   caddy:
     image: caddy/caddy:2.2.1-alpine
@@ -91,7 +94,7 @@ services:
       - 9001:9001
       - 1883:1883
     restart: unless-stopped
-    
+
     networks:
       - mqtt
 volumes:

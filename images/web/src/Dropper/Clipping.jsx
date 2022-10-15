@@ -9,13 +9,6 @@ function Clipping(props) {
 
 
 
-
-
-
-
-
-
-
   if(props.clipping_data.height > props.clipping_data.width) {
     const ratio = props.clipping_data.width / props.clipping_data.height
     return (

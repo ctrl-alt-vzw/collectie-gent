@@ -11,7 +11,6 @@ function Clipping(props) {
 
     const x = (props.clipping_data.x) * scale;
     const y = (props.clipping_data.y - (props.offSet)) * scale;
-
     document.getElementById("image_fixed"+props.clipping_data.id).style.left = x +"px"
     document.getElementById("image_fixed"+props.clipping_data.id).style.top = y +"px"
 

@@ -2,8 +2,19 @@
 
 
 function calculateOffset(data) {
-  const total = data.reduce((a, b) => a + b.y, 0);
-  return ((total / data.length) * .5)
+
+  const set = data
+  .sort((a, b) => {
+    return b.y - a.y
+  })
+  .slice(0, 50);
+  const total = set.reduce((a, b) =>  {
+      return a + b.y
+    }, 0);
+  console.log(total / set.length)
+  return ((total / set.length) * .7)
+
+
 }
 
 
