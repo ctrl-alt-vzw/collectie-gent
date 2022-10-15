@@ -4,20 +4,21 @@ import interact from 'interactjs'
 
 
 function DraggableClipping(props) {
-  const [position, setPosition] = useState({x: 0, y:0})
+  const [position, setPosition] = useState({x: window.innerWidth / 2, y: window.innerHeight - 200})
   const [imageIsLoaded, imageLoaded] = useState(false)
   const [canBeDropped, setCanBeDropped] = useState(true )
-  
+  const [scale, ] = React.useState(props.scale);
 
-  const dragPosition = {x: props.clipping_data.x, y: props.clipping_data.y}
+
 
   useEffect(() => {
-    document.getElementById("image"+props.clipping_data.id).style.left = props.clipping_data.x+"px"
-    document.getElementById("image"+props.clipping_data.id).style.top = props.clipping_data.y+"px"
-    // document.getElementById("image"+props.clipping_data.id).style.zIdex = props.clipping_data.zIndex
+    const x = (props.clipping_data.x) * scale;
+    const y = (props.clipping_data.y - (props.offSet)) * scale;
 
-    // setPosition({x: props.clipping_data.x, y: props.clipping_data.y}) 
-    
+    const dragPosition = {x, y}
+
+    document.getElementById("image"+props.clipping_data.id).style.left = x +"px"
+    document.getElementById("image"+props.clipping_data.id).style.top = y +"px"
 
     if(props.moveable) {
       interact('#image'+props.clipping_data.id).draggable({
@@ -26,19 +27,18 @@ function DraggableClipping(props) {
             console.log(event, event.target)
           },
           move (event) {
-            dragPosition.x += event.dx
-            dragPosition.y += event.dy
-            // event.target.style.transform = `translate(${position.x}px, ${position.y}px)`
+            dragPosition.x = event.client.x
+            dragPosition.y = event.client.y
 
             event.target.style.top = dragPosition.y+"px";
             event.target.style.left = dragPosition.x+"px";
             
-            // check if not too close
-            const canBe = props.checkPositioning(event.rect.left, event.rect.top, props.clipping_data);
-            setCanBeDropped(canBe == 0);
             setPosition(dragPosition)
-            props.updatePosition(dragPosition)
+            props.updatePosition({x: event.client.x, y: event.client.y})
             // console.log(event.target.style.top)
+          },
+          end (event) {
+            console.log(event, event.target)
           },
         }
       })
@@ -46,11 +46,9 @@ function DraggableClipping(props) {
   }, [])
   return (
     <div className="draggable" id={"image"+props.clipping_data.id}
-      onClick={() => console.log(props.clipping_data.id)}
-        style={{
-          opacity: canBeDropped ? 1 : 0.2
-        }}>
+      onClick={() => console.log(props.clipping_data.id)}>
       <Clipping 
+        scale={scale}
         clipping_data={props.clipping_data} 
         key={props.clipping_data.id + "clipping"} 
         image_is_loaded={imageIsLoaded} 

@@ -18,7 +18,7 @@ useEffect(() => {
     })  
     }, []);
   return (
-    <div id="container">
+    <div id="pickerContainer">
       { data.length === 0 ? <Loader message="Loading posibilities" /> : null}
       { data.map((item, key) => {
         return <Item data={item} key={key} handleElementSelection={() => dispatch({ type: "pick_annotation", payload: item })} />

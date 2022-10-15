@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Loader from './../Common/Loader.jsx'
 import DraggableClipping from './DraggableClipping'
 import { ManagerContext } from "../Manager/index.js"
-
+import { calculateOffset } from './../Common/helpers.js'
 
 
 function Dropper(props) {
@@ -12,73 +12,55 @@ function Dropper(props) {
   const [position, setPosition] = React.useState({})
   const [allowed, setAllowed] = React.useState(true);
   const [yOffset, setYOffset] = React.useState([]);
+  // const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
+  const scale = 1
 
+
+  console.log(state)
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
       .then(r => r.json())
       .then((data) => {
         console.log("fetched clippings")
-        const total = data.reduce((a, b) => a + b.y, 0);
-        const yOff = (total / data.length)
+        const yOff = calculateOffset(data);
+        setYOffset(yOff)
+
         setData(data.map((e) => {
-          if(e.UUID !== state.clipping.UUID) {
+          if(e.UUID === state.clipping.UUID) {
             return {
               ...e,
-              y: e.y - (yOff / 2)
+              y: window.innerHeight - 200,
+              x: window.innerWidth / 2
             }
           }
           return e
         }))
-        setYOffset(yOff)
       })
   }, [])
 
-  const checkPositioning = (x, y, active) => {
-    let tooClose = 0;
-    data.forEach((other) => {
-      if(other.UUID !== active.UUID) {
-        const cx = x + (100 / 2);
-        const cy = y + (100 / 2);
-        const tx = other.x + (100 / 2);
-        const ty = other.y + (100 / 2);
-        
-
-        const d = Math.hypot(tx - cx, ty - cy)
-        const minimal = 65;
-        if(d < minimal) {
-          tooClose +=1;
-        }
-      }
-    })
-    setAllowed(tooClose == 0)
-    return tooClose
-  }
 
   const updatePosition = (p) => {
-    setPosition(p)
+    setPosition({...p, y: p.y + ( yOffset * scale) })
   }
 
   const handlePositioned = (position) => {
-    if(allowed) {
-      // fetch("https://api.datacratie.cc/clipping/"+state.clipping.UUID, {
-      fetch(`${process.env.REACT_APP_API_ADDR}/clipping/${state.clipping.UUID}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          x: position.x,
-          y: position.y + (yOffset / 2)
-        })
+
+    fetch(`${process.env.REACT_APP_API_ADDR}/clipping/${state.clipping.UUID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        x: position.x,
+        y: position.y
       })
-        .then(r => r.json())
-        .then((data) => {
-          console.log(data)    
-          dispatch({ type: "clipping_positioned", payload: {...state.clipping, ...position} })
-        })
-    } else {
-      console.log("cannot position here")
-    }
+    })
+      .then(r => r.json())
+      .then((data) => {
+        console.log(data)    
+        dispatch({ type: "clipping_positioned", payload: {...state.clipping, ...position} })
+      })
+    
   }
   
   return (
@@ -88,17 +70,18 @@ function Dropper(props) {
         clipping["zIndex"] = data.length - key;
         return <DraggableClipping 
           clipping_data={clipping}  
+          offSet={yOffset}
           key={key} 
           save_location={handlePositioned} 
           moveable={clipping.UUID === state.clipping.UUID} 
-          checkPositioning={checkPositioning}  
           updatePosition={updatePosition}
+          scale={scale}
         />
       })}
 
 
      <div id="header">
-      <button className={allowed ? "active" : "inactive"} onClick={() => handlePositioned(position)}>Save position</button>
+      <button className={"active"} onClick={() => handlePositioned(position)}>Save position</button>
      </div>
     </div>
   )

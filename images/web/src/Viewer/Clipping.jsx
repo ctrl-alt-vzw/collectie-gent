@@ -5,11 +5,15 @@ import { ManagerContext } from "../Manager/index.js"
 
 function Clipping(props) {
   const [ state,  ] = React.useContext(ManagerContext)
+  const [scale, ] = React.useState(props.scale);
 
   useEffect(() => {
-    document.getElementById("image_fixed"+props.clipping_data.id).style.left = (props.clipping_data.x * state.options.scale.viewing) +"px"
-    document.getElementById("image_fixed"+props.clipping_data.id).style.top = ((props.clipping_data.y - (props.clipping_data.yOffset / 2)) * state.options.scale.viewing) +"px"
-    // document.getElementById("image_fixed"+props.clipping_data.id).style.zIndex = props.clipping_data.zIndex
+
+    const x = (props.clipping_data.x) * scale;
+    const y = (props.clipping_data.y - (props.offSet)) * scale;
+
+    document.getElementById("image_fixed"+props.clipping_data.id).style.left = x +"px"
+    document.getElementById("image_fixed"+props.clipping_data.id).style.top = y +"px"
 
   }, []);
   if(props.clipping_data.height > props.clipping_data.width) {
@@ -20,8 +24,10 @@ function Clipping(props) {
         <img 
           src={props.clipping_data.imageURI.replace("/800/", "/200/")}
           style={{
-            width: `${200 * state.options.scale.viewing * ratio}px`,
-            height: `${200 * state.options.scale.viewing}px`
+            width: `${200  * ratio * props.scale}px`,
+            height: `${200 * props.scale}px`,
+            marginTop: `${ - 100 * ratio * props.scale}px`,
+            marginLeft: `${- 100  * props.scale}px`
           }}
           alt={"clipped piece from a user in a collage"}
         />
@@ -35,8 +41,10 @@ function Clipping(props) {
         <img 
           src={props.clipping_data.imageURI.replace("/800/", "/200/")}
           style={{
-            width: `${200 * state.options.scale.viewing}px`,
-            height: `${200 * state.options.scale.viewing * ratio}px`
+            width: `${200 * props.scale}px`,
+            height: `${200 * ratio * props.scale}px`,
+            marginTop: `${ -100  * props.scale}px`,
+            marginLeft: `${ -100  * ratio * props.scale}px`
           }}
           alt={"clipped piece from a user in a collage"}
         />

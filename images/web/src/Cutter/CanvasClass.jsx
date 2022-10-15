@@ -48,7 +48,7 @@ export default class CanvasClass extends React.Component {
           }}>Restart</button>
         </div>
         <main>
-          <div id="container">
+          <div id="canvasContainer">
             <canvas id="canvas" />
             <canvas id="normal_canvas"></canvas>
             <div id="hiddenCanvasContainer"></div>
@@ -62,6 +62,7 @@ export default class CanvasClass extends React.Component {
     c.addEventListener("mousedown", () => this.mouseDown = true);
     c.addEventListener("mouseup", () => this.mouseDown = false);
     c.addEventListener("mousemove", (e) => this.mouseMoveHandler(e));
+
     c.addEventListener("touchstart", () => this.mouseDown = true, false);
     c.addEventListener("touchmove", (e) => this.mouseMoveHandler(e), false);
     c.addEventListener("touchend", () => this.mouseDown = false, false);
@@ -86,7 +87,7 @@ export default class CanvasClass extends React.Component {
 
     if(this.img) {
       const scaleFactor = canvas.height / this.img.height;
-      const offsetX = -((this.img.width * scaleFactor) - canvas.width) / 2
+      const offsetX = -((this.img.width * scaleFactor) - canvas.width) / 2;
       ctx.drawImage(this.img, offsetX, 0, this.img.width * scaleFactor, this.img.height * scaleFactor)
     }
 
@@ -146,11 +147,14 @@ export default class CanvasClass extends React.Component {
     if(this.touchpoints.length > 0) {
       const k = 10;
       const tp = this.touchpoints.map((e) => [e.x, e.y]);
+
       const hull = concaveHull.calculate(tp, k);
       // console.log(hull);
-      this.outlinePoints = hull.map((e) => {
-        return{ x: e[0], y: e[1]}
-      })
+      if(hull && hull.length > 0) {
+        this.outlinePoints = hull.map((e) => {
+          return { x: e[0], y: e[1] }
+        })
+      }
 
     }
   }
@@ -159,9 +163,7 @@ export default class CanvasClass extends React.Component {
       x: this.getCursorPosition(e).x,
       y: this.getCursorPosition(e).y
     };
-    
     if(this.mouseDown) {
-
       if(!this.lastAddedTimestamp) { this.lastAddedTimestamp = new Date().getTime()}
       const t = new Date().getTime();
       if( (t - this.lastAddedTimestamp) > (1000 / this.framerate) ) {
@@ -198,9 +200,8 @@ export default class CanvasClass extends React.Component {
   getCursorPosition(e) {
     const canvas = document.getElementById("canvas")
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
+    const x = (e.clientX - rect.left) * (window.innerWidth / rect.width) - 5;
+    const y = (e.clientY - rect.top) * (window.innerHeight / rect.height) - 5;
     return { x, y }
   }
   b64ToUint8Array(b64Image) {

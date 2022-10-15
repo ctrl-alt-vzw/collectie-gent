@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './assets/css/App.css';
 import Picker from './Picker/Picker.jsx'
@@ -14,8 +14,16 @@ if(!process.env.REACT_APP_API_ADDR) {
 }
 
 function App(props) {
+
+
   const [ state ] = React.useContext(ManagerContext)
-  console.log(state)
+
+  useEffect(() => {
+    if(state.phase === 2 || state.phase === 3) {
+      document.getElementById("container").style.width = state.options.canvasWidth + "px";
+    }
+  })
+
   return (
       <div className="App">
         { state.phase === 0 ? 
