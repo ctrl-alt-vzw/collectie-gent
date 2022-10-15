@@ -11,7 +11,7 @@ function Viewer(props) {
   const [data, setData] = React.useState([]);
   const [yOffset, setYOffset] = React.useState([]);
 
-
+  console.log(process.env.REACT_APP_API_ADDR)
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
       .then(r => r.json())

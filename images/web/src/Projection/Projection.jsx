@@ -3,7 +3,7 @@ import Loader from './../Common/Loader.jsx'
 import Clipping from './Clipping'
 import SocketClient from './SocketClient'
 
-function Viewer(props) {
+function Projection(props) {
   const [data, setData] = React.useState([]);
   const [yOffset, setYOffset] = React.useState([]);
 
@@ -12,13 +12,12 @@ function Viewer(props) {
     fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
       .then(r => r.json())
       .then((data) => {
-        console.log(data)
         const total = data.reduce((a, b) => a + b.y, 0);
         setYOffset(total / data.length)
         setData(data)
       })
 
-    const client = new SocketClient();
+    // const client = new SocketClient();
   }, [])
 
 
@@ -35,4 +34,4 @@ function Viewer(props) {
   )
 }
 
-export default Viewer;
+export default Projection;

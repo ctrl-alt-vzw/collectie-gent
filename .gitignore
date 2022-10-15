@@ -2,6 +2,7 @@
 .DS_Store
 /_volumes
 /_uploads
+/_logs
 .env
 .VSCodeCounter/
 package-*.json

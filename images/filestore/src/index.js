@@ -61,26 +61,32 @@ app.get('/uploads/mask/:fileName', function (req, res) {
 });
 
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
-app.get('/uploads/200/:fileName', function (req, res) {
+app.get('/uploads/50/:fileName', function (req, res) {
   const filePath = path.join(__dirname, './../uploads/200', req.params.fileName)
   res.sendFile(filePath);
 });
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
-app.get('/uploads/400/:fileName', function (req, res) {
-  const filePath = path.join(__dirname, './../uploads/400', req.params.fileName)
-  res.sendFile(filePath);
-});
-// app.get("/", express.static(path.join(__dirname, './../uploads')));
-app.get('/uploads/800/:fileName', function (req, res) {
-  const filePath = path.join(__dirname, './../uploads/800', req.params.fileName)
+app.get('/uploads/200/:fileName', function (req, res) {
+  const filePath = path.join(__dirname, './../uploads/200', req.params.fileName)
   res.sendFile(filePath);
 });
 
-// app.get("/", express.static(path.join(__dirname, './../uploads')));
-app.get('/uploads/normal/:fileName', function (req, res) {
-  const filePath = path.join(__dirname, './../uploads/normal', req.params.fileName)
-  res.sendFile(filePath);
-});
+// // app.get("/", express.static(path.join(__dirname, './../uploads')));
+// app.get('/uploads/400/:fileName', function (req, res) {
+//   const filePath = path.join(__dirname, './../uploads/400', req.params.fileName)
+//   res.sendFile(filePath);
+// });
+// // app.get("/", express.static(path.join(__dirname, './../uploads')));
+// app.get('/uploads/800/:fileName', function (req, res) {
+//   const filePath = path.join(__dirname, './../uploads/800', req.params.fileName)
+//   res.sendFile(filePath);
+// });
+
+// // app.get("/", express.static(path.join(__dirname, './../uploads')));
+// app.get('/uploads/normal/:fileName', function (req, res) {
+//   const filePath = path.join(__dirname, './../uploads/normal', req.params.fileName)
+//   res.sendFile(filePath);
+// });
 
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
 app.get('/uploads/:fileName', function (req, res) {
@@ -104,26 +110,11 @@ app.post('/upload', cpUpload, async (req, res) => {
   .toFile(
       path.resolve(req.files['clipping'][0].destination, '200', image)
   )
-
   await sharp(req.files['clipping'][0].path)
-  .resize(200)
-  .png()
-  .toFile(
-      path.resolve(req.files['clipping'][0].destination, '400', image)
-  )
-
-  await sharp(req.files['clipping'][0].path)
-  .resize(800)
-  .png()
-  .toFile(
-      path.resolve(req.files['clipping'][0].destination, '800', image)
-  )
-
-  await sharp(req.files['normal'][0].path)
   .resize(400)
   .png()
   .toFile(
-      path.resolve(req.files['normal'][0].destination, 'normal', normal)
+      path.resolve(req.files['clipping'][0].destination, '50', image)
   )
 
   // if want to save original, delete this
@@ -133,10 +124,8 @@ app.post('/upload', cpUpload, async (req, res) => {
   const hostname = req.protocol + '://' + req.get('host');
 
   res.send({
-    200: `${hostname}/uploads/200/${req.files['clipping'][0].filename}`,
-    400: `${hostname}/uploads/400/${req.files['clipping'][0].filename}`,
-    800: `${hostname}/uploads/800/${req.files['clipping'][0].filename}`,
-    normal: `${hostname}/uploads/normal/${req.files['normal'][0].filename}`
+    50: `${hostname}/uploads/50/${req.files['clipping'][0].filename}`,
+    200: `${hostname}/uploads/200/${req.files['clipping'][0].filename}`
   })
 })
 
