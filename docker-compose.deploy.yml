@@ -81,6 +81,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     
 
+  mqttBroker:
+    image: "eclipse-mosquitto:latest"
+    volumes:
+      - ./images/mqtt/config:/mosquitto/config
+      - ./images/mqtt/data:/mosquitto/data
+      - ./images/mqtt/log:/mosquitto/log
+    ports:
+      - 9001:9001
+      - 1883:1883
+    restart: unless-stopped
+    
+    networks:
+      - mqtt
 volumes:
   caddy_data:
   caddy_config:
