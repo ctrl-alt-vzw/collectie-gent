@@ -86,22 +86,7 @@ volumes:
   caddy_config:
 
 
+networks:
+  mqtt:
+    driver: bridge
 
-  # filestore:
-  #   build: ./images/filestore
-  #   image: "$OWNER/collagefilestore:$VERSION"
-  #   command: ["npm", "run", "dev"]
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER:
-  #     POSTGRES_DATABASE:
-  #     POSTGRES_PASSWORD:
-  #     POSTGRES_HOST: collageStore
-  #   ports:
-  #     - 3030:3000
-  #   depends_on:
-  #     collageStore:
-  #       condition: service_healthy
-  #   volumes:
-  #     - ./images/filestore/src:/usr/app/src
-  #     - ./_uploads:/usr/app/uploads
