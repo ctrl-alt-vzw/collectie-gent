@@ -42,10 +42,10 @@ export default function clipping(app, pg, mqttClient) {
   })
 
   app.post("/clipping", async(req, res) => {
-    console.log("saving")
+    // console.log("saving")
     const b = req.body;
 
-    console.log(b.originID, b.collection, b.x, b.y, b.imageURI);
+    // console.log(b.originID, b.collection, b.x, b.y, b.imageURI);
     if(b.originID && b.collection && b.imageURI && b.width && b.height) {
       const toInsert = {
         imageURI: b.imageURI,
@@ -82,7 +82,7 @@ export default function clipping(app, pg, mqttClient) {
   })
 
   app.get("/clipping/:uuid", async (req, res) => {
-    console.log("request")
+    // console.log("request")
     await pg.select("*").table("clippings").where({UUID: req.params.uuid}).then((data) => {
       if(data.length > 0) {
         res.send(data[0])

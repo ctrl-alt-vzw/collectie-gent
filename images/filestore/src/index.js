@@ -103,10 +103,10 @@ app.get('/uploads/:fileName', function (req, res) {
 const cpUpload = upload.fields([{ name: 'clipping', maxCount: 1 }, { name: 'normal', maxCount: 1 }])
 app.post('/upload', cpUpload, async (req, res) => {
 
-  console.log(
-    req.files['clipping'][0],
-    req.files['normal'][0]
-  )
+  // console.log(
+  //   req.files['clipping'][0],
+  //   req.files['normal'][0]
+  // )
   const { filename: image } = req.files['clipping'][0];
   const { filename: normal } = req.files['normal'][0];
 

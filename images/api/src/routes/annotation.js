@@ -21,7 +21,7 @@ export default function annotation(app, pg) {
     const toUpdate = {
       annotation: req.body.annotation
     }
-    console.log(toUpdate)
+    // console.log(toUpdate)
     await pg.update(toUpdate).table("annotations").where({UUID: req.params.uuid}).returning("*").then((data) => {
       res.send(data)
     })
