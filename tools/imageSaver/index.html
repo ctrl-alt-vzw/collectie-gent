@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+
+
+</head>
+<style>
+  img {
+    width:  100px;
+    float:  left;
+  }
+</style>  
+<body>
+  <div id="container"></div>
+  <script>
+    let data = []
+
+    fetch("https://api.datacratie.cc/annotation")
+      .then(r => r.json())
+      .then((d) => {
+        data = d.map((e) => e.gentImageURI)
+        addNext();
+      })
+
+      function addNext() {
+          const image = document.createElement("img");
+          image.src = data[0];
+          document.getElementById("container").insertAdjacentElement("beforeend", image)
+
+          image.addEventListener("load", () => {
+            data.splice(0, 1);
+            addNext()
+          })
+      }
+  </script>
+</body>

@@ -9,6 +9,7 @@ import annotation from './routes/annotation.js';
 import clipping from './routes/clipping.js';
 import error from './routes/error.js';
 
+import MQTTClient from './mqttClient.js';
 
 const pg = knex({
   client: 'pg',
@@ -21,11 +22,16 @@ const pg = knex({
   }
 });
 
+const mqttClient = new MQTTClient("api", mqttMessageHandler, ["*"]);
+
+
 async function initialise() {
-  console.log("connect")
   await createTables(pg);
+  mqttClient.connect();
   
 }
+
+
 
 // API endpoints
 const port = 3000;
@@ -61,11 +67,16 @@ app.get("/", async (req, res) => {
 })
 
 annotation(app, pg);
-clipping(app, pg);
+clipping(app, pg, mqttClient);
 error(app, pg);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
+
+
+function mqttMessageHandler(topic, message) {
+  console.log(topic, message)
+}
 
 initialise();

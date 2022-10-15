@@ -1,15 +1,12 @@
-import { Server} from "socket.io";
+import WebSocket, { WebSocketServer } from 'ws';
 
 
 export default class SocketManager {
   constructor(id, callback) {
     this.id = id;
     this.callback = callback;
-    this.server = new Server(3001,{
-      cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-      }
+    this.server = new WebSocketServer({
+      port: 3001
     });
 
     this.socketList = [];
@@ -20,26 +17,31 @@ export default class SocketManager {
 
   }
   async broadcast(topic, message, override = null) {
-    if(this.clientStats.connected) {
+    if(this.serverStats.connected) {
       
         this.socketList.forEach((s) => {
-          s.emit(topic, message);
+          s.send(topic, message);
         });
     }
   }
   async connect() {
     console.log("retrying to connect")
-  
-    this.server.on("connection", (socket) => {
+
+    this.server.on('connection', (ws) => {
       this.serverStats.connected = true;
+      this.socketList.push(ws);
       console.log("connection made")
-      this.socketList.push(socket);
-      socket.emit("ping", { addr: "manager"})
-      socket.on("pong", (arg) => {
-        console.log(arg)
-        this.callback("pong", arg)
-      })
-    })
+      ws.on('message', function message(data) {
+        console.log('received: %s', data);
+        // ws.send("clipping/added/c2352f83-7a3f-4361-8680-4891534fbbf8")
+      });
+
+      ws.on('ping', function message(data) {
+        ws.send('pong', data);
+      });
+
+    });
+
 
   }
 }

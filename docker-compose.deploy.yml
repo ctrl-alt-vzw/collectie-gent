@@ -24,12 +24,21 @@ services:
   api:
     image: "$OWNER/collageapi:$VERSION"
     command: ["npm", "run", "start"]
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_USER:
       POSTGRES_DATABASE:
       POSTGRES_PASSWORD:
       POSTGRES_HOST: collageStore
+      MQTT_ADDR: 
+      MQTT_PORT: 1883
+      LIFELINE_TIME:
+      LOG_LIFELINE:
+    networks:
+      - mqtt
+      - default
+    ports:
+      - 3000:3000
     depends_on:
       collageStore:
         condition: service_healthy

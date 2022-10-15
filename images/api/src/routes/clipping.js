@@ -11,7 +11,7 @@ import { generateUUID } from './../helpers.js'
 // t.integer("y");
 // t.timestamps(true, true);
 
-export default function clipping(app, pg) {
+export default function clipping(app, pg, mqttClient) {
   app.delete("/clipping/:uuid", async (req, res) => {
     pg.delete().table("clippings").where({UUID: req.params.uuid}).returning("id").then((d) => {
       if(d.length > 0) {
@@ -33,6 +33,7 @@ export default function clipping(app, pg) {
     const uuid = req.params.uuid;
 
     await pg.update({x: b.x, y: b.y}).table("clippings").where({UUID: uuid}).returning("*").then((d) => {
+      mqttClient.broadcast("clipping", JSON.stringify(d[0]))
       res.send(d);
     }).catch((e) => {
         console.log(e)
@@ -44,8 +45,8 @@ export default function clipping(app, pg) {
     console.log("saving")
     const b = req.body;
 
-    console.log(b.originID, b.collection, b.x, b.y, b.imageURI, b.normalURI);
-    if(b.originID && b.collection && b.imageURI && b.width && b.height && b.normalURI) {
+    console.log(b.originID, b.collection, b.x, b.y, b.imageURI);
+    if(b.originID && b.collection && b.imageURI && b.width && b.height) {
       const toInsert = {
         imageURI: b.imageURI,
         UUID: generateUUID(),
@@ -56,7 +57,7 @@ export default function clipping(app, pg) {
         y: b.y,
         width: b.width,
         height: b.height,
-        normalURI: b.normalURI
+        normalURI: ""
       }
       await pg.insert(toInsert).table("clippings").returning("*").then((d) => {
         res.send(d);
@@ -74,6 +75,20 @@ export default function clipping(app, pg) {
   app.get("/clipping", async (req, res) => {
     await pg.select("*").table("clippings").orderBy("id", "ASC").then((data) => {
       res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
+
+  app.get("/clipping/:uuid", async (req, res) => {
+    console.log("request")
+    await pg.select("*").table("clippings").where({UUID: req.params.uuid}).then((data) => {
+      if(data.length > 0) {
+        res.send(data[0])
+      } else {
+        res.status(404).send()
+      }
     })
     .catch((e) => {
       res.status(500).send(e)

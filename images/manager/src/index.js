@@ -10,7 +10,7 @@ const controllers = [];
 const services = [];
 
 
-const client = new MQTTClient("manager", messageHandler, ["*"]);
+const client = new MQTTClient("manager", messageHandler, ["services/api/+"]);
 const ws = new SocketManager("socketManager", socketMessageHandler)
 
 const app = express()
@@ -24,13 +24,24 @@ app.listen(port, () => {
   console.log(`Manager listening at port ${port}`)
 })
 
+
 client.connect();
 ws.connect()
 
 function messageHandler(topic, message) {
-  
+  const b = JSON.parse(message.toString());
+  const info = topic.split("/");
+  const cat = info[0];
+  const source = info[1];
+  const top = info[2];
+
+  if(source == "api"&& top == "clipping") {
+    console.log("sending")
+    ws.broadcast("clipping/added/"+ b.UUID)
+  }
 }
 
 function socketMessageHandler(topic, message) {
+  console.log(topic, message)
   
 }

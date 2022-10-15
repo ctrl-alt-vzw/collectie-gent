@@ -70,6 +70,11 @@ app.get('/uploads/200/:fileName', function (req, res) {
   const filePath = path.join(__dirname, './../uploads/200', req.params.fileName)
   res.sendFile(filePath);
 });
+// app.get("/", express.static(path.join(__dirname, './../uploads')));
+app.get('/uploads/full/:fileName', function (req, res) {
+  const filePath = path.join(__dirname, './../uploads/full', req.params.fileName)
+  res.sendFile(filePath);
+});
 
 // // app.get("/", express.static(path.join(__dirname, './../uploads')));
 // app.get('/uploads/400/:fileName', function (req, res) {
@@ -97,6 +102,7 @@ app.get('/uploads/:fileName', function (req, res) {
 
 const cpUpload = upload.fields([{ name: 'clipping', maxCount: 1 }, { name: 'normal', maxCount: 1 }])
 app.post('/upload', cpUpload, async (req, res) => {
+
   console.log(
     req.files['clipping'][0],
     req.files['normal'][0]
@@ -105,16 +111,22 @@ app.post('/upload', cpUpload, async (req, res) => {
   const { filename: normal } = req.files['normal'][0];
 
   await sharp(req.files['clipping'][0].path)
-  .resize(400)
+  .resize(50)
+  .png()
+  .toFile(
+      path.resolve(req.files['clipping'][0].destination, '50', image)
+  )
+  await sharp(req.files['clipping'][0].path)
+  .resize(200)
   .png()
   .toFile(
       path.resolve(req.files['clipping'][0].destination, '200', image)
   )
   await sharp(req.files['clipping'][0].path)
-  .resize(400)
+  .resize(1000)
   .png()
   .toFile(
-      path.resolve(req.files['clipping'][0].destination, '50', image)
+      path.resolve(req.files['clipping'][0].destination, 'full', image)
   )
 
   // if want to save original, delete this
@@ -125,7 +137,8 @@ app.post('/upload', cpUpload, async (req, res) => {
 
   res.send({
     50: `${hostname}/uploads/50/${req.files['clipping'][0].filename}`,
-    200: `${hostname}/uploads/200/${req.files['clipping'][0].filename}`
+    200: `${hostname}/uploads/200/${req.files['clipping'][0].filename}`,
+    full: `${hostname}/uploads/full/${req.files['clipping'][0].filename}`
   })
 })
 

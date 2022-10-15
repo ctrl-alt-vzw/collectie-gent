@@ -13,7 +13,7 @@ useEffect(() => {
     fetch(`${process.env.REACT_APP_API_ADDR}/annotation/random`)
       .then(r => r.json())
       .then(data => {
-
+        
         setData(data.splice(0, 100))  
     })  
     }, []);

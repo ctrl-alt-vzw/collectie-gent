@@ -14,10 +14,7 @@ function Viewer(props) {
   // const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
   const scale = 1
 
-  
   useEffect(() => {
-    console.log(state.options.canvasWidth)
-
     fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
       .then(r => r.json())
       .then((data) => {
@@ -27,7 +24,6 @@ function Viewer(props) {
   }, [])
 
   const handleReturn = () => {
-    console.log("init")
     dispatch({ type: "reset_and_select", payload: {} })
   }
   

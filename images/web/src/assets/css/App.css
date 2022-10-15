@@ -27,7 +27,6 @@ body {
   margin-top:  calc(50vh - 400px);
   display:  flex;
   flex-wrap: wrap;
-  border:  1px solid #000;
 }
 .item {
   max-width:  200px;

@@ -4,8 +4,6 @@ import {concaveHull} from './concaveHull.js';
 
 import Tooltip from './../Common/Tooltip'
 
-
-console.log(concaveHull)
 const API_URL = process.env.REACT_APP_API_ADDR;
 const FILESTORE_URL = process.env.REACT_APP_MEDIA_ADDR;
 
@@ -302,8 +300,7 @@ export default class CanvasClass extends React.Component {
       .then((data) => {
         console.log(data)
         const toSend = {
-          imageURI: data["800"],
-          normalURI: data["normal"],
+          imageURI: data["full"],
           originID: "u",
           collection: "u",
           x: 10,
