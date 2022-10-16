@@ -4,7 +4,7 @@ const app = {
   db: [],
   count: 10000,
   init() {
-    fetch("https://api.datacratie.cc/annotation")
+    fetch("https://api.datacratie.cc/annotation/startingFrom/11856")
       .then(r => r.json())
       .then((db) => {
         this.db = db;
@@ -30,7 +30,7 @@ const app = {
             height: document.getElementById(data.UUID).height 
           }
           original.ratio = original.width / original.height;
-          console.log(original)
+          // console.log(original)
 
           ctx.drawImage(img, 0, 0, 2 * original.ratio, 2);
           const id = {
@@ -53,7 +53,9 @@ const app = {
           }
 
       });
-      img.src = data.gentImageURI;
+      const imageURL = `https://api.collectie.gent/iiif/imageiiif/3/${data.gentImageURI}/full/^1000,/0/default.jpg`
+
+      img.src = imageURL;
       img.id=data.UUID 
       document.getElementById("container").insertAdjacentElement("beforeEnd", img)
     } else {
@@ -76,7 +78,7 @@ const app = {
     })
     .then(r => r.json())
     .then((data) => {
-        console.log(data)
+        // console.log(data)
 
         document.getElementById("container").innerHTML = "";
 

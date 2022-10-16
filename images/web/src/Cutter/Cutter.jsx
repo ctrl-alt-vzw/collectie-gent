@@ -11,8 +11,11 @@ function Cutter(props) {
     console.log("clipping", clipping)
     dispatch({ type: "cut_finished", payload: clipping })
   }
+
+  const image = `https://api.collectie.gent/iiif/imageiiif/3/${state.annotation.gentImageURI}/full/^1000,/0/default.jpg`
+
   return ( 
-    <CanvasClass imageuri={state.annotation.gentImageURI} clippingcreated={handleClippingCreated} />
+    <CanvasClass imageuri={image} clippingcreated={handleClippingCreated} />
   )
 
 }

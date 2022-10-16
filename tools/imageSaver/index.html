@@ -4,32 +4,30 @@
 
 </head>
 <style>
+  body {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  #container {
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -ms-flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100vh  
+  }
+  .item {
+    width:  150px;
+    padding:  5px;
+    box-sizing: border-box;
+  }
   img {
-    width:  100px;
-    float:  left;
+    width:  150px;
   }
 </style>  
 <body>
   <div id="container"></div>
-  <script>
-    let data = []
-
-    fetch("https://api.datacratie.cc/annotation")
-      .then(r => r.json())
-      .then((d) => {
-        data = d.map((e) => e.gentImageURI)
-        addNext();
-      })
-
-      function addNext() {
-          const image = document.createElement("img");
-          image.src = data[0];
-          document.getElementById("container").insertAdjacentElement("beforeend", image)
-
-          image.addEventListener("load", () => {
-            data.splice(0, 1);
-            addNext()
-          })
-      }
-  </script>
+  <script src="getData.js">  </script>
 </body>
+

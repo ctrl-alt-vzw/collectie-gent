@@ -1,15 +1,17 @@
 import React from 'react'
 
 function Item(props){
+  console.log(props)
+  const image = `https://api.collectie.gent/iiif/imageiiif/3/${props.data.gentImageURI}/full/^1000,/0/default.jpg`
   return( 
     <div className="item">
       <div className="imageContainer">
-        <img src={props.data.gentImageURI} alt={props.data.annotation} style={{
-          backgroundColor: `rgba(${props.data.imagedata.colors.tl.join(',')})`,
+        <img src={image} alt={props.data.annotation} style={{
+          backgroundColor: `rgba(${ props.data.imagedata.colors ? props.data.imagedata.colors.tl.join(',') : "0,0,0,1"})`,
           minHeight: '200px'
         }} />
       </div>
-      <h1>{props.data.annotation}</h1>
+      <h1>{props.data.annotation !== null ? props.data.annotation : props.data.originalAnnotation}</h1>
       <div>
         <p>Collection: {props.data.collection}</p>
         <p>origin: {props.data.originID}</p>

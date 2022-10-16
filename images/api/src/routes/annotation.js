@@ -67,7 +67,7 @@ export default function annotation(app, pg) {
         UUID: generateUUID(),
         originID: b.id,
         collection: b.origin,
-        annotation: ""
+        originalAnnotation: b.label
       }
       pg.select("*").table("annotations").where({ originID: b.id, collection: b.origin }).then(async (d) => {
         if(d.length > 0) {
@@ -100,6 +100,15 @@ export default function annotation(app, pg) {
     })
   })
 
+  app.get("/annotation/startingfrom/:id", async (req, res) => {
+    await pg.select("*").table("annotations").orderBy("id", "DESC").where("id", ">", req.params.id).then((data) => {
+      res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
+
   app.get("/annotation", async (req, res) => {
     await pg.select("*").table("annotations").orderBy("id", "ASC").then((data) => {
       res.send(data)
@@ -114,7 +123,7 @@ export default function annotation(app, pg) {
     await pg
       .select("*")
       .table("annotations")
-      .limit(100)
+      .limit(50)
       .orderByRaw('RANDOM()')
       .then((data) => {
         res.send(data)

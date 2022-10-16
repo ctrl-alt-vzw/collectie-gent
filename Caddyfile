@@ -15,3 +15,8 @@ web.datacratie.cc {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }
+manager.datacratie.cc {
+    reverse_proxy web:3001 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}

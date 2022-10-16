@@ -10,6 +10,7 @@ function Picker(props) {
   const [ data, setData ] = React.useState([]);
 
 useEffect(() => {
+    setData([])
     fetch(`${process.env.REACT_APP_API_ADDR}/annotation/random`)
       .then(r => r.json())
       .then(data => {

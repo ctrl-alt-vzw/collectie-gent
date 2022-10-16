@@ -30,10 +30,12 @@ export default async function createTables(pg) {
       return pg.schema.createTable('annotations', function(t) {
         t.increments('id').primary();
         t.string('UUID', 1000);
-        t.string('gentImageURI', 1000);
-        t.string('originID', 1000);
-        t.string('collection', 1000);
+        t.string('gentImageURI', 500);
+        t.string('originID', 100);
+        t.string('collection', 20);
+        t.json('imagedata');
         t.text('annotation', "longtext");
+        t.text('originalAnnotation', "longtext");
         t.timestamps(true, true);
       })
 

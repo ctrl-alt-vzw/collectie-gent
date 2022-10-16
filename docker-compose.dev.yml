@@ -85,7 +85,7 @@ services:
 
   manager:
     build: ./images/manager
-    image: "$OWNER/manager:$VERSION"
+    image: "$OWNER/collagemanager:$VERSION"
     command: ["npm", "run", "dev"]
     environment:
       MQTT_ADDR: 
