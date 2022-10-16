@@ -2,12 +2,14 @@
 
 const app = {
   db: [],
-  count: 10000,
+  count: 0,
+  lastID: 17906,
   init() {
-    fetch("https://api.datacratie.cc/annotation/startingFrom/11856")
+    fetch("https://api.datacratie.cc/annotation/colorless")
       .then(r => r.json())
       .then((db) => {
-        this.db = db;
+        this.db = db.rows;
+        this.count = db.length;
         this.drawCanvas(this.db[0])
       })
   },
@@ -60,9 +62,14 @@ const app = {
       document.getElementById("container").insertAdjacentElement("beforeEnd", img)
     } else {
       console.log("contains", data.imagedata)
+        this.lastID = this.db[0].id;
         this.db.shift()
         if(this.db.length > 0) {
           this.drawCanvas(this.db[0])
+        } else {
+          if(this.count > 0) {
+            this.init();
+          }
         }
 
     }
@@ -78,7 +85,7 @@ const app = {
     })
     .then(r => r.json())
     .then((data) => {
-        // console.log(data)
+        console.log(data[0].id)
 
         document.getElementById("container").innerHTML = "";
 

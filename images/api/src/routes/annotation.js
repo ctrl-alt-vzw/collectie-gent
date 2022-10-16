@@ -99,6 +99,14 @@ export default function annotation(app, pg) {
       res.status(500).send(e)
     })
   })
+  app.get("/annotation/colorless", async (req, res) => {
+    await pg.raw('SELECT * FROM annotations WHERE imagedata IS NULL').then((data) => {
+      res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
 
   app.get("/annotation/startingfrom/:id", async (req, res) => {
     await pg.select("*").table("annotations").orderBy("id", "DESC").where("id", ">", req.params.id).then((data) => {

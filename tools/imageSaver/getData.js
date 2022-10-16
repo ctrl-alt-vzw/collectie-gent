@@ -122,10 +122,10 @@ function initFetching(start = 0) {
           }
         })
         currentFetch += response.data.Entities.results.length;
-        if(currentFetch < 61070) {
+        // if(currentFetch < 61070) {
           console.log(currentFetch)
           initFetching(currentFetch)
-        }
+        //}
       } else {
         console.log(response)
       }
