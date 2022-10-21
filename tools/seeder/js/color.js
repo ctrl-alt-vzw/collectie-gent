@@ -1,19 +1,7 @@
 
 
 const app = {
-  db: [],
-  count: 0,
-  lastID: 17906,
-  init() {
-    fetch("https://api.datacratie.cc/annotation/colorless")
-      .then(r => r.json())
-      .then((db) => {
-        this.db = db.rows;
-        this.count = db.length;
-        this.drawCanvas(this.db[0])
-      })
-  },
-
+  cb: null,
   drawCanvas(data) {
 
     if(data.imagedata == {} || data.imagedata == null) {
@@ -54,36 +42,14 @@ const app = {
             this.store(data, toStore)
           }
 
-      })
-      img.addEventListener("error", () => {
-          console.log("error", data.imagedata)
-          this.lastID = this.db[0].id;
-          this.db.shift()
-          if(this.db.length > 0) {
-            this.drawCanvas(this.db[0])
-          } else {
-            if(this.count > 0) {
-              this.init();
-            }
-          }
-      })
+      });
       const imageURL = `https://api.collectie.gent/iiif/imageiiif/3/${data.gentImageURI}/full/^1000,/0/default.jpg`
 
       img.src = imageURL;
       img.id=data.UUID 
       document.getElementById("container").insertAdjacentElement("beforeEnd", img)
     } else {
-      console.log("contains", data.imagedata)
-        this.lastID = this.db[0].id;
-        this.db.shift()
-        if(this.db.length > 0) {
-          this.drawCanvas(this.db[0])
-        } else {
-          if(this.count > 0) {
-            this.init();
-          }
-        }
-
+      this.cb(data)
     }
 
   },
@@ -98,15 +64,13 @@ const app = {
     .then(r => r.json())
     .then((data) => {
         console.log(data[0].id)
-
-        document.getElementById("container").innerHTML = "";
-
-        this.db.shift()
-        if(this.db.length > 0) {
-          this.drawCanvas(this.db[0])
-        }
+        this.cb(data[0])
     })
+  },
+  async init(data, cb) {
+    this.cb = cb;
+    this.drawCanvas(data);
   }
 }
 
-app.init();
+export default app;

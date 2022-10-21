@@ -11,19 +11,21 @@ import error from './routes/error.js';
 
 import MQTTClient from './mqttClient.js';
 
-const pg = knex({
-  client: 'pg',
-  connection: {
+const connection = {
     host : process.env.POSTGRES_HOST ? process.env.POSTGRES_HOST : "localhost",
     port : 5432,
     user : process.env.POSTGRES_USER ? process.env.POSTGRES_USER : "postgres",
     password : process.env.POSTGRES_PASSWORD ? process.env.POSTGRES_PASSWORD : "test",
     database : process.env.POSTGRES_DATABASE ? process.env.POSTGRES_DATABASE : "test"
-  }
+  };
+const pg = knex({
+  client: 'pg',
+  connection: connection
 });
 
 const mqttClient = new MQTTClient("api", mqttMessageHandler, ["*"]);
 
+console.log(connection)
 
 async function initialise() {
   await createTables(pg);
@@ -49,7 +51,9 @@ app.get("/", async (req, res) => {
         "GET /annotation/empty": "Display all records with empty annotation",
         "PATCH /annotation/[UUID]": "update an annotation, body: {annotation: [new annotation]}",
         "DELETE /annotation/[UUID]": "Delete a record",
-        "POST /annotation": "Add a record, needs { imageURI, id, origin }"
+        "POST /annotation": "Add a record, needs { imageURI, id, origin }",
+        "GET /annotation/uniqueItemCount": "Count of all unique records in the DB, limitted to 100",
+        "GET /annotation/byQuery/:query": "List all records with a specific annotation"
       }, 
       "clippings": {
         "GET /clipping": "display all records",

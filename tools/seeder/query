@@ -1,0 +1,78 @@
+
+// variables 
+{
+  "limit": 25,
+  "skip": 0,
+  "searchValue": {
+    "value": "",
+    "isAsc": false,
+    "relation_filter": [],
+    "randomize": true,
+    "key": "title",
+    "has_mediafile": true,
+    "skip_relations": false,
+    "and_filter": false
+  }
+}
+
+//query
+query getEntities($limit: Int, $skip: Int, $searchValue: SearchFilter!) {
+  Entities(limit: $limit, skip: $skip, searchValue: $searchValue) {
+    count
+    limit
+    results {
+      ...minimalEntity
+      __typename
+    }
+    relations {
+      ...fullRelation
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment minimalEntity on Entity {
+  id
+  object_id
+  type
+  title: metadata(key: [title]) {
+    key
+    value
+    __typename
+  }
+  description: metadata(key: [description]) {
+    key
+    value
+    __typename
+  }
+  primary_mediafile
+  primary_transcode
+  primary_mediafile_info {
+    width
+    height
+    __typename
+  }
+  mediafiles {
+    mediatype {
+      type
+      mime
+      image
+      audio
+      video
+      pdf
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
+
+fragment fullRelation on Relation {
+  key
+  type
+  label
+  value
+  order
+  __typename
+}

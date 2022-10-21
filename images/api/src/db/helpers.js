@@ -36,6 +36,7 @@ export default async function createTables(pg) {
         t.json('imagedata');
         t.text('annotation', "longtext");
         t.text('originalAnnotation', "longtext");
+        t.boolean("flagged").defaultTo(false)
         t.timestamps(true, true);
       })
 
