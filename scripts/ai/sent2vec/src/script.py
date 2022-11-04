@@ -76,7 +76,7 @@ for list in batched_items:
             "vectors": vector.tolist()
         })
 
-with open('/output/vectors_031122.json', 'w') as f:
+with open('/output/vectors_041122.json', 'w') as f:
     json.dump(data, f)
 
 exit()

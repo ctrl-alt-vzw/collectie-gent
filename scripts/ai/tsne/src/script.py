@@ -26,7 +26,7 @@ def getPropertyFromList(list, property):
     return returnList
 
 
-input = readJsonFile('input/vectors_031122.json')
+input = readJsonFile('/input/vectors_041122.json')
 vectors_list = []
 for obj in input:
     vectors_list.append(obj['vectors'])
@@ -34,7 +34,7 @@ input_vectors = np.array(vectors_list)
 
 #X = np.array([[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]])
 vectors_embedded = TSNE(n_components=3, learning_rate='auto',
-                  init='pca', perplexity=50, ).fit_transform(input_vectors)
+                  init='pca', perplexity=30, ).fit_transform(input_vectors)
 print(vectors_embedded.shape)
 
 #add info to vectors
@@ -52,4 +52,4 @@ for index, vector in enumerate(vectors_embedded):
         "vectors": vector.tolist()
     })
 
-writeJsonFile('output/out_3D_perplex_50.json', output)
+writeJsonFile('/output/out_3D_perplex_30.json', output)
