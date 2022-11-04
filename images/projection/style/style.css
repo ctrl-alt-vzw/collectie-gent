@@ -1,0 +1,12 @@
+body {
+  overflow-x: hidden;
+}
+.clipping {
+  position:  absolute;
+}
+
+.clipping > img {
+  width:  100%;
+  height: 100%;
+  float:  left;
+}

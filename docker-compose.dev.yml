@@ -102,6 +102,20 @@ services:
     networks:
       - mqtt
 
+  # projection:
+  #   build: ./images/projection
+  #   image: "$OWNER/collageprojection:$VERSION"
+  #   command: ["npm", "run", "dev"]
+  #   environment: 
+  #     REACT_APP_API_ADDR:
+  #     REACT_APP_MEDIA_ADDR:
+  #   networks:
+  #     - mqtt
+  #   ports:
+  #     - 3033:3000
+  #   restart: always
+  #   volumes:
+  #     - ./images/projection/src:/usr/app/src
 
 networks:
   mqtt:

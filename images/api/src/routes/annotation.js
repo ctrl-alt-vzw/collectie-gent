@@ -16,6 +16,22 @@ export default function annotation(app, pg) {
       }
     })
   })
+
+
+  app.get("/annotation/random", async (req, res) => {
+    await pg
+      .select("*")
+      .table("annotations")
+      .limit(50)
+      .orderByRaw('RANDOM()')
+      .then((data) => {
+        res.send(data)
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
+  
   app.patch("/annotation/:uuid", async(req, res) => {
     // console.log(req.body)
     const toUpdate = {
@@ -134,6 +150,14 @@ export default function annotation(app, pg) {
       res.status(500).send(e)
     })
   })
+  app.get("/annotation/:uuid", async (req, res) => {
+    await pg.select("*").table("annotations").where({UUID: req.params.uuid}).then((data) => {
+      res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
   app.get("/annotation/uniqueItemCount", async(req, res) => {
     await pg.raw("SELECT annotation, COUNT(annotation) AS CountOf FROM annotations GROUP BY annotation ORDER BY COUNT(annotation) DESC LIMIT 100") 
       .then((data) => {
@@ -147,20 +171,6 @@ export default function annotation(app, pg) {
     await pg.raw(`SELECT * FROM annotations WHERE annotation='${req.params.query}'`) 
       .then((data) => {
         res.send(data);
-      })
-      .catch((e) => {
-        res.status(500).send(e)
-      })
-  })
-  app.get("/annotation/random", async (req, res) => {
-     // .whereNot({annotation: ""})
-    await pg
-      .select("*")
-      .table("annotations")
-      .limit(50)
-      .orderByRaw('RANDOM()')
-      .then((data) => {
-        res.send(data)
       })
       .catch((e) => {
         res.status(500).send(e)

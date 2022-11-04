@@ -8,6 +8,7 @@ import createTables from "./db/helpers.js";
 import annotation from './routes/annotation.js';
 import clipping from './routes/clipping.js';
 import error from './routes/error.js';
+import vertex from './routes/vertex.js';
 
 import MQTTClient from './mqttClient.js';
 
@@ -25,7 +26,7 @@ const pg = knex({
 
 const mqttClient = new MQTTClient("api", mqttMessageHandler, ["*"]);
 
-console.log(connection)
+// console.log(connection)
 
 async function initialise() {
   await createTables(pg);
@@ -64,15 +65,23 @@ app.get("/", async (req, res) => {
         "GET /errors": "display all records",
         "DELETE /error/[UUID]": "Delete a record",
         "POST /error": "Add a record, needs { originID, collection, x, y, imageURI }"
+      },
+      "vertex": {
+        "GET /vertex": "display all records",
+        "DELETE /vertex/[UUID]": "Delete a record",
+        "POST /vertex": "Add a record, needs { x, y, z, annotationUUID }",
+        "GET /vertex/:uuid": "display a specific record",
+        "GET /vertex/annotation/:uuid": "display a specific record by annotation",
       }
     },
-    "version": "0.1"
+    "version": "0.2"
   })
 })
 
 annotation(app, pg);
 clipping(app, pg, mqttClient);
 error(app, pg);
+vertex(app, pg);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
