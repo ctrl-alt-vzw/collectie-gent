@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+    sent2vec:
+        container_name: tsne
+        build: .
+        volumes:
+            - ./src/:/src/
+            - ./_volumes/out:/output
+            - ./_volumes/in:/input
