@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+    sent2vec:
+        container_name: sent2vec
+        build: .
+        volumes:
+            - ./src/:/src/
+            - ./_volumes/out:/output
