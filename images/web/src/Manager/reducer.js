@@ -11,7 +11,7 @@ const options = {
     viewing: 1,
     dropping: 1
   },
-  canvasWidth: process.env.CANVAS_WIDTH ? process.env.CANVAS_WIDTH : 2000
+  canvasWidth: process.env.CANVAS_WIDTH ? process.env.CANVAS_WIDTH : 1900
 }
 
 

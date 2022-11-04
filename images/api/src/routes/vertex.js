@@ -20,7 +20,7 @@ export default function vertex(app, pg) {
 
 
   app.post("/vertex", async(req, res) => {
-    console.log("saving")
+    // console.log("saving")
     const b = req.body;
 
     if(b.annotationUUID && b.x && b.y && b.z) {
@@ -31,8 +31,23 @@ export default function vertex(app, pg) {
         z: b.z,
         annotationUUID: b.annotationUUID
       }
-      await pg.insert(toInsert).table("vertex").returning("*").then((d) => {
-        res.send(d);
+      await pg.select("*").table("vertex").where({annotationUUID: b.annotationUUID}).then(async (d) => { 
+        if(d.length > 0) {
+          await pg.update({x: toInsert.x, y: toInsert.y, z:toInsert.z}).table("vertex").where({annotationUUID: b.annotationUUID}).returning("*").then((d) => {
+            res.send({updated: d});
+          }).catch((e) => {
+              console.log(e)
+              res.status(401).send()
+          })
+        }  else {
+          await pg.insert(toInsert).table("vertex").returning("*").then((d) => {
+            res.send({ inserted: d});
+          }).catch((e) => {
+              console.log(e)
+              res.status(401).send()
+          })
+
+        }
       }).catch((e) => {
           console.log(e)
           res.status(401).send()

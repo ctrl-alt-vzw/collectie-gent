@@ -12,7 +12,7 @@ function calculateOffset(data) {
       return a + b.y
     }, 0);
   console.log(total / set.length)
-  return ((total / set.length) * .7)
+  return ((total / set.length) * .8)
 
 
 }
