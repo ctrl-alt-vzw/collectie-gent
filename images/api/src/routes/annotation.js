@@ -92,7 +92,7 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation/empty", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "DESC").where({"annotation": ""}).then((data) => {
+    await pg.select("*").table("annotations").orderBy("id", "DESC").where({"annotation": ""}).andWhere("hidden", false).then((data) => {
       res.send(data)
     })
     .catch((e) => {
@@ -109,7 +109,7 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation/startingfrom/:id", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "DESC").where("id", ">", req.params.id).then((data) => {
+    await pg.select("*").table("annotations").orderBy("id", "DESC").where("id", ">", req.params.id).andWhere("hidden", false).then((data) => {
       res.send(data)
     })
     .catch((e) => {
@@ -118,7 +118,7 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "ASC").then((data) => {
+    await pg.select("*").table("annotations").where("hidden", false).orderBy("id", "ASC").then((data) => {
       res.send(data)
     })
     .catch((e) => {
@@ -133,6 +133,7 @@ export default function annotation(app, pg) {
       .table("annotations")
       .limit(50)
       .orderByRaw('RANDOM()')
+      .where("hidden", false)
       .then((data) => {
         res.send(data)
       })
