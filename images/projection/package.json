@@ -1,0 +1,17 @@
+{
+  "name": "projection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "live-server --port=3033",
+    "start": "serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.0.1",
+    "watch-server": "^1.3.0"
+  }
+}

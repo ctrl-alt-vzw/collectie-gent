@@ -28,6 +28,8 @@ export default class CanvasClass extends React.Component {
     this.cutting = false;
     this.erasing = false;
     this.imageURI = props.imageuri;
+    this.originID = props.originID;
+    this.collection = props.collection;
 
   }
   render() {
@@ -301,13 +303,15 @@ export default class CanvasClass extends React.Component {
         console.log(data)
         const toSend = {
           imageURI: data["full"],
-          originID: "u",
-          collection: "u",
+          normalURI: data["normal"],
+          originID: this.originID,
+          collection: this.collection,
           x: 10,
           y: 10,
           height: clippingHeight,
-          width: clippingWidth
+          width: clippingWidth,
         }
+        console.log(toSend);
         fetch(`${process.env.REACT_APP_API_ADDR}/clipping`, {
           headers: {
             'Accept': 'application/json, text/plain, */*',

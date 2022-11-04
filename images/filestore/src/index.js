@@ -62,7 +62,7 @@ app.get('/uploads/mask/:fileName', function (req, res) {
 
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
 app.get('/uploads/50/:fileName', function (req, res) {
-  const filePath = path.join(__dirname, './../uploads/200', req.params.fileName)
+  const filePath = path.join(__dirname, './../uploads/50', req.params.fileName)
   res.sendFile(filePath);
 });
 // app.get("/", express.static(path.join(__dirname, './../uploads')));

@@ -56,8 +56,7 @@ export default function clipping(app, pg, mqttClient) {
         x: b.x,
         y: b.y,
         width: b.width,
-        height: b.height,
-        normalURI: ""
+        height: b.height
       }
       await pg.insert(toInsert).table("clippings").returning("*").then((d) => {
         res.send(d);

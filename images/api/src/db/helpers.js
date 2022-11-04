@@ -36,6 +36,7 @@ export default async function createTables(pg) {
         t.json('imagedata');
         t.text('annotation', "longtext");
         t.text('originalAnnotation', "longtext");
+        t.boolean("flagged").defaultTo(false)
         t.timestamps(true, true);
       })
 
@@ -45,6 +46,24 @@ export default async function createTables(pg) {
     }
   })
 
+
+  pg.schema.hasTable('vertex').then(function(exists) {
+    if (!exists) {
+      return pg.schema.createTable('vertex', function(t) {
+        t.increments('id').primary();
+        t.string('UUID', 1000);
+        t.float("x").defaultTo(0);
+        t.float("y").defaultTo(0);
+        t.float("z").defaultTo(0);
+        t.string('annotationUUID', 1000);
+        t.timestamps(true, true);
+      })
+
+    } else {
+      console.log("tables vertex exist")
+
+    }
+  })
 
   pg.schema.hasTable('errors').then(function(exists) {
     if (!exists) {
