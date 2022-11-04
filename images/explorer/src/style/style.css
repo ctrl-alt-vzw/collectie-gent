@@ -1,7 +1,11 @@
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .clipping {
+  position:  absolute;
+}
+
+#container {
   position:  absolute;
 }
 
