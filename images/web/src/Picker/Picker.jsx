@@ -3,7 +3,27 @@ import Loader from './../Common/Loader.jsx'
 import Item from './Item.jsx'
 
 import { ManagerContext } from "../Manager/index.js"
+import Application from './Application/Application.js'
 
+function Picker(props) {
+
+  const [ , dispatch ] = React.useContext(ManagerContext)
+  const [ data, setData ] = React.useState([]);
+
+useEffect(() => {
+    const application = new Application(document.querySelector('canvas.webgl'))
+    }, []);
+  return (
+    <div id="pickerContainer">
+      <canvas className='webgl'></canvas>
+    </div>
+  )
+
+}
+
+export default Picker;
+
+/*
 function Picker(props) {
 
   const [ , dispatch ] = React.useContext(ManagerContext)
@@ -30,3 +50,4 @@ useEffect(() => {
 }
 
 export default Picker;
+*/
