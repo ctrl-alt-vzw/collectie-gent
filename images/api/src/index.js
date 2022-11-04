@@ -8,22 +8,25 @@ import createTables from "./db/helpers.js";
 import annotation from './routes/annotation.js';
 import clipping from './routes/clipping.js';
 import error from './routes/error.js';
+import vertex from './routes/vertex.js';
 
 import MQTTClient from './mqttClient.js';
 
-const pg = knex({
-  client: 'pg',
-  connection: {
+const connection = {
     host : process.env.POSTGRES_HOST ? process.env.POSTGRES_HOST : "localhost",
     port : 5432,
     user : process.env.POSTGRES_USER ? process.env.POSTGRES_USER : "postgres",
     password : process.env.POSTGRES_PASSWORD ? process.env.POSTGRES_PASSWORD : "test",
     database : process.env.POSTGRES_DATABASE ? process.env.POSTGRES_DATABASE : "test"
-  }
+  };
+const pg = knex({
+  client: 'pg',
+  connection: connection
 });
 
 const mqttClient = new MQTTClient("api", mqttMessageHandler, ["*"]);
 
+// console.log(connection)
 
 async function initialise() {
   await createTables(pg);
@@ -49,7 +52,9 @@ app.get("/", async (req, res) => {
         "GET /annotation/empty": "Display all records with empty annotation",
         "PATCH /annotation/[UUID]": "update an annotation, body: {annotation: [new annotation]}",
         "DELETE /annotation/[UUID]": "Delete a record",
-        "POST /annotation": "Add a record, needs { imageURI, id, origin }"
+        "POST /annotation": "Add a record, needs { imageURI, id, origin }",
+        "GET /annotation/uniqueItemCount": "Count of all unique records in the DB, limitted to 100",
+        "GET /annotation/byQuery/:query": "List all records with a specific annotation"
       }, 
       "clippings": {
         "GET /clipping": "display all records",
@@ -60,15 +65,23 @@ app.get("/", async (req, res) => {
         "GET /errors": "display all records",
         "DELETE /error/[UUID]": "Delete a record",
         "POST /error": "Add a record, needs { originID, collection, x, y, imageURI }"
+      },
+      "vertex": {
+        "GET /vertex": "display all records",
+        "DELETE /vertex/[UUID]": "Delete a record",
+        "POST /vertex": "Add a record, needs { x, y, z, annotationUUID }",
+        "GET /vertex/:uuid": "display a specific record",
+        "GET /vertex/annotation/:uuid": "display a specific record by annotation",
       }
     },
-    "version": "0.1"
+    "version": "0.2"
   })
 })
 
 annotation(app, pg);
 clipping(app, pg, mqttClient);
 error(app, pg);
+vertex(app, pg);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

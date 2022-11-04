@@ -54,7 +54,19 @@ const app = {
             this.store(data, toStore)
           }
 
-      });
+      })
+      img.addEventListener("error", () => {
+          console.log("error", data.imagedata)
+          this.lastID = this.db[0].id;
+          this.db.shift()
+          if(this.db.length > 0) {
+            this.drawCanvas(this.db[0])
+          } else {
+            if(this.count > 0) {
+              this.init();
+            }
+          }
+      })
       const imageURL = `https://api.collectie.gent/iiif/imageiiif/3/${data.gentImageURI}/full/^1000,/0/default.jpg`
 
       img.src = imageURL;

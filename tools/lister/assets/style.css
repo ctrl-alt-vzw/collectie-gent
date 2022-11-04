@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    font-family: monospace, sans-serif;
+}
+
+#container {
+    width: 600px;
+    margin:  auto;
+    margin-top:  20px;
+}
+.item {
+    padding:  10px;
+    float:  left;
+    
+    margin:  20px 0px;
+    box-sizing: border-box;
+}
+.item > img {
+    width: 100%;
+}
+.item > h1 {
+    font-size: 1.2em;
+}
+.item > p {
+    color:  #aaa;
+}
+.item > button {
+    background: #000;
+    border:  0px;
+    border-radius: 0px;
+    color:  #fff;
+    padding:  10px;
+    float:  right;
+}
+
+#actions {
+    position: fixed;
+    width:  100%;
+    padding:  10px;
+    box-sizing: border-box;
+    top:  0px;
+}
+#actions > button {
+    background: #000;
+    border:  0px;
+    border-radius: 0px;
+    color:  #fff;
+    padding:  10px;
+    float:  right;
+}

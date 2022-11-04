@@ -1,0 +1,11 @@
+{
+  "name": "imagequalifier",
+  "version": "1.0.0",
+  "description": "* fetch de data, gebruik de \"event\" klasse om de elementen op te slaan in de events array    \t* Gebruik de \"onlineEvent\" klasse indien de locatie van het event \"online\" is * Voeg eventlisteners toe voor het search formulier en de sort knoppen * geef de events weer aan de hand van een get htmlString methode in de klasse     * Voeg in de onlineEvent klasse een extra \"online\" cssKlasse toe in de parent div * Sorteer en filter de array aan de hand van de input van de user * Selecteer een random event uit de array en geef dit weer in de randomEvent div.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
