@@ -53,6 +53,7 @@ services:
       - 3030:3000
     volumes:
       - ./_uploads:/usr/app/uploads
+      - ./_pictograms:/usr/app/pictograms
 
   manager:
     image: "$OWNER/collagemanager:$VERSION"

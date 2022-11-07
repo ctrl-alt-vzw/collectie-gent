@@ -55,6 +55,7 @@ services:
     volumes:
       - ./images/filestore/src:/usr/app/src
       - ./_uploads:/usr/app/uploads
+      - ./_pictograms:/usr/app/pictograms
 
 
   web:

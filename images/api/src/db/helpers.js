@@ -34,6 +34,8 @@ export default async function createTables(pg) {
         t.string('originID', 100);
         t.string('collection', 20);
         t.json('imagedata');
+        t.json('metadata');
+        t.json('colordata');
         t.text('annotation', "longtext");
         t.text('originalAnnotation', "longtext");
         t.boolean("flagged").defaultTo(false);

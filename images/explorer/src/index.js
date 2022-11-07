@@ -115,20 +115,20 @@ function init() {
 }
 
 function handleClick(e) {
-  console.log(e)
-  if(highlighted) {
-    highlighted = null;
-  } else {
-    const threshold = 20;
-    const options = clippings.filter((item) => {
-      const withinX = e.x > item.x && e.x < item.x + item.width;
-      const withinY = e.y > item.y && e.y < item.y + item.height;
-      return withinX && withinY
-    })
-    highlighted = options.sort((a, b) => a.sortID - b.sortID)[0];
+  // console.log(e)
+  // if(highlighted) {
+  //   highlighted = null;
+  // } else {
+  //   const threshold = 20;
+  //   const options = clippings.filter((item) => {
+  //     const withinX = e.x > item.x && e.x < item.x + item.width;
+  //     const withinY = e.y > item.y && e.y < item.y + item.height;
+  //     return withinX && withinY
+  //   })
+  //   highlighted = options.sort((a, b) => a.sortID - b.sortID)[0];
 
-  }
-  render();
+  // }
+  // render();
 }
 
 function fetchData() {
