@@ -60,6 +60,36 @@ export default function annotation(app, pg) {
     })
   })
   
+  app.patch("/annotation/:uuid/colordata", async(req, res) => {
+    // console.log(req.body)
+    const toUpdate = {
+      colordata: req.body
+    }
+    // console.log(toUpdate)
+    await pg.update(toUpdate).table("annotations").where({UUID: req.params.uuid}).returning("*").then((data) => {
+      res.send(data)
+    })
+    .catch(e => {
+      res.status(400).send(e)
+    })
+  })
+
+  app.patch("/annotation/:uuid/metadata", async(req, res) => {
+    // console.log(req.body)
+    const id = req.body.originID;
+    const collection = req.body.collection
+    const toUpdate = {
+      metadata: req.body.metadata
+    }
+    // console.log(toUpdate)
+    await pg.update(toUpdate).table("annotations").where({originID: id, collection: collection}).returning("*").then((data) => {
+      res.send(data)
+    })
+    .catch(e => {
+      res.status(400).send(e)
+    })
+  })
+  
   app.patch("/annotation/:uuid/originalAnnotation", async(req, res) => {
     // console.log(req.body)
     const toUpdate = {
@@ -117,7 +147,7 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation/empty", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "DESC").where({"annotation": ""}).then((data) => {
+    await pg.select("*").table("annotations").orderBy("id", "DESC").where({"annotation": ""}).andWhere("hidden", false).then((data) => {
       res.send(data)
     })
     .catch((e) => {
@@ -134,7 +164,7 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation/startingfrom/:id", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "ASC").limit(20).where("id", ">", req.params.id).then((data) => {
+    await pg.select("*").table("annotations").orderBy("id", "ASC").limit(20).where("id", ">", req.params.id).andWhere("hidden", false).then((data) => {
       res.send(data)
     })
     .catch((e) => {
@@ -143,13 +173,28 @@ export default function annotation(app, pg) {
   })
 
   app.get("/annotation", async (req, res) => {
-    await pg.select("*").table("annotations").orderBy("id", "ASC").then((data) => {
+    await pg.select("*").table("annotations").where("hidden", false).orderBy("id", "ASC").then((data) => {
       res.send(data)
     })
     .catch((e) => {
       res.status(500).send(e)
     })
   })
+
+  app.get("/annotation/random", async (req, res) => {
+    await pg
+      .select("*")
+      .table("annotations")
+      .limit(50)
+      .orderByRaw('RANDOM()')
+      .where("hidden", false)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })  
   app.get("/annotation/:uuid", async (req, res) => {
     await pg.select("*").table("annotations").where({UUID: req.params.uuid}).then((data) => {
       res.send(data)
@@ -167,8 +212,18 @@ export default function annotation(app, pg) {
         res.status(500).send(e)
       })
   })
-  app.get("/annotation/byQuery/:query", async(req, res) => {
+  app.get("/annotation/byAnnotation/:query", async(req, res) => {
     await pg.raw(`SELECT * FROM annotations WHERE annotation='${req.params.query}'`) 
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
+
+  app.get("/annotation/byQuery/:query", async(req, res) => {
+    await pg.raw(`SELECT * FROM annotations WHERE ${req.params.query}`) 
       .then((data) => {
         res.send(data);
       })

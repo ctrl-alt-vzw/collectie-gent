@@ -1,8 +1,13 @@
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .clipping {
   position:  absolute;
+}
+
+#container {
+  position:  absolute;
+  border:  1px solid #000;
 }
 
 .clipping > img {

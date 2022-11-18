@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "live-server --port=3033",
+    "dev": "live-server /usr/app/src --port=3033",
     "start": "serve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "live-server": "^1.2.2",
     "serve": "^14.0.1",
     "watch-server": "^1.3.0"
   }

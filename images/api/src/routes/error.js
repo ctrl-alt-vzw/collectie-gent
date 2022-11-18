@@ -36,7 +36,7 @@ export default function error(app, pg) {
   
 
   app.post("/error", async(req, res) => {
-    console.log("saving")
+    // console.log("saving")
     const b = req.body;
 
     if(b.uri) {

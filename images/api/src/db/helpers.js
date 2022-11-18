@@ -34,14 +34,36 @@ export default async function createTables(pg) {
         t.string('originID', 100);
         t.string('collection', 20);
         t.json('imagedata');
+        t.json('metadata');
+        t.json('colordata');
         t.text('annotation', "longtext");
         t.text('originalAnnotation', "longtext");
-        t.boolean("flagged").defaultTo(false)
+        t.boolean("flagged").defaultTo(false);
+        t.boolean("hidden").defaultTo(false);
         t.timestamps(true, true);
       })
 
     } else {
       console.log("tables annotations exist")
+
+    }
+  })
+
+  pg.schema.hasTable('approvals').then(function(exists) {
+    if (!exists) {
+      return pg.schema.createTable('approvals', function(t) {
+        t.increments('id').primary();
+        t.string('UUID', 1000);
+        t.string('annotationUUID', 100);
+        t.string('workerID', 100);
+        t.string('originID', 100);
+        t.string('collection', 20);
+        t.boolean("approved").defaultTo(false);
+        t.timestamps(true, true);
+      })
+
+    } else {
+      console.log("tables approvals exist")
 
     }
   })
