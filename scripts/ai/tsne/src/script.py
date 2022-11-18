@@ -26,7 +26,7 @@ def getPropertyFromList(list, property):
     return returnList
 
 
-input = readJsonFile('/input/vectors_041122.json')
+input = readJsonFile('/input/vectors_051122.json')
 vectors_list = []
 for obj in input:
     vectors_list.append(obj['vectors'])

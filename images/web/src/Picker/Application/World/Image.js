@@ -13,6 +13,7 @@ export default class Image {
     constructor(item, texture) {
         this.application = new Application();
         this.scene = this.application.scene;
+        this.camera = this.application.camera;
         this.imageMeshes = this.application.imageMeshes;
 
         //How to index the loaded images?
@@ -44,7 +45,9 @@ export default class Image {
         mesh.lookAt(lookVector);
 
         //callback
-        mesh.onClick = this.onClick;
+        mesh.onClick = () => {
+            this.onClick(mesh)
+        }
 
         //add
         this.imageMeshes.push(mesh);
@@ -63,7 +66,9 @@ export default class Image {
         }
     }
 
-    onClick(e) {
-        console.log('Clicked on me', this, e);
+    onClick(mesh) {
+        console.log('Clicked on me', this, mesh);
+        this.camera.lookAt(mesh, 10);
+        this.application.selectedCallback(mesh.uuid)
     }
 }

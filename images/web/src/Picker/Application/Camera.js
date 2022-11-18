@@ -32,6 +32,15 @@ export default class Camera {
     this.setControls();
   }
 
+  lookAt(mesh, distance = 20) {
+    console.log("Moving cam");
+    this.instance.position.copy(mesh.position);
+    const translation = distance + mesh.position.distanceTo(new THREE.Vector3(0, 0, 0));
+    this.instance.position.normalize().multiplyScalar(translation);
+    //camera.lookAt(mesh);
+    //render();
+  }
+
   setInstance() {
     this.instance = new THREE.PerspectiveCamera(CAMERA.fov, this.sizes.width / this.sizes.height, CAMERA.near, CAMERA.far);
     this.instance.position.set(CAMERA.position.x, CAMERA.position.y, CAMERA.position.z);

@@ -14,16 +14,17 @@ export default class Raycaster {
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
 
+        console.log(this.renderer, this.camera);
         this.initEvent();
     }
 
     initEvent() {
         window.addEventListener('mousedown', e => {
             e.preventDefault();
-            this.mouse.x = (e.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
-            this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
+            this.mouse.x = (e.clientX / this.renderer.instance.domElement.clientWidth) * 2 - 1;
+            this.mouse.y = -(e.clientY / this.renderer.instance.domElement.clientHeight) * 2 + 1;
 
-            this.raycaster.setFromCamera(this.mouse, this.camera);
+            this.raycaster.setFromCamera(this.mouse, this.camera.instance);
             const intersects = this.raycaster.intersectObjects(this.imageMeshes);
 
             if (intersects.length > 0) {

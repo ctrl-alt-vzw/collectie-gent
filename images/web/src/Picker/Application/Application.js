@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 import Camera from './Camera.js';
+import Raycaster from './Utils/Raycaster.js';
 import Renderer from './Renderer.js';
 import Resources from './Utils/Resources.js';
-
 import Sizes from "./Utils/Sizes.js";
 import Time from "./Utils/Time.js";
 import World from './World/World.js';
+
 
 import sources from './sources.js';
 import Debug from './Utils/Debug.js';
@@ -13,7 +14,7 @@ import Debug from './Utils/Debug.js';
 let instance = null;
 
 export default class Application {
-  constructor(canvas) {
+  constructor(canvas, selectedCallback) {
 
     if (instance) {
       return instance;
@@ -43,6 +44,11 @@ export default class Application {
 
     this.camera = new Camera();
     this.renderer = new Renderer();
+
+    //add raycaster after renderer
+    this.raycaster = new Raycaster();
+    //set callback so it's available for images
+    this.selectedCallback = selectedCallback;
 
 
     // events
