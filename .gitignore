@@ -9,3 +9,5 @@
 package-*.json
 */*/node_modules/
 scripts/ai/*/_volumes
+tools/storeImageInformation
+tools/fillOriginalInfo
