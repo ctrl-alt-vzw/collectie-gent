@@ -9,6 +9,7 @@ import annotation from './routes/annotation.js';
 import clipping from './routes/clipping.js';
 import error from './routes/error.js';
 import vertex from './routes/vertex.js';
+import approval from './routes/approval.js';
 
 import MQTTClient from './mqttClient.js';
 
@@ -54,7 +55,6 @@ app.get("/", async (req, res) => {
         "DELETE /annotation/[UUID]": "Delete a record",
         "POST /annotation": "Add a record, needs { imageURI, id, origin }",
         "GET /annotation/uniqueItemCount": "Count of all unique records in the DB, limitted to 100",
-        "GET /annotation/byQuery/:query": "List all records with a specific annotation"
       }, 
       "clippings": {
         "GET /clipping": "display all records",
@@ -72,9 +72,14 @@ app.get("/", async (req, res) => {
         "POST /vertex": "Add a record, needs { x, y, z, annotationUUID }",
         "GET /vertex/:uuid": "display a specific record",
         "GET /vertex/annotation/:uuid": "display a specific record by annotation",
+        "GET /vertex/nearest?x=0&y=0&z=0&amount=10": "get the nearest vertices, with a coordinate and an amount of records returned"
+      },
+      "approval": {
+        "GET /approvals": "display all records",
+        "POST /approvals": "Add a record, needs { originID, annotationUUID, workerID, collection, approved (bool)}",
       }
     },
-    "version": "0.2"
+    "version": "0.4"
   })
 })
 
@@ -82,6 +87,7 @@ annotation(app, pg);
 clipping(app, pg, mqttClient);
 error(app, pg);
 vertex(app, pg);
+approval(app, pg);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

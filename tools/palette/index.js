@@ -4,11 +4,14 @@ var pixels = require('image-pixels')
 
 async function getPalette(e) {
   try {
+    console.log(e.gentImageURI)
     const p = await pixels('https://media.datacratie.cc/pictograms/' + e.gentImageURI);
     var {ids, colors} = await palette(p)
+    console.log("sending")
     sendData(e, { colors: colors})
   } catch(e) {
     // sendData(e, null)
+      console.log(e)
       handling+=1;
       recurse();
 
@@ -24,6 +27,7 @@ function getData() {
     .then((d) => {
       data = d.rows;
       handling = 0;
+      console.log(data.length)
       recurse()
     })
     .catch(e => {
@@ -35,6 +39,7 @@ function getData() {
 function recurse() {
   if(data[handling]) {
     const current = data[handling];
+    console.log(current.id)
     getPalette(current);
   } else {
     getData();

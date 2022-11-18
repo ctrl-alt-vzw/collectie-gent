@@ -68,6 +68,16 @@ export default function vertex(app, pg) {
     })
   })
 
+  app.get("/vertex/nearest", async(req, res) => {
+    console.log(req.query, "init")
+    await pg.raw(`SELECT * FROM vertex ORDER BY ABS(x - ${req.query.x}) + ABS(y - ${req.query.y}) + ABS(z - ${req.query.z}) LIMIT ${req.query.amount} `) 
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
   app.get("/vertex/:uuid", async (req, res) => {
     await pg.select("*").table("vertex").where({UUID: req.params.uuid}).then((data) => {
       res.send(data)
@@ -85,5 +95,15 @@ export default function vertex(app, pg) {
       res.status(500).send(e)
     })
   })
+  app.get("/vertex/byQuery/:query", async(req, res) => {
+    await pg.raw(`SELECT * FROM vertex WHERE ${req.params.query}`) 
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
+
 
 }

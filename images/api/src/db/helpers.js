@@ -49,6 +49,25 @@ export default async function createTables(pg) {
     }
   })
 
+  pg.schema.hasTable('approvals').then(function(exists) {
+    if (!exists) {
+      return pg.schema.createTable('approvals', function(t) {
+        t.increments('id').primary();
+        t.string('UUID', 1000);
+        t.string('annotationUUID', 100);
+        t.string('workerID', 100);
+        t.string('originID', 100);
+        t.string('collection', 20);
+        t.boolean("approved").defaultTo(false);
+        t.timestamps(true, true);
+      })
+
+    } else {
+      console.log("tables approvals exist")
+
+    }
+  })
+
 
   pg.schema.hasTable('vertex').then(function(exists) {
     if (!exists) {
