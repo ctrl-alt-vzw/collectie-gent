@@ -82,6 +82,7 @@ annotation(app, pg);
 clipping(app, pg, mqttClient);
 error(app, pg);
 vertex(app, pg);
+approval(app, pg, mqttClient);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
