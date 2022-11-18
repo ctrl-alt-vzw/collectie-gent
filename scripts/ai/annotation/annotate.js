@@ -12,7 +12,10 @@ const errors = [];
 const addError = (errorCode, id, msg, note) => {
     let n = note ? note : '';
     errors.push({
-        errorCode, id, msg, note: n
+        errorCode,
+        id,
+        msg,
+        note: n
     });
 }
 
@@ -23,7 +26,7 @@ const writeErrorFile = () => {
 const getTasks = async () => {
     const response = await fetch(`${API_URL}/annotation/empty`);
     const json = await response.json();
-    if(!json.length) {
+    if (!json.length) {
         console.error("No new tasks");
         addError(0, 0, "No new tasks");
     }
@@ -34,33 +37,35 @@ const run = async () => {
     const tasks = await getTasks();
     console.log(`We have ${tasks.length} annotation ahead, let's go`);
     try {
-        for(const task of tasks) {
+        for (const task of tasks) {
             //first test if image is available
-            if(await imageExists(task.gentImageURI, task.UUID)) {
+            if (await imageExists(task.gentImageURI, task.UUID)) {
                 try {
                     //get annotation
                     console.log('Starting annotation fetch for task #', task.id);
                     const annotation = await getAnnotation(task.gentImageURI, CONFIG.model, CONFIG.use_beam_search);
                     //push to API
-                    
+
                     fetch(`${API_URL}/annotation/${task.UUID}`, {
                         method: 'PATCH',
                         mode: 'cors', // no-cors, *cors, same-origin
                         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                         headers: {
-                          'Content-Type': 'application/json'
-                          // 'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/json'
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: JSON.stringify({annotation: annotation})
+                        body: JSON.stringify({
+                            annotation: annotation
+                        })
                     })
-                    
+
                 } catch (e) {
                     addError(0, task.UUID, "Failed adding annotation", e);
                 }
             } else {
                 addError(0, task.UUID, "Could not get image", e);
             }
-    
+
         }
         writeErrorFile();
     } catch (e) {
@@ -72,7 +77,7 @@ const run = async () => {
 const imageExists = async (url, id) => {
     //Needs part of URI now
     const response = await fetch(`https://api.collectie.gent/iiif/image/iiif/3/${url}/info.json`);
-    if(response.ok) {
+    if (response.ok) {
         return true
     } else {
         console.error(`IMG ERROR: No IMG exists for ${id} / ${url}`)
@@ -90,21 +95,23 @@ const getAnnotation = async (imgUrl, model, beam) => {
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
-              'Content-Type': 'application/json'
-              // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify({input: {
-                image: url,
-                model: model,
-                use_beam_search: beam
-              }}) // body data type must match "Content-Type" header
+            body: JSON.stringify({
+                input: {
+                    image: url,
+                    model: model,
+                    use_beam_search: beam
+                }
+            }) // body data type must match "Content-Type" header
         })
         const json = await response.json();
         console.log(json);
-        if(!response.ok) {
+        if (!response.ok) {
             addError(response.status, '', 'HTTP Error fetching annotation', imgUrl);
         }
-        if(json.status == 'success' && json.output.length) {
+        if (json.status == 'success' && json.output.length) {
             console.log(json.output[0].text);
             return json.output[0].text;
         } else {

@@ -67,8 +67,6 @@ function initEvents() {
     // n = 78
     // space = 32
     // y = 89
-
-    // console.log(event.keyCode)
     event.preventDefault();
     if(event.keyCode == 32) {
       scrolling = false;
@@ -91,6 +89,7 @@ function initEvents() {
 
       document.getElementById("workerUUIDHolder").innerHTML = currentWorker;
       document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
+
     }
   });
 

@@ -11,8 +11,8 @@ function Viewer(props) {
   const [state , dispatch ] = React.useContext(ManagerContext)
   const [data, setData] = React.useState([]);
   const [yOffset, setYOffset] = React.useState([]);
-  // const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
-  const scale = 1
+  const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
+  // const scale = 1
 
   useEffect(() => {
     console.log(`${process.env.REACT_APP_API_ADDR}/clipping`)

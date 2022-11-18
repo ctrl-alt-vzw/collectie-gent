@@ -104,4 +104,15 @@ export default function clipping(app, pg, mqttClient) {
     })
   })
 
+
+  app.get("/clipping/byQuery/:query", async(req, res) => {
+    await pg.raw(`SELECT * FROM clippings WHERE ${req.params.query}`) 
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
+
 }
