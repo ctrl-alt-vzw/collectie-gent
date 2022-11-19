@@ -24,6 +24,14 @@
 
 <body>
   <div id="container">
+    <div id="helpContainer">
+      Welcome, mechanical worker, <br />
+      <br />
+      Please approve(<mark>Y</mark>) or disapprove(<mark>N</mark>) the following AI annotations(<mark>marked in yellow</mark> ). <br />
+      You can pause on an image by <mark>pressing the spacebar</mark>. <br />
+      <br />
+      Please note that the description does not need to be accurate, but it should be satisfying.
+    </div>
     <div id="leftLane">
       <div id="approveContainer">
       </div>
@@ -35,7 +43,7 @@
     </div>
     <div id="rightLane">
       <div id="visualContainer">
-      <h1>Mechanical Turker</h1>
+      <!-- <h1>Mechanical Turker</h1> -->
         <h2>Work done: <span id="percentage"></span></h2>
             <canvas id="canvas"> </canvas>
 
@@ -48,10 +56,6 @@
                 <th>VERIFIED</th>
             <tr>
         </table>
-      </div>
-      <div id="workerInfo">
-        <h1>Worker ID: <span id="workerUUIDHolder">NULL</span></h1>
-        <h1>Worker amount: <span id="workerAmountHolder">0</span></h1>
       </div>
     </div>
 

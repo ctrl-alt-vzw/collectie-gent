@@ -71,34 +71,46 @@ function initEvents() {
     // n = 78
     // space = 32
     // y = 89
-    event.preventDefault();
-    if (event.keyCode == 32) {
-      scrolling = false;
+    console.log(event.keyCode);
+    // event.preventDefault();
+    if(event.keyCode == 32) {
+      scrolling = !scrolling;
+      if(scrolling) renderLoop()
       const img = document.getElementById("currentImage");
       img.src = imageURIGenerator(currentlyWatching.gentImageURI, true)
     }
-    if (event.keyCode == 89) {
+    if(event.keyCode == 82) {
       vote(true);
       workerHasWorked++;
-      document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
+      // document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
     }
-    if (event.keyCode == 78) {
+    if(event.keyCode == 79) {
       vote(false);
       workerHasWorked++;
-      document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
+      // document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
     }
-    if (event.keyCode == 90) {
+    if(event.keyCode == 55) {
+      displayHelp();
+    }
+    if(event.keyCode == 90) {
       currentWorker = generateUUID();
       workerHasWorked = 0;
 
-      document.getElementById("workerUUIDHolder").innerHTML = currentWorker;
-      document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
+      // document.getElementById("workerUUIDHolder").innerHTML = currentWorker;
+      // document.getElementById("workerAmountHolder").innerHTML = workerHasWorked;
 
     }
   });
 
 }
-
+function displayHelp() {
+  
+  document.getElementById("helpContainer").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("helpContainer").style.display = "none";
+    // remove help
+  }, 5000)
+}
 function vote(approved) {
 
   fetch("https://api.datacratie.cc/approvals", {
@@ -118,6 +130,7 @@ function vote(approved) {
     .then((data) => {
       console.log(data)
       scrolling = true
+      visualisation.getReviewedItems();
       renderLoop();
     })
     .catch((error) => {

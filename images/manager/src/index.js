@@ -39,6 +39,10 @@ function messageHandler(topic, message) {
     console.log("sending")
     ws.broadcast("clipping/added/"+ b.UUID)
   }
+  if(source == "api"&& top == "worker") {
+    console.log("sending worker output", b)
+    ws.broadcast("worker/receipt/"+ b.workerID)
+  }
 }
 
 function socketMessageHandler(topic, message) {

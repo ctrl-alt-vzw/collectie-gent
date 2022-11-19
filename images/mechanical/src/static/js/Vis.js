@@ -2,7 +2,7 @@
 
 const INDEX_OFFSET = 1932
 const CANVAS_WIDTH = 1280;
-const CANVAS_HEIGHT = 1280;
+const CANVAS_HEIGHT = 680;
 const ITEMS_AMOUNT = 48332;
 
 export default class Vis {
@@ -62,7 +62,7 @@ export default class Vis {
         this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         let cols = 220;
         let rows = 220;
-        let size = 5;
+        let size = 3;
         let offset = 0;
 
         let index = 0;
@@ -71,15 +71,15 @@ export default class Vis {
                 if (index < ITEMS_AMOUNT) {
                     let item = this.getItem(index + INDEX_OFFSET);
                     if (!item) {
-                        this.context.strokeStyle = '#000';
-                        this.context.strokeRect(offset + i * size, offset + j * size, size, size);
+                        // this.context.strokeStyle = '#000';
+                        // this.context.strokeRect(offset + i * size, offset + j * size, size, size);
                         this.context.fillStyle = 'rgba(125, 125, 125, 0.5)';
-                        this.context.fillRect(offset + i * size, offset + j * size, size, size);
+                        this.context.fillRect(offset + i * size, offset + j * size, size-1, size-1);
                     } else if (item.approved) {
-                        this.context.fillStyle = 'green';
+                        this.context.fillStyle = 'rgba(0, 255, 0, 1)';
                         this.context.fillRect(offset + i * size, offset + j * size, size, size);
                     } else if (!item.approved) {
-                        this.context.fillStyle = 'red';
+                        this.context.fillStyle = 'rgba(255, 0, 0, 1)';
                         this.context.fillRect(offset + i * size, offset + j * size, size, size);
 
                     }

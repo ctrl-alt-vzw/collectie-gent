@@ -16,11 +16,11 @@ export default function approval(app, pg, mqttClient) {
       collection: b.collection,
       approved: b.approved
     }
-    await pg.insert(toInsert).table("approvals").returning("*").then((d) => {
+    await pg.insert(toInsert).table("approvals").returning("*").then(async (d) => {
       res.send({ inserted: d});
 
       await pg.select("*").table("approvals").where({workerID: b.workerID}).then((works) => {
-        mqttClient.broadcast("worker", JSON.stringify({ works: works, workerID: b.workerID }))
+        mqttClient.broadcast("worker", JSON.stringify({ workerID: b.workerID }))
       })
     }).catch((e) => {
         console.log(e)
@@ -30,6 +30,15 @@ export default function approval(app, pg, mqttClient) {
 
   app.get("/approvals", async (req, res) => {
     await pg.select("*").table("approvals").orderBy("id", "ASC").then((data) => {
+      res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
+
+  app.get("/worker/:uuid", async (req, res) => {
+    await pg.select("*").table("approvals").where({workerID: req.params.uuid}).orderBy("id", "DESC").then((data) => {
       res.send(data)
     })
     .catch((e) => {

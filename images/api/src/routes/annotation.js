@@ -181,6 +181,16 @@ export default function annotation(app, pg) {
     })
   })
 
+
+  app.get("/annotation/byId/:id", async (req, res) => {
+    await pg.select("*").table("annotations").where("id", req.params.id).then((data) => {
+      res.send(data[0])
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
+
   app.get("/annotation/random", async (req, res) => {
     await pg
       .select("*")
