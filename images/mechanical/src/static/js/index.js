@@ -1,6 +1,7 @@
 import Vis from "./Vis.js";
 
 const BASE_URI = "https://api.datacratie.cc"
+const USE_LOCAL = true;
 const USE_SMALL_IMAGES = true;
 const SCROLLTIME = 200;
 
@@ -71,6 +72,10 @@ function initEvents() {
     // n = 78
     // space = 32
     // y = 89
+    if(workerHasWorked >= 5) {
+      currentWorker = generateUUID();
+      workerHasWorked = 0;
+    }
     console.log(event.keyCode);
     // event.preventDefault();
     if(event.keyCode == 32) {
@@ -157,6 +162,9 @@ function generateUUID() { // Public Domain/MIT
 }
 
 function imageURIGenerator(gentImageURI, override = false) {
+  if(USE_LOCAL  && !override) {
+    return `http://localhost:3030/pictograms/${gentImageURI}`
+  }
   if (USE_SMALL_IMAGES && !override) {
     return `https://media.datacratie.cc/pictograms/${gentImageURI}`
   }

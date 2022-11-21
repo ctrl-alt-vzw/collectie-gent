@@ -11,3 +11,4 @@ package-*.json
 scripts/ai/*/_volumes
 tools/storeImageInformation
 tools/fillOriginalInfo
+/_pictograms
