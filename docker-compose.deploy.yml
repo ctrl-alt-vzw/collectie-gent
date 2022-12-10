@@ -44,6 +44,17 @@ services:
         condition: service_healthy
 
 
+  explorer:
+    image: "$OWNER/collageexplorer:$VERSION"
+    command: ["npm", "run", "start"]
+    environment: 
+      REACT_APP_API_ADDR:
+      REACT_APP_MEDIA_ADDR:
+    networks:
+      - mqtt
+    ports:
+      - 3033:3000
+    restart: always
 
   filestore:
     image: "$OWNER/collagefilestore:$VERSION"
@@ -102,6 +113,8 @@ services:
 
   watchtower:
     image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_POLL_INTERVAL: 3600
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     

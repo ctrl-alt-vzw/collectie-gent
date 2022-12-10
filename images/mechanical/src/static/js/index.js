@@ -135,7 +135,7 @@ function vote(approved) {
     .then((data) => {
       console.log(data)
       scrolling = true
-      visualisation.getReviewedItems();
+      // visualisation.getReviewedItems();
       renderLoop();
     })
     .catch((error) => {

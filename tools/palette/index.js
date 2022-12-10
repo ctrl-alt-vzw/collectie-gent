@@ -5,7 +5,10 @@ var pixels = require('image-pixels')
 async function getPalette(e) {
   try {
     console.log(e.gentImageURI)
-    const p = await pixels('https://media.datacratie.cc/pictograms/' + e.gentImageURI);
+    const str = `https://api.collectie.gent/iiif/imageiiif/3/${e.gentImageURI}/full/^1000,/0/default.jpg`;
+    const alt = str.replace(" ", "%20");
+    console.log(alt)
+    const p = await pixels(alt);
     var {ids, colors} = await palette(p)
     console.log("sending")
     sendData(e, { colors: colors})

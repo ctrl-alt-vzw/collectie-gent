@@ -55,12 +55,6 @@ app.get("/", (req, res) => {
 
 
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
-app.get('/pictograms/:fileName', function (req, res) {
-  const filePath = path.join(__dirname, './../pictograms/', req.params.fileName)
-  res.sendFile(filePath);
-});
-
-// app.get("/", express.static(path.join(__dirname, './../uploads')));
 app.get('/uploads/mask/:fileName', function (req, res) {
   const filePath = path.join(__dirname, './../uploads/mask', req.params.fileName)
   res.sendFile(filePath);

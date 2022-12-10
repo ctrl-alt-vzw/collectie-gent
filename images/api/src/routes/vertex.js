@@ -67,9 +67,20 @@ export default function vertex(app, pg) {
       res.status(500).send(e)
     })
   })
+//SELECT vertex."UUID", vertex.x, vertex.y, vertex.z, vertex."annotationUUID", annotations."gentImageURI" FROM vertex INNER JOIN annotations ON vertex."annotationUUID" = annotations."UUID" ORDER BY
 
+  app.get("/vertex/nearestWithImage", async(req, res) => {
+    // console.log(req.query, "init")
+    await pg.raw(`SELECT vertex."UUID", vertex.x, vertex.y, vertex.z, vertex."annotationUUID", annotations."gentImageURI", annotations.metadata, annotations.annotation, annotations.colordata, annotations.imagedata, annotations.collection, annotations."originID" FROM vertex INNER JOIN annotations ON vertex."annotationUUID" = annotations."UUID" ORDER BY ABS(x - ${req.query.x}) + ABS(y - ${req.query.y}) + ABS(z - ${req.query.z}) LIMIT ${req.query.amount} `) 
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((e) => {
+        res.status(500).send(e)
+      })
+  })
   app.get("/vertex/nearest", async(req, res) => {
-    console.log(req.query, "init")
+    // console.log(req.query, "init")
     await pg.raw(`SELECT * FROM vertex ORDER BY ABS(x - ${req.query.x}) + ABS(y - ${req.query.y}) + ABS(z - ${req.query.z}) LIMIT ${req.query.amount} `) 
       .then((data) => {
         res.send(data);
@@ -87,6 +98,15 @@ export default function vertex(app, pg) {
     })
   })
 
+  app.get("/vertexEnriched", async (req, res) => {
+    await pg.raw(`SELECT vertex."UUID", vertex.x, vertex.y, vertex.z, vertex."annotationUUID", annotations."gentImageURI", annotations.annotation, annotations.colordata, annotations.imagedata, annotations.collection, annotations."originID" FROM vertex INNER JOIN annotations ON vertex."annotationUUID" = annotations."UUID"  ORDER BY vertex.id`) 
+    .then((data) => {
+      res.send(data)
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
   app.get("/vertex", async (req, res) => {
     await pg.select("*").table("vertex").orderBy("id", "ASC").then((data) => {
       res.send(data)

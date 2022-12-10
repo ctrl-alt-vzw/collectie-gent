@@ -21,7 +21,7 @@ function Clipping(props) {
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/800/", "/200/")}
+          src={props.clipping_data.imageURI.replace("/full/", "/50/")}
           style={{
             width: `${200  * ratio * props.scale}px`,
             height: `${200 * props.scale}px`,
@@ -38,7 +38,7 @@ function Clipping(props) {
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/800/", "/200/")}
+          src={props.clipping_data.imageURI.replace("/full/", "/50/")}
           style={{
             width: `${200 * props.scale}px`,
             height: `${200 * ratio * props.scale}px`,
