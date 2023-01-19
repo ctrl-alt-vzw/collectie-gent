@@ -1,4 +1,4 @@
-const URL = 'https://api.datacratie.cc';
+const URL = 'https://api.collage.gent';
 
 function generateBody(collection, id) {
   const variables={id: `${collection}:${id}`}
@@ -176,7 +176,7 @@ let annotations = [];
 let lastID = 6015;
 
 async function init(from = lastID) {
-  fetch("https://api.datacratie.cc/annotation/startingfrom/"+from)
+  fetch("https://api.collage.gent/annotation/startingfrom/"+from)
     .then(r => r.json())
     .then(data => {
       currentFetch = 0;

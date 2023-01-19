@@ -26,7 +26,7 @@ export default class Vis {
     }
 
     async getReviewedItems() {
-        const resp = await fetch('https://api.datacratie.cc/approvals');
+        const resp = await fetch('https://api.collage.gent/approvals');
         this.reviewedItems = await resp.json();
 
         this.renderLastItems();

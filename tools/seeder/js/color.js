@@ -54,7 +54,7 @@ const app = {
 
   },
   store(anno, data) {
-    fetch("https://api.datacratie.cc/annotation/"+anno.UUID+"/imagedata", {
+    fetch("https://api.collage.gent/annotation/"+anno.UUID+"/imagedata", {
         method: "PATCH",
         body: JSON.stringify(data),
           headers: {

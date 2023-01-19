@@ -198,11 +198,11 @@ void webSocketEvent(String msg){
 
 void getDataFromAnnotation(String ID) {
   try {
-    String[] URLPARTS = { "https://api.datacratie.cc/annotation/byId/", ID };
+    String[] URLPARTS = { "https://api.collage.gent/annotation/byId/", ID };
     String URL = join(URLPARTS, "");
     JSONObject d = loadJSONObject( URL );
     String imageURI = d.getString("gentImageURI");
-    String[] IMGURLPARTS = { "https://media.datacratie.cc/pictograms/", imageURI };
+    String[] IMGURLPARTS = { "https://media.collage.gent/pictograms/", imageURI };
     String IMGURL = join(IMGURLPARTS, "");
     img = loadImage(IMGURL);
    
@@ -214,7 +214,7 @@ void getDataFromAnnotation(String ID) {
 }
 void getData(String UUID) {
   try {
-    String[] URLPARTS = { "https://api.datacratie.cc/worker/", UUID };
+    String[] URLPARTS = { "https://api.collage.gent/worker/", UUID };
     String URL = join(URLPARTS, "");
     JSONArray d = loadJSONArray( URL );
     println(d.size());

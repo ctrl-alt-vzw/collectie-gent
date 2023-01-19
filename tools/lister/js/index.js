@@ -3,7 +3,7 @@ let d = [];
 
 function fetchAnnotations(id = 0, cb) {
   console.log("fetching", id)
-  fetch("https://api.datacratie.cc/annotation/startingfrom/"+id)
+  fetch("https://api.collage.gent/annotation/startingfrom/"+id)
     .then(r => r.json()) 
     .then((data) => {
       cb(data);
@@ -11,7 +11,7 @@ function fetchAnnotations(id = 0, cb) {
 }
 
 function flagAnnotation(UUID) {
-  fetch("https://api.datacratie.cc/annotation/"+UUID+"/flag")
+  fetch("https://api.collage.gent/annotation/"+UUID+"/flag")
     .then(r => r.json()) 
     .then((data) => {
       console.log(data)

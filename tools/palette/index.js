@@ -25,7 +25,7 @@ let handling = 0;
 let data = []
 
 function getData() {
-  fetch("https://api.datacratie.cc/annotation/byQuery/colorData IS NULL LIMIT 50")
+  fetch("https://api.collage.gent/annotation/byQuery/colorData IS NULL LIMIT 50")
     .then(r => r.json())
     .then((d) => {
       data = d.rows;
@@ -52,7 +52,7 @@ function recurse() {
 
 function sendData(e, colors) {
   console.log(colors)
-  fetch("https://api.datacratie.cc/annotation/" + e.UUID + "/colordata", {
+  fetch("https://api.collage.gent/annotation/" + e.UUID + "/colordata", {
     method: "PATCH",
     body: JSON.stringify(colors),
     headers: {

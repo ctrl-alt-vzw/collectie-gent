@@ -1,6 +1,6 @@
 import coloriseApp from './color.js'
 
-const URL = 'https://api.datacratie.cc';
+const URL = 'https://api.collage.gent';
 
 function generateBody(limit, skip) {
   const variables={

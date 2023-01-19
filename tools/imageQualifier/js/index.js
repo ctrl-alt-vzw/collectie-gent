@@ -5,7 +5,7 @@ const app = {
   count: 0,
   lastID: 17906,
   init() {
-    fetch("https://api.datacratie.cc/annotation/colorless")
+    fetch("https://api.collage.gent/annotation/colorless")
       .then(r => r.json())
       .then((db) => {
         this.db = db.rows;
@@ -88,7 +88,7 @@ const app = {
 
   },
   store(anno, data) {
-    fetch("https://api.datacratie.cc/annotation/"+anno.UUID+"/imagedata", {
+    fetch("https://api.collage.gent/annotation/"+anno.UUID+"/imagedata", {
         method: "PATCH",
         body: JSON.stringify(data),
           headers: {

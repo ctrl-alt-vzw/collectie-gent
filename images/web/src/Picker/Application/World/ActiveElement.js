@@ -22,7 +22,7 @@ export default class ActiveElement extends Element {
   }
   storePosition() {
     console.log(this.mesh.position)
-    fetch("https://api.datacratie.cc/clipping/"+this.source.UUID, {
+    fetch("https://api.collage.gent/clipping/"+this.source.UUID, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

@@ -1,7 +1,7 @@
 export default [
   {
     "id": 1,
-    "imageURI": "http://media.datacratie.cc/uploads/800/clipping-1657210045628-218098898.png",
+    "imageURI": "http://media.collage.gent/uploads/800/clipping-1657210045628-218098898.png",
     "UUID": "4030b124-70fb-450d-bd0e-3bdf9c8211ca",
     "originID": null,
     "collection": null,
@@ -15,7 +15,7 @@ export default [
   },
   {
     "id": 2,
-    "imageURI": "http://media.datacratie.cc/uploads/800/clipping-1657210869613-833899181.png",
+    "imageURI": "http://media.collage.gent/uploads/800/clipping-1657210869613-833899181.png",
     "UUID": "5a9c8410-8279-4de3-bce8-428814f86103",
     "originID": "u",
     "collection": "u",
@@ -29,7 +29,7 @@ export default [
   },
   {
     "id": 3,
-    "imageURI": "http://media.datacratie.cc/uploads/800/clipping-1662404414967-227419847.png",
+    "imageURI": "http://media.collage.gent/uploads/800/clipping-1662404414967-227419847.png",
     "UUID": "6ef7876f-ca91-41bd-8c04-b4128a46b560",
     "originID": "u",
     "collection": "u",
@@ -43,7 +43,7 @@ export default [
   },
   {
     "id": 4,
-    "imageURI": "http://media.datacratie.cc/uploads/800/clipping-1662449236068-347312297.png",
+    "imageURI": "http://media.collage.gent/uploads/800/clipping-1662449236068-347312297.png",
     "UUID": "07d6babd-c24a-498c-97fc-ed0702939056",
     "originID": "u",
     "collection": "u",
@@ -57,7 +57,7 @@ export default [
   },
   {
     "id": 5,
-    "imageURI": "http://media.datacratie.cc/uploads/800/clipping-1662449364170-508619175.png",
+    "imageURI": "http://media.collage.gent/uploads/800/clipping-1662449364170-508619175.png",
     "UUID": "ba6b9b2e-5736-4319-a84b-997beb7fcd2d",
     "originID": "u",
     "collection": "u",

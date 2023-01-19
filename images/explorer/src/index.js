@@ -133,7 +133,7 @@ function handleClick(e) {
 
 function fetchData() {
 
-  fetch("https://api.datacratie.cc/clipping")
+  fetch("https://api.collage.gent/clipping")
     .then(r => r.json())
     .then((data) => {
       console.log(data)

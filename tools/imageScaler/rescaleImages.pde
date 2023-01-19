@@ -45,7 +45,7 @@ void draw() {
   }
 }
 void loadData() {
-    json = loadJSONArray("https://api.datacratie.cc/annotation/startingFrom/"+lastID);
+    json = loadJSONArray("https://api.collage.gent/annotation/startingFrom/"+lastID);
     println("loaded");
     currentIndex = 0;
 }

@@ -1,4 +1,4 @@
-const URL = 'https://api.datacratie.cc';
+const URL = 'https://api.collage.gent';
 let updated = 0;
 function generateBody(limit, skip) {
   const variables={

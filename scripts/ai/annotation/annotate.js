@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const API_URL = 'https://api.datacratie.cc';
+const API_URL = 'https://api.collage.gent';
 const ANNOTATION_SERVICE_URL = 'http://192.168.86.83:5003/predictions';
 const CONFIG = {
     model: 'conceptual-captions',

@@ -1,6 +1,6 @@
 import Vis from "./Vis.js";
 
-const BASE_URI = "https://api.datacratie.cc"
+const BASE_URI = "https://api.collage.gent"
 const USE_LOCAL = true;
 const USE_SMALL_IMAGES = true;
 const SCROLLTIME = 200;
@@ -118,7 +118,7 @@ function displayHelp() {
 }
 function vote(approved) {
 
-  fetch("https://api.datacratie.cc/approvals", {
+  fetch("https://api.collage.gent/approvals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -166,7 +166,7 @@ function imageURIGenerator(gentImageURI, override = false) {
     return `http://localhost:3030/pictograms/${gentImageURI}`
   }
   if (USE_SMALL_IMAGES && !override) {
-    return `https://media.datacratie.cc/pictograms/${gentImageURI}`
+    return `https://media.collage.gent/pictograms/${gentImageURI}`
   }
   return `https://api.collectie.gent/iiif/imageiiif/3/${gentImageURI}/full/^1000,/0/default.jpg`
 

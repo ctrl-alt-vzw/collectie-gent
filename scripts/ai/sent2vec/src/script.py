@@ -9,7 +9,7 @@ from urllib.request import urlopen
 import json
 
 def getCollectionItems():
-    response = urlopen('https://api.datacratie.cc/annotation')
+    response = urlopen('https://api.collage.gent/annotation')
     return json.loads(response.read())
 
 def filterCollectionItems(json_array):

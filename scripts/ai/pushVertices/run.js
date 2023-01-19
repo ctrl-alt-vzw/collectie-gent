@@ -1,7 +1,7 @@
 const fs = require('fs');
 const data = require('./data/out_3D_perplex_30.json');
 
-const API_URL = 'https://api.datacratie.cc';
+const API_URL = 'https://api.collage.gent';
 const errors = [];
 //1. load json file
 //2. loop and push every vertex

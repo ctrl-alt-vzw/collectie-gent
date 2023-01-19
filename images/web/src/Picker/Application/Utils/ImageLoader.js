@@ -17,7 +17,7 @@ export default class ImageLoader extends EventEmitter {
 
     async getStartingImages() {
         try {
-            const resp = await fetch('https://api.datacratie.cc/annotation/random');
+            const resp = await fetch('https://api.collage.gent/annotation/random');
             const randomItems = await resp.json();
             this.loadTextures(randomItems);
         } catch (e) {
