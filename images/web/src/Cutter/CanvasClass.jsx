@@ -1,11 +1,11 @@
 
 import React from 'react'
-import {concaveHull} from './concaveHull.js';
+import concaveHull from './concaveHull.js';
 
 import Tooltip from './../Common/Tooltip'
 
-const API_URL = process.env.REACT_APP_API_ADDR;
-const FILESTORE_URL = process.env.REACT_APP_MEDIA_ADDR;
+const API_URL = process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent";
+const FILESTORE_URL = process.env.REACT_APP_MEDIA_ADDR ? process.env.REACT_APP_MEDIA_ADDR : "https://media.collage.gent";
 
 const protocol = "https"
 const options = {
@@ -135,8 +135,8 @@ export default class CanvasClass extends React.Component {
   }
   loadImage(url) {
     const img = new Image();   // Create new img element
+    img.setAttribute('crossOrigin', 'Anonymous'); 
     img.addEventListener('load', () => {    
-      img.setAttribute('crossorigin', 'anonymous'); // works for me
       this.img = img;
       this.update();
       console.log("loaded")
@@ -263,9 +263,9 @@ export default class CanvasClass extends React.Component {
       clippingHeight
     );
 
-
     const b64Image = hidden_canvas.toDataURL(strMime);
     const u8Image = this.dataURLtoBlob(b64Image);
+      u8Image.crossOrigin = ''
     const formData = new FormData();
     formData.append("clipping", u8Image);
 
@@ -294,7 +294,7 @@ export default class CanvasClass extends React.Component {
     formData.append("normal", new Blob([normal_u8Image], { type: strMime }));
 
     console.log(formData)
-    fetch(`${process.env.REACT_APP_MEDIA_ADDR}/upload`, {
+    fetch(`${FILESTORE_URL}/upload`, {
       method: 'POST',
       body: formData
     })
@@ -312,7 +312,7 @@ export default class CanvasClass extends React.Component {
           width: clippingWidth,
         }
         console.log(toSend);
-        fetch(`${process.env.REACT_APP_API_ADDR}/clipping`, {
+        fetch(`${API_URL}/clipping`, {
           headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'

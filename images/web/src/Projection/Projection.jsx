@@ -9,7 +9,7 @@ function Projection(props) {
 
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
       .then(r => r.json())
       .then((data) => {
         const total = data.reduce((a, b) => a + b.y, 0);

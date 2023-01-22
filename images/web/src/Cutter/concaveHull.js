@@ -517,7 +517,9 @@ var concaveHull = function() {
   };
 }();
 
-// NodeJS CLI Support
-if (typeof exports === "object") {
-  module.exports = { concaveHull };
-}
+
+// module.exports = concaveHull;
+export default concaveHull;
+// // NodeJS CLI Support
+// if (typeof exports === "object") {
+// }

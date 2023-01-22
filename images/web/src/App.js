@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 import './assets/css/App.css';
-import Picker from './Picker/Picker.jsx'
+import Picker from './Picker2D/Picker.jsx'
 import Cutter from './Cutter/Cutter.jsx'
 import Dropper from './Dropper/Dropper.jsx'
 import Viewer from './Viewer/Viewer.jsx'

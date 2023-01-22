@@ -33,7 +33,7 @@ function Picker(props) {
 
 useEffect(() => {
     setData([])
-    fetch(`${process.env.REACT_APP_API_ADDR}/annotation/random`)
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/annotation/random`)
       .then(r => r.json())
       .then(data => {
         

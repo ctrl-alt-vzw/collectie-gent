@@ -18,7 +18,7 @@ function Clipping(props) {
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/800/", "/200/")}
+          src={props.clipping_data.imageURI.replace("/800/", "/200/").replace("http://media.datacratie.cc", "http://media.collage.gent")}
           style={{
             width: `${200 * state.options.scale.viewing * ratio}px`,
             height: `${200 * state.options.scale.viewing}px`
@@ -33,7 +33,7 @@ function Clipping(props) {
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/800/", "/200/")}
+          src={props.clipping_data.imageURI.replace("/800/", "/200/").replace("http://media.datacratie.cc", "http://media.collage.gent")}
           style={{
             width: `${200 * state.options.scale.viewing}px`,
             height: `${200 * state.options.scale.viewing * ratio}px`

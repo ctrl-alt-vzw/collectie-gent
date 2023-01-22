@@ -18,7 +18,7 @@ function Dropper(props) {
 
   console.log(state)
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_ADDR}/clipping`)
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
       .then(r => r.json())
       .then((data) => {
         console.log("fetched clippings")
@@ -45,7 +45,7 @@ function Dropper(props) {
 
   const handlePositioned = (position) => {
 
-    fetch(`${process.env.REACT_APP_API_ADDR}/clipping/${state.clipping.UUID}`, {
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping/${state.clipping.UUID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

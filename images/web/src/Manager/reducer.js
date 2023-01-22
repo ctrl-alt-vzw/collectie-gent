@@ -22,32 +22,39 @@ export const reducer = (state, action) => {
         annotation: action.payload,
           phase: phases.CUT
       }
-      case "cut_finished":
-        return {
-          ...state,
-          clipping: action.payload,
-            phase: phases.DROP
-        }
-        case "clipping_positioned":
-          return {
-            ...state,
-            clipping: action.payload,
-              phase: phases.WATCH
-          }
-          case "reset_and_select":
-            return {
-              ...state,
-              phase: phases.PICK,
-                clipping: {},
-                annotation: {}
-            }
-            default:
-              return state
+    case "cut_finished":
+      return {
+        ...state,
+        clipping: action.payload,
+          phase: phases.DROP
+      }
+    case "clipping_positioned":
+      return {
+        ...state,
+        clipping: action.payload,
+          phase: phases.WATCH
+      }
+    case "reset_and_select":
+      return {
+        ...state,
+        phase: phases.PICK,
+          clipping: {},
+          annotation: {}
+      }
+    case "reset_and_view":
+      return {
+        ...state,
+        phase: phases.WATCH,
+          clipping: {},
+          annotation: {}
+      }
+    default:
+        return state
   }
 }
 
 export const initialState = {
-  "phase": phases.PICK,
+  "phase": phases.WATCH,
   "clipping": {},
   "annotation": {},
   "options": options

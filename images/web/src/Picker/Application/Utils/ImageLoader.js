@@ -6,7 +6,7 @@ import Image from '../World/Image';
 //TO BE CHECKED
 //Maybe in the future implement it like Resources.js
 
-const LOCAL_URL = 'http://localhost:3000';
+const LOCAL_URL = 'https://media.collage.gent';
 
 export default class ImageLoader extends EventEmitter {
     constructor() {
@@ -30,7 +30,7 @@ export default class ImageLoader extends EventEmitter {
         items.forEach(item => {
             try {
                 this.textureLoader.load(
-                    `${LOCAL_URL}/_pictograms/${item.gentImageURI}`,
+                    `${LOCAL_URL}/pictograms/${item.gentImageURI}`,
                     (texture) => {
                         console.log('Texture loaded');
                         const img = new Image(item, texture);
