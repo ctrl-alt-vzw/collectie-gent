@@ -20,7 +20,7 @@ export default class SocketManager {
     if(this.serverStats.connected) {
       
         this.socketList.forEach((s) => {
-          s.send(topic, message);
+          s.send(topic);
         });
     }
   }
@@ -31,13 +31,16 @@ export default class SocketManager {
       this.serverStats.connected = true;
       this.socketList.push(ws);
       console.log("connection made")
-      ws.on('message', function message(data) {
-        console.log('received: %s', data);
+      ws.on('message', (data) => {
+        if(data == "ping") {
+          ws.send('pong', data);
+        } else {
+          const parsed = JSON.parse(data);
+          if(parsed.type == "itemMove") {
+            this.broadcast(JSON.stringify(parsed));
+          }
+        }
         // ws.send("clipping/added/c2352f83-7a3f-4361-8680-4891534fbbf8")
-      });
-
-      ws.on('ping', function message(data) {
-        ws.send('pong', data);
       });
 
     });

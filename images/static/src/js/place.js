@@ -9,6 +9,12 @@ const  {
 
 const  Item = require('./Item.js')
 
+
+
+// Create WebSocket connection.
+
+
+
 class Place {
   constructor(selected, placedCB) {
     this.renderHTML();
@@ -20,6 +26,13 @@ class Place {
     this.dragging = false;
     this.selected = selected;
     this.placedCallback = placedCB;
+    this.socket = new WebSocket("ws://206.189.5.89:3004");
+    // Connection opened
+    this.socket.addEventListener('open', (event) => {
+      console.log("opened");
+    });
+
+
   }
   fetchData() {
     fetch("https://api.collage.gent/clipping")
@@ -118,6 +131,15 @@ class Place {
     if(this.itemToDrop && this.dragging) {
       this.itemToDrop.x = mousePosition(e).x
       this.itemToDrop.y = mousePosition(e).y + this.offset
+
+      this.socket.send(JSON.stringify({
+        type: "itemMove",
+        payload: {
+          item: this.itemToDrop,
+          x: this.itemToDrop.x / this.scale,
+          y: this.itemToDrop.y / this.scale
+        }
+      }))
 
       this.render();
     }

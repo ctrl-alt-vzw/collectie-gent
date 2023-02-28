@@ -76,6 +76,23 @@ services:
       - ./images/static/build:/usr/app/build
 
 
+
+  projection:
+    build: ./images/projection
+    image: "$OWNER/collageprojection:$VERSION"
+    restart: always
+    command: ["npm", "run", "start"]
+    environment: 
+      REACT_APP_API_ADDR: api
+      REACT_APP_MEDIA_ADDR: filestore
+    ports:
+      - 8084:3000
+      - 8083:80
+    volumes:
+      - ./images/projection/src:/usr/app/src
+      - ./images/projection/build:/usr/app/build
+
+
   manager:
     build: ./images/manager
     image: "$OWNER/collagemanager:$VERSION"

@@ -58,7 +58,11 @@ let numImagesLoading = 0;
       if(document.getElementById("loading")) {
         document.getElementById("loading").style.display = "block"
       }  
-      this.fetchData();  
+      this.fetchData(); 
+
+      setTimeout(() => {
+        this.render()
+      }, 1000) 
        
     } else {
       if(document.getElementById("loading")) {
