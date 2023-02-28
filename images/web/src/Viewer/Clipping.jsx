@@ -17,11 +17,10 @@ function Clipping(props) {
   }, []);
   if(props.clipping_data.height > props.clipping_data.width) {
     const ratio = props.clipping_data.width / props.clipping_data.height
-
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/full/", "/50/").replace("http://media.datacratie.cc", "http://media.collage.gent")}
+          src={`https://media.collage.gent/uploads/200/${props.clipping_data.imageURI}`}
           style={{
             width: `${200  * ratio * props.scale}px`,
             height: `${200 * props.scale}px`,
@@ -38,7 +37,7 @@ function Clipping(props) {
     return (
       <div className="clippingItem" id={"image_fixed"+props.clipping_data.id}>
         <img 
-          src={props.clipping_data.imageURI.replace("/full/", "/50/").replace("http://media.datacratie.cc", "http://media.collage.gent")}
+          src={`https://media.collage.gent/uploads/200/${props.clipping_data.imageURI}`}
           style={{
             width: `${200 * props.scale}px`,
             height: `${200 * ratio * props.scale}px`,

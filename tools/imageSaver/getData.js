@@ -96,7 +96,7 @@ function initFetching(start = 0) {
     body: JSON.stringify(generateBody(20, start))
   };
 
-  fetch('https://sleepy-fortress-82290.herokuapp.com/https://data.collectie.gent/api/graphql?=', options)
+  fetch('https://data.collectie.gent/api/graphql?=', options)
     .then(response => response.json())
     .then(response => {
       const container = document.getElementById("container")

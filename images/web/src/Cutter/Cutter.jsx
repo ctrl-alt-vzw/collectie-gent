@@ -8,7 +8,7 @@ function Cutter(props) {
 
   const [ state, dispatch ] = React.useContext(ManagerContext)
   const handleClippingCreated = (clipping) => {
-    console.log("clipping", clipping)
+    // console.log("clipping", clipping)
     dispatch({ type: "cut_finished", payload: clipping })
   }
 

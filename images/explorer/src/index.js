@@ -233,7 +233,7 @@ class Clipping {
     }
   }
   getImage(zoomlevel = 1) {
-    const levels = ["/50/", "/200/", "/full/"];
+    const levels = ["50", "200", "full"];
     const index = Math.floor((zoomlevel / 2) * levels.length);
     if(index !== Math.floor((this.curZoomLevel/2) * levels.length)) {
       try { 
@@ -244,7 +244,7 @@ class Clipping {
           this.img = null;
         }, false);
         this.curZoomLevel = zoomlevel;
-        this.img.src = this.imageURL.replace("/800/", levels[index]);
+        this.img.src = `https://media.collage.gent/uploads/200/${this.imageURL}`;
       }
       catch(e) {
 

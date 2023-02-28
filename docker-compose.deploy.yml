@@ -114,8 +114,8 @@ services:
   watchtower:
     image: containrrr/watchtower
     environment:
-      WATCHTOWER_POLL_INTERVAL: 3600
-    command: "--interval 60 --cleanup"   
+      WATCHTOWER_POLL_INTERVAL: 216000 
+    command: "--interval 3600 --cleanup"   
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     

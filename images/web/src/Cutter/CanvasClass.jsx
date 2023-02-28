@@ -6,7 +6,7 @@ import Tooltip from './../Common/Tooltip'
 
 const API_URL = process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent";
 const FILESTORE_URL = process.env.REACT_APP_MEDIA_ADDR ? process.env.REACT_APP_MEDIA_ADDR : "https://media.collage.gent";
-
+console.log(API_URL)
 const protocol = "https"
 const options = {
   show: {
@@ -49,7 +49,7 @@ export default class CanvasClass extends React.Component {
         </div>
         <main>
           <div id="canvasContainer">
-            <canvas id="canvas" />
+            <canvas id="cutCanvas" />
             <canvas id="normal_canvas"></canvas>
             <div id="hiddenCanvasContainer"></div>
           </div>
@@ -58,14 +58,14 @@ export default class CanvasClass extends React.Component {
     )
   }
   componentDidMount() {
-    const c = document.getElementById("canvas");
+    const c = document.getElementById("cutCanvas");
     c.addEventListener("mousedown", () => this.mouseDown = true);
     c.addEventListener("mouseup", () => this.mouseDown = false);
     c.addEventListener("mousemove", (e) => this.mouseMoveHandler(e));
 
-    c.addEventListener("touchstart", () => this.mouseDown = true, false);
-    c.addEventListener("touchmove", (e) => this.mouseMoveHandler(e), false);
-    c.addEventListener("touchend", () => this.mouseDown = false, false);
+    c.addEventListener("touchstart", () => this.mouseDown = true);
+    c.addEventListener("touchmove", (e) => this.mouseMoveHandler(e));
+    c.addEventListener("touchend", () => this.mouseDown = false);
     
     c.width = window.innerWidth - 10;
     c.height = window.innerHeight - 10;
@@ -80,7 +80,7 @@ export default class CanvasClass extends React.Component {
   }
 
   update() {
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('cutCanvas');
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'source-over';
@@ -118,7 +118,7 @@ export default class CanvasClass extends React.Component {
   }
   drawOutline() {
     if(this.outlinePoints.length > 0) {
-      var c = document.getElementById("canvas");
+      var c = document.getElementById("cutCanvas");
       var ctx = c.getContext("2d");
 
       ctx.beginPath();
@@ -139,7 +139,7 @@ export default class CanvasClass extends React.Component {
     img.addEventListener('load', () => {    
       this.img = img;
       this.update();
-      console.log("loaded")
+      // console.log("loaded")
     }, false);
     img.src = this.imageURI; // Set source path
   }
@@ -178,12 +178,12 @@ export default class CanvasClass extends React.Component {
               angle -= 90;
               const cd = Math.sqrt( Math.pow((this.centerpoint.x - iter.x), 2) + Math.pow((this.centerpoint.y - iter.y), 2) );
 
-              console.log(angle , cd)
+              // console.log(angle , cd)
 
               const nx = this.centerpoint.x + (cd - options.eraserStrength) * Math.sin(angle * (Math.PI / 180));
               const ny = this.centerpoint.y + (cd - options.eraserStrength) * Math.cos(angle * (Math.PI / 180) );
 
-              console.log(Math.round(nx), Math.round(ny))
+              // console.log(Math.round(nx), Math.round(ny))
 
               // this.touchpoints.splice(i, 1);
               this.touchpoints[i] = {x: nx, y: ny}
@@ -198,7 +198,7 @@ export default class CanvasClass extends React.Component {
     }
   }
   getCursorPosition(e) {
-    const canvas = document.getElementById("canvas")
+    const canvas = document.getElementById("cutCanvas")
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (window.innerWidth / rect.width) - 5;
     const y = (e.clientY - rect.top) * (window.innerHeight / rect.height) - 5;
@@ -232,7 +232,7 @@ export default class CanvasClass extends React.Component {
     this.cutting = true; 
     this.update();
     const strMime = "image/png";
-    const canvas = document.getElementById('canvas');
+    const canvas = document.getElementById('cutCanvas');
     const canvas_normal = document.getElementById("normal_canvas")
     // resize
 
@@ -293,14 +293,14 @@ export default class CanvasClass extends React.Component {
     const normal_u8Image = this.dataURLtoBlob(normal_b64Image);
     formData.append("normal", new Blob([normal_u8Image], { type: strMime }));
 
-    console.log(formData)
+    // console.log(formData)
     fetch(`${FILESTORE_URL}/upload`, {
       method: 'POST',
       body: formData
     })
       .then(r => r.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         const toSend = {
           imageURI: data["full"],
           normalURI: data["normal"],
@@ -311,7 +311,7 @@ export default class CanvasClass extends React.Component {
           height: clippingHeight,
           width: clippingWidth,
         }
-        console.log(toSend);
+        // console.log(toSend);
         fetch(`${API_URL}/clipping`, {
           headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -327,7 +327,7 @@ export default class CanvasClass extends React.Component {
 
       })
       .catch((e) => {
-        console.log(e)
+        console.error(e)
       })
 
   }

@@ -87,6 +87,23 @@ export default async function createTables(pg) {
     }
   })
 
+  pg.schema.hasTable('vertex2D').then(function(exists) {
+    if (!exists) {
+      return pg.schema.createTable('vertex2D', function(t) {
+        t.increments('id').primary();
+        t.string('UUID', 1000);
+        t.float("x").defaultTo(0);
+        t.float("y").defaultTo(0);
+        t.string('annotationUUID', 1000);
+        t.timestamps(true, true);
+      })
+
+    } else {
+      console.log("tables vertex2D exist")
+
+    }
+  })
+
   pg.schema.hasTable('errors').then(function(exists) {
     if (!exists) {
       return pg.schema.createTable('errors', function(t) {

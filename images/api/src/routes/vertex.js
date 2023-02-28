@@ -89,6 +89,30 @@ export default function vertex(app, pg) {
         res.status(500).send(e)
       })
   })
+  app.get("/vertex/neighboursByUUID/:uuid", async(req, res) => {
+    // console.log(req.query, "init")
+    await pg.select("*").table("vertex").where({'annotationUUID': req.params.uuid}).then(async (items) => {
+      if(items.length == 0) {
+        res.status(404).send("none found")
+      } else {
+        console.log(items)
+        await pg.raw(`SELECT vertex."UUID", vertex.x, vertex.y, vertex.z, vertex."annotationUUID", annotations."gentImageURI", annotations.metadata, annotations.annotation, annotations.colordata, annotations.imagedata, annotations.collection, annotations."originID" FROM vertex INNER JOIN annotations ON vertex."annotationUUID" = annotations."UUID" ORDER BY ABS(x - ${items[0].x}) + ABS(y - ${items[0].y}) + ABS(z - ${items[0].z}) LIMIT 20 `) 
+          .then((data) => {
+            console.log(data)
+            res.send(data);
+          })
+          .catch((e) => {
+            res.status(500).send(e)
+          })
+
+      }
+    })
+    .catch((e) => {
+            console.log("here")
+            console.log(e)
+      res.status(500).send(e)
+    })
+  })
   app.get("/vertex/:uuid", async (req, res) => {
     await pg.select("*").table("vertex").where({UUID: req.params.uuid}).then((data) => {
       res.send(data)

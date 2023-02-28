@@ -15,8 +15,8 @@ function Viewer(props) {
   // const scale = 1
 
   useEffect(() => {
-    console.log(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
-    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
+    // console.log(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "http://api.collage.gent"}/clipping`)
       .then(r => r.json())
       .then((data) => {
         setYOffset(calculateOffset(data)) 

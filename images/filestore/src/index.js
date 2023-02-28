@@ -55,6 +55,12 @@ app.get("/", (req, res) => {
 
 
 // app.get("/", express.static(path.join(__dirname, './../uploads')));
+app.get('/pictograms/:fileName', function (req, res) {
+  const filePath = path.join(__dirname, './../pictograms', req.params.fileName)
+  res.sendFile(filePath);
+});
+
+// app.get("/", express.static(path.join(__dirname, './../uploads')));
 app.get('/uploads/mask/:fileName', function (req, res) {
   const filePath = path.join(__dirname, './../uploads/mask', req.params.fileName)
   res.sendFile(filePath);
@@ -136,9 +142,9 @@ app.post('/upload', cpUpload, async (req, res) => {
   const hostname = req.protocol + '://' + req.get('host');
 
   res.send({
-    50: `${hostname}/uploads/50/${req.files['clipping'][0].filename}`,
-    200: `${hostname}/uploads/200/${req.files['clipping'][0].filename}`,
-    full: `${hostname}/uploads/full/${req.files['clipping'][0].filename}`
+    50: `${req.files['clipping'][0].filename}`,
+    200: `${req.files['clipping'][0].filename}`,
+    full: `${req.files['clipping'][0].filename}`
   })
 })
 

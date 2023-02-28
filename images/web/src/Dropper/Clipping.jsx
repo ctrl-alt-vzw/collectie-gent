@@ -13,7 +13,7 @@ function Clipping(props) {
     const ratio = props.clipping_data.width / props.clipping_data.height
     return (
       <img 
-        src={props.clipping_data.imageURI.replace("/800/", "/200/" )}
+        src={props.clipping_data.imageURI.replace("/full/", "/200/" ).replace("datacratie.cc", "collage.gent")}
         style={{
             width: `${200 * ratio * props.scale}px`,
             height: `${200  * props.scale}px`,
@@ -27,7 +27,7 @@ function Clipping(props) {
     const ratio = props.clipping_data.height / props.clipping_data.width
     return (
       <img 
-        src={props.clipping_data.imageURI.replace("/800/", "/200/" )}
+        src={props.clipping_data.imageURI.replace("/full/", "/200/" ).replace("datacratie.cc", "collage.gent")}
         style={{
             width: `${200  * props.scale}px`,
             height: `${200  * ratio * props.scale}px`,

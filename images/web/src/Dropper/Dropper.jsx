@@ -12,16 +12,14 @@ function Dropper(props) {
   const [position, setPosition] = React.useState({})
   const [allowed, setAllowed] = React.useState(true);
   const [yOffset, setYOffset] = React.useState([]);
-  // const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
-  const scale = 1
+  const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
+  // const scale = 1
 
 
-  console.log(state)
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
       .then(r => r.json())
       .then((data) => {
-        console.log("fetched clippings")
         const yOff = calculateOffset(data);
         setYOffset(yOff)
 
@@ -57,7 +55,6 @@ function Dropper(props) {
     })
       .then(r => r.json())
       .then((data) => {
-        console.log(data)    
         dispatch({ type: "clipping_positioned", payload: {...state.clipping, ...position} })
       })
     

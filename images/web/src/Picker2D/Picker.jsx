@@ -10,9 +10,9 @@ function Picker(props) {
   const [state , dispatch ] = React.useContext(ManagerContext)
   const [data, setData] = React.useState([]);
   const [scale, setScale] = React.useState(window.innerWidth / state.options.canvasWidth)
-  // const scale = 1
 
   useEffect(() => {
+    setData([])
     fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/annotation/random`)
       .then(r => r.json())
       .then((data) => {
@@ -27,11 +27,17 @@ function Picker(props) {
     dispatch({ type: "pick_annotation", payload: e })
   }
   const handleNeighbourSelection = (e) => {
-    console.log(e)
-    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/vertex/neighboursByUUID?UUID=${e.UUID}`)
+    // console.log(e)
+    fetch(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/vertex/neighboursByUUID/${e.UUID}`)
       .then(r => r.json())
       .then((data) => {
-        setData(data)
+        // console.log(data)
+        if(data.rows.length > 0) {
+
+          setData(data.rows.map((e) => {
+            return {...e, UUID: e.annotationUUID}
+          }))
+        }
       })
 
   }

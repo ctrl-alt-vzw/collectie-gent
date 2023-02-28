@@ -61,19 +61,19 @@ services:
 
 
   web:
-    build: ./images/web
+    build: ./images/static
     image: "$OWNER/collageweb:$VERSION"
     restart: always
     command: ["npm", "run", "start"]
     environment: 
-      REACT_APP_API_ADDR:
-      REACT_APP_MEDIA_ADDR:
+      REACT_APP_API_ADDR: api
+      REACT_APP_MEDIA_ADDR: filestore
     ports:
       - 8080:3000
       - 8081:80
     volumes:
-      - ./images/web/src:/usr/app/src
-      - ./images/web/build:/usr/app/build
+      - ./images/static/src:/usr/app/src
+      - ./images/static/build:/usr/app/build
 
 
   manager:

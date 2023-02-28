@@ -13,24 +13,14 @@ body {
 }
 
 #canvasContainer {
-  width: 1200px;
-  height: 800px;
-  margin: auto;
-  margin-top: calc(50vh - 400px);
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #000;
 }
 
-/*
-#pickerContainer {
-  width:  1200px;
-  margin:  auto;
-  margin-top:  calc(50vh - 400px);
-  display:  flex;
-  flex-wrap: wrap;
-}
-*/
 .item {
   max-width: 200px;
   padding: 10px;
@@ -165,4 +155,52 @@ button {
 
 .active {
   opacity: 1;
+}
+
+/* added for pickeer */
+#loading {
+  width: 100vw;
+  position: fixed;
+  top: calc(50vh - 20px);
+  left: 0px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #fff;
+  text-align: center;
+}
+#infoContainer {
+  width: 400px;
+  background-color: #fff;
+  position: fixed;
+  left: calc(100vw - 450px);
+  top: 50px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  padding: 20px;
+}
+#infoContainer > img {
+  width: 100%;
+  display: none;
+  margin-bottom: 10px;
+}
+#infoContainer > h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+#infoContainer > p {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 0px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+#selectionBtn {
+  display: none;
 }
