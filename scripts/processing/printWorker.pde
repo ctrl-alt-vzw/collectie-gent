@@ -66,7 +66,7 @@ void draw()
 void drawSticker() {
   background(255);
   try {
-    generateQR("https://api.collage.gent/clipping/" + number);
+    generateQR("https://collage.gent/" + number);
     QRCode.resize(190, 190);
     image(QRCode,  width -185, height - 210);
   } 
@@ -140,7 +140,7 @@ void drawSticker() {
   
   line(10, height - 35, width - 10, height - 35);
   textAlign(CENTER, CENTER);
-  text("collagegent.be/"+number, width / 2, height - 20);
+  text("collage.gent/"+number, width / 2, height - 20);
   
   if (img != null) {
     drawImage(img);

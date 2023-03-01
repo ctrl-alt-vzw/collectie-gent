@@ -242,4 +242,18 @@ export default function annotation(app, pg) {
       })
   })
 
+
+  app.get("/annotation/byCollectionOrigin/:collection/:originID", async(req, res) => {
+    // console.log(req.body)
+    const id = req.params.originID;
+    const collection = req.params.collection
+    
+    await pg.select("*").table("annotations").where({originID: id, collection: collection}).then((data) => {
+      res.send(data)
+    })
+    .catch(e => {
+      res.status(400).send(e)
+    })
+  })
+
 }
