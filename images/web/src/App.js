@@ -1,43 +1,30 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './assets/css/App.css';
-import Picker from './Picker2D/Picker.jsx'
-import Cutter from './Cutter/Cutter.jsx'
-import Dropper from './Dropper/Dropper.jsx'
-import Viewer from './Viewer/Viewer.jsx'
 
-import { ManagerContext } from "./Manager/index.js"
+import Menu from './Common/Menu.jsx'
+import Clipping from './Components/Clipping.jsx'
 
-if(!process.env.REACT_APP_API_ADDR) {
-  process.env.REACT_APP_API_ADDR = "https://api.collage.gent"
-}
 
 function App(props) {
-
-
-  const [ state ] = React.useContext(ManagerContext)
+  const [clippings, setClippings] =  useState([])
 
   useEffect(() => {
-    if(state.phase === 2 || state.phase === 3) {
-      document.getElementById("container").style.width = state.options.canvasWidth + "px";
-    }
-  })
+    fetch(`https://api.collage.gent/clipping`)
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data)
+        setClippings(data);
+      })
+  }, [])
 
   return (
       <div className="App">
-        { state.phase === 0 ? 
-          <Picker /> : null
-        }
-        { state.phase === 1 && state.annotation ? 
-          <Cutter /> : null
-        }
-        { state.phase === 2 && state.clipping ? 
-          <Dropper /> : null
-        }
-        { state.phase === 3 ? 
-          <Viewer /> : null
-        }
+        <Menu />
+        { clippings.map((c, i) => {
+          return <Clipping data={c} key={i} />
+        })}
       </div>
   );
 }

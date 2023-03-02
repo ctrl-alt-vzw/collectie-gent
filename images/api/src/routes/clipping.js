@@ -56,7 +56,8 @@ export default function clipping(app, pg, mqttClient) {
         x: b.x,
         y: b.y,
         width: b.width,
-        height: b.height
+        height: b.height,
+        clippingData: b.clippingData
       }
       await pg.insert(toInsert).table("clippings").returning("*").then((d) => {
         res.send(d);
@@ -83,6 +84,20 @@ export default function clipping(app, pg, mqttClient) {
   app.get("/clipping/:uuid", async (req, res) => {
     // console.log("request")
     await pg.select("*").table("clippings").where({UUID: req.params.uuid}).then((data) => {
+      if(data.length > 0) {
+        res.send(data[0])
+      } else {
+        res.status(404).send()
+      }
+    })
+    .catch((e) => {
+      res.status(500).send(e)
+    })
+  })
+
+  app.get("/clipping/byId/:id", async (req, res) => {
+    // console.log("request")
+    await pg.select("*").table("clippings").where({id: req.params.id}).then((data) => {
       if(data.length > 0) {
         res.send(data[0])
       } else {

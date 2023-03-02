@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+#actions {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    margin-top: -50px;
+    z-index: 10;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#actions>button {
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    background: blue;
+    color: #fff;
+    font-family: MONOSPACE;
+}

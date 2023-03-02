@@ -1,206 +1,56 @@
 body {
-  background-color: #eee;
-  overflow-x: hidden;
+  background: #eee;
 }
 
-
-#container {
-  height: 800px;
-  margin: auto;
-  margin-top: calc(50vh - 400px);
-  display: flex;
-  flex-wrap: wrap;
-}
-
-#canvasContainer {
+.container {
   width: 100vw;
-  height: 100vh;
-  margin: 0px;
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px solid #000;
+  box-sizing: border-box;
 }
-
-.item {
-  max-width: 200px;
+.clipping {
+  background: #fff;
   padding: 10px;
   box-sizing: border-box;
+  margin: 10px;
+}
+.clipping > img{
+  width: auto;
+  height: 50px;
 }
 
-.imageContainer {
-  width: 180px;
-  height: 180px;
-  overflow: hidden;
-}
-
-.imageContainer>img {
-  width: 100%;
-  max-height: 200px;
-}
-
-.item>h1 {
-  width: 100%;
-  font-size: 1.2em;
-}
-
-button {
-  width: 100%;
-  background: #000;
-  color: #fff;
-  border: 0px;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
-
-/* cutter */
-
-#canvas {
-  margin: 5px;
-  width: 100%;
-  height: 100%;
-}
-
-#normal_canvas {
-  display: none
-}
-
-#collectieImages {
-  position: absolute;
-  background-color: white;
-  top: 10px;
-  left: 50%;
-  width: 200px;
-  margin-left: -100px;
-  border: 1px solid #000;
-}
-
-#collectieImages>.preview {
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-#collectieImages>.preview>img {
-  width: 70px;
-}
-
-#collectieImages>.preview>button {
-  height: 40px;
-  float: right
-}
-
-.draggable {
-  position: absolute;
-}
-
-.clippingItem {
-  position: absolute;
-  /*  -webkit-filter: grayscale(1);  Google Chrome, Safari 6+ & Opera 15+ 
-  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
-}
-
-#header {
-  position: fixed;
-  display: flex;
-  top: calc(100% - 50px);
-  left: calc(50% - 200px);
-  width: 400px;
-}
-
-.loader {
-  position: fixed;
-  top: 50%;
-  left: calc(50% - 100px);
-  background-color: #000;
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-  width: 200px;
-  margin-top: -20px;
-}
-
-#tooltip {
-
-  position: fixed;
-  top: 10px;
-  left: calc(50% - 200px);
-  text-align: center;
-  width: 400px;
-}
-
-#normal_canvas,
-#hiddenCanvasContainer {
-  display: none;
-}
-
-
-.dropActions {
-  position: fixed;
-  background-blend-mode: multiply;
-  left: calc(50% - 150px);
-  top: calc(100% - 75px);
-  width: 300px;
-  padding: 25px 50px;
-  box-sizing: border-box;
-  height: 75px;
-  background-color: #fff;
-  text-align: center;
-}
-
-.inactive {
-  opacity: .2;
-}
-
-.active {
-  opacity: 1;
-}
-
-/* added for pickeer */
-#loading {
+#imageContainer {
   width: 100vw;
-  position: fixed;
-  top: calc(50vh - 20px);
+  padding: 30px;
+  box-sizing: border-box;
+}
+#originImage {
+  position: absolute;
+  top: 0px;
   left: 0px;
-  height: 40px;
-  line-height: 40px;
-  background-color: #fff;
-  text-align: center;
+  z-index: 9;
 }
-#infoContainer {
-  width: 400px;
-  background-color: #fff;
-  position: fixed;
-  left: calc(100vw - 450px);
-  top: 50px;
-  border: 1px solid #eee;
-  box-sizing: border-box;
-  padding: 20px;
-}
-#infoContainer > img {
-  width: 100%;
-  display: none;
-  margin-bottom: 10px;
-}
-#infoContainer > h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-#infoContainer > p {
-  font-size: 1em;
-  margin-bottom: 10px;
+#clippedImage {
+  position: absolute;
+  z-index: 10;
 }
 
-button {
-  width: 100%;
-  background: #000;
-  color: #fff;
-  border: 0px;
-  padding: 10px;
+.informationContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  padding: 30px;
   box-sizing: border-box;
-  margin-bottom: 10px;
 }
-#selectionBtn {
-  display: none;
-}
+
+.annotations { grid-area: 1 / 2 / 3 / 4; }
+.aiAnnotation { grid-area: 1 / 2 / 2 / 4; }
+.originAnnotation { grid-area: 2 / 2 / 3 / 4; }
+.headline { grid-area: 1 / 1 / 7 / 2; }
+.placementInfo { grid-area: 3 / 2 / 7 / 4; }
+.placementX { grid-area: 3 / 2 / 4 / 4; }
+.placementY { grid-area: 4 / 2 / 5 / 4; }
+.placementLoc { grid-area: 5 / 2 / 6 / 4; }
+.placementDate { grid-area: 6 / 2 / 7 / 4; }
+

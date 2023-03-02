@@ -16,7 +16,8 @@ const options = {
   slack: 30,
   eraserStrength: 5
 }
-
+let offsetX = 0;
+let scaleFactor = 1;
 module.exports = class Cut {
   constructor(selected, cutDoneCallback) {
     //console.log(selected)
@@ -97,8 +98,8 @@ module.exports = class Cut {
     ctx.globalCompositeOperation = 'source-over';
 
     if(this.img) {
-      const scaleFactor = canvas.height / this.img.height;
-      const offsetX = -((this.img.width * scaleFactor) - canvas.width) / 2;
+      scaleFactor = canvas.height / this.img.height;
+      offsetX = -((this.img.width * scaleFactor) - canvas.width) / 2;
       ctx.drawImage(this.img, offsetX, 0, this.img.width * scaleFactor, this.img.height * scaleFactor)
     }
 
@@ -316,6 +317,12 @@ module.exports = class Cut {
           y: 10,
           height: clippingHeight,
           width: clippingWidth,
+          clippingData: {
+            x: (startClippingX / scaleFactor) - offsetX,
+            y: startClippingY / scaleFactor,
+            w: clippingWidth / scaleFactor,
+            h: clippingHeight / scaleFactor
+          }
         }
         //console.log(toSend);
         fetch(`${API_URL}/clipping`, {

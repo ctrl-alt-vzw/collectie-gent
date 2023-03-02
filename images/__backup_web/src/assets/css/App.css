@@ -1,0 +1,206 @@
+body {
+  background-color: #eee;
+  overflow-x: hidden;
+}
+
+
+#container {
+  height: 800px;
+  margin: auto;
+  margin-top: calc(50vh - 400px);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#canvasContainer {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #000;
+}
+
+.item {
+  max-width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.imageContainer {
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+}
+
+.imageContainer>img {
+  width: 100%;
+  max-height: 200px;
+}
+
+.item>h1 {
+  width: 100%;
+  font-size: 1.2em;
+}
+
+button {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 0px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+
+/* cutter */
+
+#canvas {
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+#normal_canvas {
+  display: none
+}
+
+#collectieImages {
+  position: absolute;
+  background-color: white;
+  top: 10px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+  border: 1px solid #000;
+}
+
+#collectieImages>.preview {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#collectieImages>.preview>img {
+  width: 70px;
+}
+
+#collectieImages>.preview>button {
+  height: 40px;
+  float: right
+}
+
+.draggable {
+  position: absolute;
+}
+
+.clippingItem {
+  position: absolute;
+  /*  -webkit-filter: grayscale(1);  Google Chrome, Safari 6+ & Opera 15+ 
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+#header {
+  position: fixed;
+  display: flex;
+  top: calc(100% - 50px);
+  left: calc(50% - 200px);
+  width: 400px;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 100px);
+  background-color: #000;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 200px;
+  margin-top: -20px;
+}
+
+#tooltip {
+
+  position: fixed;
+  top: 10px;
+  left: calc(50% - 200px);
+  text-align: center;
+  width: 400px;
+}
+
+#normal_canvas,
+#hiddenCanvasContainer {
+  display: none;
+}
+
+
+.dropActions {
+  position: fixed;
+  background-blend-mode: multiply;
+  left: calc(50% - 150px);
+  top: calc(100% - 75px);
+  width: 300px;
+  padding: 25px 50px;
+  box-sizing: border-box;
+  height: 75px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.inactive {
+  opacity: .2;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* added for pickeer */
+#loading {
+  width: 100vw;
+  position: fixed;
+  top: calc(50vh - 20px);
+  left: 0px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #fff;
+  text-align: center;
+}
+#infoContainer {
+  width: 400px;
+  background-color: #fff;
+  position: fixed;
+  left: calc(100vw - 450px);
+  top: 50px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  padding: 20px;
+}
+#infoContainer > img {
+  width: 100%;
+  display: none;
+  margin-bottom: 10px;
+}
+#infoContainer > h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+#infoContainer > p {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 0px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+#selectionBtn {
+  display: none;
+}

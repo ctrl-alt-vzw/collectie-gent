@@ -10,13 +10,13 @@ import {
 
 import './assets/css/index.css';
 import App from './App';
-import Projection from './Projection/Projection.jsx'
+import Detail from './Detail';
+
 
 import './assets/css/App.css';
 
 import reportWebVitals from './reportWebVitals';
 
-import { ManagerProvider } from "./Manager/index.js"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -28,17 +28,16 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "projection",
-    element: <Projection />,
-  },
+    path: "/:id",
+    element: (
+        <Detail />
+    ),
+  }
 ]);
 
 root.render(
   <React.StrictMode>
-    <ManagerProvider>
       <RouterProvider router={router} />
-    </ManagerProvider>
-
   </React.StrictMode>
 );
 
