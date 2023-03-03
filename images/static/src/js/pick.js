@@ -42,10 +42,11 @@ let highlighted = null;
 
 let numImagesLoading = 0;
  class Pick {
-  constructor(selectionEvent) {
+  constructor(selectionEvent, panic) {
     this.selectionDone = selectionEvent;
     this.renderHTML()
     this.init()
+    this.panic = panic;
 
   }
   

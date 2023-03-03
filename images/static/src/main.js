@@ -41,27 +41,36 @@ function startSelection() {
   sessionStorage.setItem("STATE", states.PICK);
   render();
 }
+
+
+function panic() {
+  sessionStorage.setItem("selection", "");
+  sessionStorage.setItem("cut", "");
+  sessionStorage.setItem("placed", "");
+  sessionStorage.setItem("STATE", states.PICK);
+  render();
+}
 function render() {
   const state = sessionStorage.getItem("STATE")
 
   if(state == states.PICK) {
     console.log("new")
-    const picker = new Pick(selectionDone);
+    const picker = new Pick(selectionDone, panic);
   } 
   else if(state == states.CUT) {
     const selection = JSON.parse(sessionStorage.getItem("selection"))
-    const cutter = new Cut(selection,cutDone);
+    const cutter = new Cut(selection,cutDone, panic);
   }
   else if(state == states.PLACE) {
     const selection = JSON.parse(sessionStorage.getItem("cut"))
-    const placer = new Place(selection,placingDone);
+    const placer = new Place(selection,placingDone, panic);
   }
   else if(state == states.VIEW) {
     const selection = JSON.parse(sessionStorage.getItem("placed"))
-    const viewer = new View(selection, startSelection);
+    const viewer = new View(selection, startSelection, panic);
   }
   else {
-    const def = new Pick(selectionDone);
+    const def = new Pick(selectionDone, panic);
   } 
 }
 

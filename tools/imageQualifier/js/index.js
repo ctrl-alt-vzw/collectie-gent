@@ -3,24 +3,28 @@
 const app = {
   db: [],
   count: 0,
-  lastID: 17906,
+  lastID: 1,
   init() {
-    fetch("https://api.collage.gent/annotation/colorless")
+    fetch("https://api.collage.gent/annotation/byQuery/ imagedata::text IS NULL;")
       .then(r => r.json())
       .then((db) => {
         this.db = db.rows;
         this.count = db.length;
-        this.drawCanvas(this.db[0])
+        setTimeout(() => {
+
+          this.drawCanvas(this.db[0])
+      
+        }, 1000)
       })
   },
 
   drawCanvas(data) {
-
     if(data.imagedata == {} || data.imagedata == null) {
       const el = document.createElement("canvas");
       var img = document.createElement("img");
 
       img.addEventListener("load", () => {
+        console.log("loaded")
 
           // Dynamically create a canvas element
           var canvas = document.createElement("canvas");
@@ -68,6 +72,9 @@ const app = {
           }
       })
       const imageURL = `https://api.collectie.gent/iiif/imageiiif/3/${data.gentImageURI}/full/^1000,/0/default.jpg`
+      console.log("drawing ")
+      console.log(data.id)
+      console.log(imageURL)
 
       img.src = imageURL;
       img.id=data.UUID 

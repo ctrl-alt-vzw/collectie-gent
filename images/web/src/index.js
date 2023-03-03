@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import './assets/css/index.css';
+import './assets/css/icons.css';
 import App from './App';
 import Detail from './Detail';
 

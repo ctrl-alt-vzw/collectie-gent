@@ -16,18 +16,18 @@ function Detail(props) {
     fetch(`https://api.collage.gent/clipping/byId/${id}`)
       .then((r) => r.json())
       .then((data) => {
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        data.created_at = new Date(data.created_at).toLocaleDateString("nl-BE", options);
         setItem(data);
         console.log(data)
+
         fetch(`https://api.collage.gent/annotation/byCollectionOrigin/${data.collection}/${data.originID}`)
           .then((r) => r.json())
           .then((data) => {
             console.log(data);
             setOrigin(data[0]);
-
-            setRatio( data[0].imagedata.width / (window.innerWidth))
-
+            setRatio( (window.innerWidth) / data[0].imagedata.width)
             console.log(data[0].imagedata.width / (window.innerWidth))
-
           })
       })
   }, [])
@@ -37,39 +37,69 @@ function Detail(props) {
         <Menu />
         <div id="detail">
           { item && item.clippingData && origin && origin.imagedata ? 
-            <div id="imageContainer" style={{ height:  origin.imagedata.height / ratio + 100 + "px"}}>
-               <>
-                <img id="originImage" src={`https://api.collectie.gent/iiif/imageiiif/3/${origin.gentImageURI}/full/^1000,/0/default.jpg`} style={{
-                  width: Math.round(origin.imagedata.width / ratio) + "px",
-                  height: origin.imagedata.height / ratio + "px",
-                  top: "50px",
-                  opacity: 0.4
-                }} />
-                <img id="clippedImage" src={`https://media.collage.gent/uploads/200/${item.imageURI}`} style={{
-                top:  50 + item.clippingData.y / ratio  + "px",
-                left: (25 / ratio) + item.clippingData.x / ratio + "px",
-                width: item.clippingData.w / ratio + "px",
-                height: item.clippingData.h / ratio + "px"
-              }} />
-              </>
+            <>
+              <div id="imageContainer" style={{ height:  origin.imagedata.height * ratio + 50 + "px"}}>
+                <>
+                  <img id="originImage" src={`https://api.collectie.gent/iiif/imageiiif/3/${origin.gentImageURI}/full/^1000,/0/default.jpg`} style={{
+                    width: (origin.imagedata.width) * ratio + "px",
+                    height: (origin.imagedata.height) * ratio + "px",
+                    top: "50px",
+                    left:  "0px",
+                    opacity: 0.4
+                  }} />
+                  <img id="clippedImage" src={`https://media.collage.gent/uploads/full/${item.imageURI}`} style={{
+                    top:  50 + (item.clippingData.y) * ratio + "px",
+                    left: (item.clippingData.x - (item.clippingData.offsetX / item.clippingData.ratio)) * ratio + "px",
+                    width: (item.clippingData.w) * ratio  + "px",
+                    height: (item.clippingData.h) * ratio + "px"
+                  }} />
+                </>
+              </div> 
+              <div className="informationContainer">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td rowSpan="2" style={{borderRight: "1px solid #eee"}}>
+                        <div className="headline">
+                          <div id="headlineWrap">
+                            <div className="origin">
+                              {origin.collection}
+                              <br />{origin.originID.substr(0, 12)+"..."}
+                            </div>
+                            <div id="itemID">{id}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{borderBottom: "1px solid #eee"}}>
+                        <div className="annotations" >
+                          <div className="aiAnnotation">{origin.annotation}</div>
+                          <div className="originAnnotation">{origin.originalAnnotation}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="placementInfo">
+                          <div className="pItem"><span>x</span>{Math.round(item.x * 100) / 100}</div>
+                          <div className="pItem"><span>y</span>{Math.round(item.y * 100) / 100}</div>
+                          <div className="pItem"><span>plaats</span>{item.placedAt ? item.placedAt : "Gent"}</div>
+                          <div className="pItem"><span>datum</span>{item.created_at}</div>
+                        </div>
+                      </td>
+                    </tr>
 
-            </div> 
-
-          : null }
-          <div className="informationContainer">
-            <div className="headline">{id}</div>
-            <div className="annotations">
-              <div className="aiannotation">{origin.annotation}</div>
-              <div className="originAnnotation">{origin.originalAnnotation}</div>
-            </div>
-
-            <div className="placementInfo">
-              <div className="placementX">{item.x}</div>
-              <div className="placementY">{item.y}</div>
-              <div className="placementLoc">{item.placedAt}</div>
-              <div className="placementDate">{item.created_at}</div>
-            </div>
-          </div> 
+                    <tr>
+                      <td colSpan="2">
+                        <div className="ctaContainer">
+                          <a target="_blanc" href={`https://data.collectie.gent/entity/${origin.collection}:${origin.originID}`} className="cta">vind in de collectie</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> 
+            </>
+          : "loading" }  
         </div>
       </div>
   );

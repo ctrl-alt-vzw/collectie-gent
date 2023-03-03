@@ -19,7 +19,7 @@ const options = {
 let offsetX = 0;
 let scaleFactor = 1;
 module.exports = class Cut {
-  constructor(selected, cutDoneCallback) {
+  constructor(selected, cutDoneCallback, panic) {
     //console.log(selected)
     this.mouseDown = false;
     this.touchpoints = [];
@@ -37,7 +37,7 @@ module.exports = class Cut {
 
     this.clippingcreated = cutDoneCallback;
 
-
+    this.panicCTA = panic;
   }
   restart(){
     this.outlinePoints = []; 
@@ -54,7 +54,8 @@ module.exports = class Cut {
     `);
     document.getElementById("headerContainer").innerHTML = `
       <button id="saveBtn">Save</button>
-      <button  id="restartBtn">Restart</button>`;
+      <button id="restartBtn">Restart</button>
+      <button id="backBtn">Back</button>`;
   }
   cleanup() {
     const canvas = document.getElementById("cutCanvas");
@@ -84,6 +85,9 @@ module.exports = class Cut {
 
     document.getElementById("restartBtn").addEventListener("click", (e) => this.restart())
     document.getElementById("saveBtn").addEventListener("click", (e) => this.saveImage())
+    document.getElementById("backBtn").addEventListener("click", (e) => {
+      this.panicCTA();
+    })
 
 
     this.loadImage()
@@ -100,6 +104,7 @@ module.exports = class Cut {
     if(this.img) {
       scaleFactor = canvas.height / this.img.height;
       offsetX = -((this.img.width * scaleFactor) - canvas.width) / 2;
+      // offsetX = 0;
       ctx.drawImage(this.img, offsetX, 0, this.img.width * scaleFactor, this.img.height * scaleFactor)
     }
 
@@ -318,10 +323,14 @@ module.exports = class Cut {
           height: clippingHeight,
           width: clippingWidth,
           clippingData: {
-            x: (startClippingX / scaleFactor) - offsetX,
+            x: startClippingX / scaleFactor,
             y: startClippingY / scaleFactor,
             w: clippingWidth / scaleFactor,
-            h: clippingHeight / scaleFactor
+            h: clippingHeight / scaleFactor,
+            ratio: scaleFactor,
+            offsetX: offsetX,
+            imageW: this.img.width,
+            imageH: this.img.height
           }
         }
         //console.log(toSend);

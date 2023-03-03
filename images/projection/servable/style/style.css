@@ -1,6 +1,7 @@
 body {
   overflow: hidden;
   font-family: sans-serif;
+  background-color: #000000;
 }
 .clipping {
   position:  absolute;
@@ -71,7 +72,7 @@ button {
 
 
 body {
-  background-color: #eee;
+  background-color: #0000;
   overflow-x: hidden;
 }
 
@@ -129,7 +130,7 @@ button {
 
 #collectieImages {
   position: absolute;
-  background-color: white;
+  background-color: #000;
   top: 10px;
   left: 50%;
   width: 200px;

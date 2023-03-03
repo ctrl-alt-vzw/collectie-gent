@@ -1,0 +1,25 @@
+
+#container {
+  height: 800px;
+  margin: auto;
+  margin-top: calc(50vh - 400px);
+  display: flex;
+  flex-wrap: wrap;
+}
+.clipping {
+  background: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 10px;
+}
+.clipping > img{
+  width: auto;
+  height: 50px;
+}
+
+
+.clippingItem {
+  position: absolute;
+  /*  -webkit-filter: grayscale(1);  Google Chrome, Safari 6+ & Opera 15+ 
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}

@@ -128,7 +128,7 @@ class View {
     this.scale = window.innerWidth / 2100;
     this.collage = [];
     this.fetchData();
-    this.draggedOffset = {x:50, y: 0}
+    this.draggedOffset = { x:50, y: 0}
 
     this.activeItem = null;
 
@@ -144,6 +144,7 @@ class View {
     // Listen for messages
     this.socket.addEventListener('message', (event) => {
       try {
+        console.log(event.data);
         const pa = JSON.parse(event.data);
         this.manageNewItem(JSON.parse(event.data));
       }
@@ -154,8 +155,18 @@ class View {
     
   }
   manageNewItem(item) {
+
     if(this.activeItem) {
-      this.activeItem.updatePos(item.payload.x, item.payload.y)
+      console.log(this.activeItem.UUID);
+      console.log(item);
+      if(this.activeItem.UUID == item.payload.item.UUID) {
+        this.activeItem.updatePos(item.payload.x, item.payload.y)
+      } else {
+        this.collage.unshift(this.activeItem);
+        const i = new Item(item.payload.item, this.scale, this.offset);
+        i.loadImage(this, true);
+        this.activeItem = i;
+      }
     } else {
       const i = new Item(item.payload.item, this.scale, this.offset);
       i.loadImage(this, true);
@@ -195,14 +206,15 @@ class View {
     const canvas = document.getElementById('viewCanvas');
     const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    this.collage.forEach((clipping, key) => {
-      clipping.render(ctx, this.draggedOffset);
-    })
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if(this.activeItem) {
       this.activeItem.render(ctx, this.draggedOffset);
     }
+    this.collage.forEach((clipping, key) => {
+      clipping.render(ctx, this.draggedOffset);
+    })
   }
   renderHTML() {
     this.componentDidMount()
