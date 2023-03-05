@@ -1,10 +1,9 @@
 body {
-  background: #eee;
+  background: #fff;
   font-size: 14pt;
   font-family: sans-serif;
   overflow-x: hidden;
 }
-
 .container {
   width: 100vw;
   box-sizing: border-box;
@@ -176,6 +175,17 @@ body {
   padding: 10px 20px;
   margin: 10px;
   box-sizing: border-box;
+  text-decoration: none;
+}
+.ctaLight {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: 1px solid #eee;
+  padding: 10px 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  font-size: .8em;
   text-decoration: none;
 
 }

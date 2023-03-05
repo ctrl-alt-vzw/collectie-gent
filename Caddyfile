@@ -10,11 +10,6 @@ media.collage.gent {
     }
 }
 
-web.collage.gent {
-    reverse_proxy web:3000 {
-        header_down Strict-Transport-Security max-age=31536000;
-    }
-}
 manager.collage.gent {
     reverse_proxy web:3001 {
         header_down Strict-Transport-Security max-age=31536000;
@@ -27,14 +22,14 @@ explore.collage.gent {
     }
 }
 
-collage.gent {
-    reverse_proxy web:3000 {
+touch.collage.gent {
+    reverse_proxy static:3000 {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }
 
-touch.collage.gent {
-    reverse_proxy web:3001 {
+collage.gent {
+    reverse_proxy web:3000 {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }

@@ -17,8 +17,8 @@ function Menu(props) {
       { displayMenu ? 
         <div id="menuOverlay">
           <div className="linkContainer">
-            <Link to="/">Home</Link>
-            <Link to="/">Contact</Link>
+            <Link to="/" onClick={() => setDisplayMenu(false)}>Home</Link>
+            <Link to="/" onClick={() => setDisplayMenu(false)}>Contact</Link>
           </div>  
           <div className="ctaContainer">
             <a target="_blanc" href={`https://collectie.gent`} className="cta">Bekijk de volledige collectie</a>

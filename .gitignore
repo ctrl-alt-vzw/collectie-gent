@@ -13,5 +13,5 @@ tools/storeImageInformation
 tools/fillOriginalInfo
 /_pictograms
 
-images/static/out/
+images/touch/out/
 images/projection/out/

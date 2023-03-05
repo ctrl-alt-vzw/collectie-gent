@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Loader from './../Common/Loader.jsx'
 import Clipping from './Clipping'
-import {calculateOffset} from './../Common/helpers.js'
+import ClippingCard from './ClippingCard'
+import {calculateOffset, getCookie, setCookie} from './../Common/helpers.js'
 
 
 
@@ -10,10 +11,10 @@ function Viewer(props) {
   if(window.innerWidth > 600) { margin = 100; }
 
   const [data, setData] = useState([]);
+  const [useCards, setUseCards] = useState(getCookie("useCards"));
   const [yOffset, setYOffset] = useState([]);
   const [scale, setScale] = useState((window.innerWidth - margin*2) / 2000)
   const [xOffset, ] = useState(margin)
-  // const scale = 1
 
   useEffect(() => {
     // console.log(`${process.env.REACT_APP_API_ADDR ? process.env.REACT_APP_API_ADDR : "https://api.collage.gent"}/clipping`)
@@ -27,23 +28,38 @@ function Viewer(props) {
 
   const handleReturn = () => {
   }
-  
-  return (
+    return (
+      <>
+        <div id="containerList">
+          {data.length === 0 ? <Loader message="loading clippings" /> : null}
+          { useCards ? 
 
-    <div id="container">
-      {data.length === 0 ? <Loader message="loading clippings" /> : null}
-      { data.map((clipping, key) => {
-        clipping["zIndex"] = data.length - key;
-        return <Clipping 
-          clipping_data={clipping} 
-          offSet={yOffset} 
-          xOffset={xOffset}
-          key={key} 
-          scale={scale}  
-        />
-      })}
-    </div>
-  )
+            data.map((clipping, key) => {
+              return <ClippingCard
+                clipping_data={clipping} 
+                key={key} 
+              />
+            })
+
+          : data.map((clipping, key) => {
+              clipping["zIndex"] = data.length - key;
+              return <Clipping 
+                clipping_data={clipping} 
+                offSet={yOffset} 
+                xOffset={xOffset}
+                key={key} 
+                scale={scale}  
+              />
+            })
+          }
+        </div>
+        <div id="overlay">
+          <a className="cta" onClick={() => { setUseCards(true); setCookie("useCards", true) }}>List</a>
+          <a className="cta" onClick={() => { setUseCards(false); setCookie("useCards", false)  }}>Collage</a>
+        </div>
+      </>
+    )
+
 }
 
 export default Viewer;

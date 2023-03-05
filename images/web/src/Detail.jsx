@@ -10,6 +10,8 @@ function Detail(props) {
   const [item, setItem] =  useState([])
   const [origin, setOrigin] =  useState([])
 
+  const width = window.innerWidth > 600  ? 600 : window.innerWidth;
+  const offsetContainer = ((window.innerWidth - width) / 2);
   const [ratio, setRatio] = useState(1);
 
   useEffect(() => {
@@ -19,15 +21,14 @@ function Detail(props) {
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         data.created_at = new Date(data.created_at).toLocaleDateString("nl-BE", options);
         setItem(data);
-        console.log(data)
+        // console.log(data)
 
         fetch(`https://api.collage.gent/annotation/byCollectionOrigin/${data.collection}/${data.originID}`)
           .then((r) => r.json())
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             setOrigin(data[0]);
-            setRatio( (window.innerWidth) / data[0].imagedata.width)
-            console.log(data[0].imagedata.width / (window.innerWidth))
+            setRatio( width / data[0].imagedata.width)
           })
       })
   }, [])
@@ -35,25 +36,30 @@ function Detail(props) {
   return (
       <div className="App">
         <Menu />
-        <div id="detail">
-          { item && item.clippingData && origin && origin.imagedata ? 
+        <div id="detail" style={{
+            width: width + "px",
+            marginLeft: offsetContainer + "px"
+          }}>
             <>
-              <div id="imageContainer" style={{ height:  origin.imagedata.height * ratio + 50 + "px"}}>
+              <div id="imageContainer" style={{ height: origin.imagedata ? origin.imagedata.height * ratio + 50 + "px" : 400  + "px"}}>
                 <>
                   <img id="originImage" src={`https://api.collectie.gent/iiif/imageiiif/3/${origin.gentImageURI}/full/^1000,/0/default.jpg`} style={{
-                    width: (origin.imagedata.width) * ratio + "px",
-                    height: (origin.imagedata.height) * ratio + "px",
+                    width: (origin.imagedata ? origin.imagedata.width : 400 ) * ratio + "px",
+                    height: (origin.imagedata ? origin.imagedata.height : 400) * ratio + "px",
                     top: "50px",
-                    left:  "0px",
-                    opacity: 0.4
+                    left:  offsetContainer + "px",
+                    opacity: item.clippingData ? 0.4 : 1
                   }} />
-                  <img id="clippedImage" src={`https://media.collage.gent/uploads/full/${item.imageURI}`} style={{
-                    top:  50 + (item.clippingData.y) * ratio + "px",
-                    left: (item.clippingData.x - (item.clippingData.offsetX / item.clippingData.ratio)) * ratio + "px",
-                    width: (item.clippingData.w) * ratio  + "px",
-                    height: (item.clippingData.h) * ratio + "px"
-                  }} />
-                </>
+                  {item.clippingData ? 
+                    <img id="clippedImage" src={`https://media.collage.gent/uploads/full/${item.imageURI}`} style={{
+                      top:  50 + (item.clippingData ? item.clippingData.y : 0) * ratio + "px",
+                      left: item.clippingData ? offsetContainer + (item.clippingData.x - (item.clippingData.offsetX / item.clippingData.ratio)) * ratio + "px" : offsetContainer + "px",
+                      width: (item.clippingData ? item.clippingData.w: 0) * ratio  + "px",
+                      height: (item.clippingData.h) * ratio + "px"
+                    }} />
+                  : null }
+                  </>
+
               </div> 
               <div className="informationContainer">
                 <table>
@@ -64,7 +70,7 @@ function Detail(props) {
                           <div id="headlineWrap">
                             <div className="origin">
                               {origin.collection}
-                              <br />{origin.originID.substr(0, 12)+"..."}
+                              <br />{origin.originID ? origin.originID.substr(0, 12)+"...": "..."}
                             </div>
                             <div id="itemID">{id}</div>
                           </div>
@@ -98,8 +104,7 @@ function Detail(props) {
                   </tbody>
                 </table>
               </div> 
-            </>
-          : "loading" }  
+            </> 
         </div>
       </div>
   );
