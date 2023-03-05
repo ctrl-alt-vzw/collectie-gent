@@ -43,7 +43,6 @@ services:
       collageStore:
         condition: service_healthy
 
-
   projection:
     image: "$OWNER/collageprojection:$VERSION"
     restart: unless-stopped
@@ -54,7 +53,6 @@ services:
       REACT_APP_API_ADDR:
       REACT_APP_MEDIA_ADDR:
 
-
   filestore:
     image: "$OWNER/collagefilestore:$VERSION"
     command: ["npm", "run", "start"]
@@ -64,7 +62,6 @@ services:
     volumes:
       - ./_uploads:/usr/app/uploads
       - ./_pictograms:/usr/app/pictograms
-
 
   manager:
     image: "$OWNER/collagemanager:$VERSION"
@@ -85,10 +82,13 @@ services:
     ports:
       - 8081:3000
       - 8080:80
-    environment: 
-      REACT_APP_API_ADDR:
-      REACT_APP_MEDIA_ADDR:
 
+  touch:
+    image: "$OWNER/collagetouch:$VERSION"
+    restart: unless-stopped
+    ports:
+      - 8081:3000
+      - 8080:80
 
   mechanical:
     image: "$OWNER/collagemechanical:$VERSION"

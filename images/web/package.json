@@ -22,6 +22,7 @@
     "start": "react-scripts --openssl-legacy-provider start",
     "start-env": "export $(cat ../../.env | xargs) && npm start",
     "build": "react-scripts --openssl-legacy-provider build",
+    "build-serve": "react-scripts --openssl-legacy-provider build && serve build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
