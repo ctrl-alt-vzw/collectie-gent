@@ -26,7 +26,7 @@ class Place {
     this.dragging = false;
     this.selected = selected;
     this.placedCallback = placedCB;
-    this.socket = new WebSocket("ws://206.189.5.89:3004");
+    this.socket = new WebSocket("wss://socket.collage.gent");
     // Connection opened
     this.socket.addEventListener('open', (event) => {
       console.log("opened");

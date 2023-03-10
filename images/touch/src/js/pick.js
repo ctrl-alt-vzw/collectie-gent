@@ -288,7 +288,7 @@ let numImagesLoading = 0;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    document.getElementById("loaded").innerHTML = numImagesLoading;
+    // document.getElementById("loaded").innerHTML = numImagesLoading;
 
     ctx.beginPath();
     ctx.fillStyle = "red"

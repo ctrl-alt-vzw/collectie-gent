@@ -134,7 +134,7 @@ class View {
 
 
     // Create WebSocket connection.
-    this.socket = new WebSocket("ws://206.189.5.89:3004");
+    this.socket = new WebSocket("wss://socket.collage.gent");
     // Connection opened
     this.socket.addEventListener('open', (event) => {
       console.log("opened");
@@ -144,7 +144,7 @@ class View {
     // Listen for messages
     this.socket.addEventListener('message', (event) => {
       try {
-        console.log(event.data);
+        // console.log(event.data);
         const pa = JSON.parse(event.data);
         this.manageNewItem(JSON.parse(event.data));
       }

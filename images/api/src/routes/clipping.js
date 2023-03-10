@@ -73,7 +73,7 @@ export default function clipping(app, pg, mqttClient) {
 
 
   app.get("/clipping", async (req, res) => {
-    await pg.select("*").table("clippings").orderBy("id", "ASC").then((data) => {
+    await pg.select("*").table("clippings").orderBy("id", "DESC").then((data) => {
       res.send(data)
     })
     .catch((e) => {

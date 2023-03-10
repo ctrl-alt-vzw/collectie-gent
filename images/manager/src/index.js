@@ -13,16 +13,6 @@ const services = [];
 const client = new MQTTClient("manager", messageHandler, ["services/api/+"]);
 const ws = new SocketManager("socketManager", socketMessageHandler)
 
-const app = express()
-const port = 3000
-app.use(cors())
-
-app.get('/', (req, res) => {
-  res.send(JSON.stringify({ hello: "world"}))
-})
-app.listen(port, () => {
-  console.log(`Manager listening at port ${port}`)
-})
 
 
 client.connect();
@@ -49,3 +39,16 @@ function socketMessageHandler(topic, message) {
   console.log(topic, message)
   
 }
+
+
+const app = express()
+const port = 3000;
+app.use(cors())
+
+app.get('/', (req, res) => {
+  res.send(JSON.stringify({ hello: "world"}))
+})
+
+app.listen(port, () => {
+  console.log(`Manager listening at port ${port}`)
+})
