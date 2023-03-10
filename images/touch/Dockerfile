@@ -8,4 +8,4 @@ RUN npm i --silent
 
 COPY ./ ./
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "serve"]

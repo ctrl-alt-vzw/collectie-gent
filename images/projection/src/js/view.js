@@ -47,12 +47,21 @@ class View {
   manageNewItem(item) {
 
     if(this.activeItem) {
-      console.log(this.activeItem.UUID);
-      console.log(item);
+      // console.log(this.activeItem.UUID);
+      // console.log(item);
       if(this.activeItem.UUID == item.payload.item.UUID) {
         this.activeItem.updatePos(item.payload.x, item.payload.y)
       } else {
         this.collage.unshift(this.activeItem);
+
+        this.maxY = 0;
+        this.collage.forEach((i) => { 
+          if(i.y * this.scale > this.maxY) { 
+            this.maxY = i.y * this.scale; 
+          }
+        })
+        this.offset = this.maxY - (window.innerHeight/2) - 100;
+
         const i = new Item(item.payload.item, this.scale, this.offset);
         i.loadImage(this, true);
         this.activeItem = i;

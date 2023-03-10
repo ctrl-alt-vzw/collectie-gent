@@ -9,6 +9,7 @@
     "build-watch": "watchify ./src/main.js -o servable/bundle.js",
     "serve-live": "live-server ./servable --port=3000",
     "start": "browserify /usr/app/src/main.js -o /usr/app/servable/bundle.js && serve /usr/app/servable",
+    "serve": "serve /usr/app/servable",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",

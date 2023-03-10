@@ -22,7 +22,8 @@ function Viewer(props) {
       .then(r => r.json())
       .then((data) => {
         setYOffset(calculateOffset(data)) 
-        setData(data)
+        const sorted = data.sort((a,b) => b.id - a.id)
+        setData(sorted)
       })
   }, [])
 
