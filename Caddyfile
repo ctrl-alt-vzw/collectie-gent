@@ -26,9 +26,18 @@ media.collage.gent {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }
-
 manager.collage.gent {
-    reverse_proxy web:3001 {
+    reverse_proxy manager:3000 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}
+socket.collage.gent {
+    reverse_proxy manager:3001 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}
+projection.collage.gent {
+    reverse_proxy projection:3000 {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }
