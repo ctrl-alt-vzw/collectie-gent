@@ -19,7 +19,7 @@ const  Item = require('./Item.js')
 class Place {
   constructor(selected, placedCB) {
     this.renderHTML();
-    this.scale = window.innerWidth / 1000;
+    this.scale = window.innerWidth / 1300;
     this.collage = [];
     this.fetchData();
     this.maxY = 0;

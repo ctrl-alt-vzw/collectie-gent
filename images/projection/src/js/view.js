@@ -17,7 +17,7 @@ class View {
   constructor() {
     this.renderHTML();
     console.log(document.getElementById("canvasContainer"))
-    this.scale = document.getElementById("canvasContainer").clientWidth / 1100;
+    this.scale = document.getElementById("canvasContainer").clientWidth / 1400;
     console.log(this.scale)
     this.collage = [];
 
