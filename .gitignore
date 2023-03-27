@@ -11,5 +11,9 @@ package-*.json
 scripts/ai/*/_volumes
 tools/storeImageInformation
 tools/fillOriginalInfo
+/_pictograms
+
 images/touch/out/
+images/touch/servable/local
+
 images/projection/out/
