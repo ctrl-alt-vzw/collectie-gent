@@ -5,7 +5,7 @@ const View  = require('./js/view.js');
 
 
 let countDown = setTimeout(() => {
-      console.log("restart");
+  console.log("restart");   
   panic();
 }, 1000 * 60 * 5);
 
@@ -19,6 +19,7 @@ const states = {
 console.log("Render");
 window.addEventListener('DOMContentLoaded', (event) => {
   render();
+  document.getElementById("panicBtn").addEventListener('click', () => panic())
 
 
   document.getElementById("canvasContainer").addEventListener("click", (e) => {
@@ -66,7 +67,7 @@ function panic() {
   sessionStorage.setItem("cut", "");
   sessionStorage.setItem("placed", "");
   sessionStorage.setItem("STATE", states.PICK);
-  render();
+  window.location.reload();
 }
 function render() {
   const state = sessionStorage.getItem("STATE")

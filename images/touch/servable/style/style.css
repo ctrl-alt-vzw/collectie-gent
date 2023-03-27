@@ -237,3 +237,12 @@ i {
   line-height: 1.3em;
   color: #aaa;
 }
+#panicBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #aaa;
+  color: #fff;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
