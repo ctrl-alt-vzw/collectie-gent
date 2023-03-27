@@ -296,8 +296,7 @@ let numImagesLoading = 0;
       .catch((err) => {
         console.error(err)
       })
-    const image = `https://media.collage.gent/uploads/200/${h.imageURL}`;
-
+    const image = `https://media.collage.gent/pictograms/${h.imageURL}`;
     // const image = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
     document.getElementById("infoImage").src= image;
     document.getElementById("infoTitle").innerHTML=  "loading";
