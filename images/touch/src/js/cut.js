@@ -381,8 +381,9 @@ module.exports = class Cut {
           normalURI: data["normal"],
           originID: this.originID,
           collection: this.collection,
-          x: 10,
-          y: 10,
+          x: -1000,
+          y: -1000,
+          placedAt: "Huis van Alijn",
           height: clippingHeight,
           width: clippingWidth,
           clippingData: {
