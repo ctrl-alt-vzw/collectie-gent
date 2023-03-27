@@ -120,9 +120,9 @@ let numImagesLoading = 0;
 
 	  
 
-    document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.mouseDownEvent(e), {passive:false});
-    document.getElementById("pickCanvas").addEventListener("touchmove", (e) => this.mouseMoveEvent(e), {passive:false});
-    document.getElementById("pickCanvas").addEventListener("touchend", (e) => this.mouseUpEvent(e), {passive:false});
+    document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.mouseDownEvent(e));
+    document.getElementById("pickCanvas").addEventListener("touchmove", (e) => this.mouseMoveEvent(e));
+    document.getElementById("pickCanvas").addEventListener("touchend", (e) => this.mouseUpEvent(e));
 
     document.getElementById("pickCanvas").addEventListener("mousedown", (e) => this.mouseDownEvent(e))
     document.getElementById("pickCanvas").addEventListener("mouseup", (e) => this.mouseUpEvent(e))

@@ -5,7 +5,7 @@ const View  = require('./js/view.js');
 
 
 let countDown = setTimeout(() => {
-
+      console.log("restart");
   panic();
 }, 1000 * 60 * 5);
 
@@ -24,8 +24,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById("canvasContainer").addEventListener("click", (e) => {
     console.log("touched")
     clearTimeout(countDown)
-    countDown = setTimeout(() => {
 
+    countDown = setTimeout(() => {
+      console.log("restart");
       panic();
     }, 1000 * 60 * 5);
 
