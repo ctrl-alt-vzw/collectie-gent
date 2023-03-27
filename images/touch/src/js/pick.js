@@ -112,14 +112,22 @@ let numImagesLoading = 0;
     const innerWidth = window.innerWidth;
 
     const ratio = innerWidth / containerWidth;
-    // vpx = 0;
-    // vpy = 0;
-    vpx = Math.round(Math.random() * 2000) - 1000;
-    vpy = Math.round(Math.random() * 2000) - 1000;
+    vpx = 0;
+    vpy = 0;
+    
+    svpx = Math.round(Math.random() * 2000) - 1000;
+    svpy = Math.round(Math.random() * 2000) - 1000;
+    
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
     vzl = 1;
 
+vpx = vpx + svpx;
+      vpy = vpy + svpy;
+
+      lax = lax - svpx;
+      lay = lay - svpy;
+      
 	  
 
     document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.touchDownEvent(e));
