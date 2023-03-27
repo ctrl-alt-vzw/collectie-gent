@@ -1,6 +1,13 @@
 const concaveHull = require('./cutHelpers/concaveHull.js');
 
-
+const {
+  dist,
+  dist3D,
+  mousePosition,
+  touchPosition,
+  millis,
+  mapValues: map
+} = require('./helpers.js')
 
 
 
@@ -73,12 +80,11 @@ module.exports = class Cut {
     c.addEventListener("mousemove", (e) => this.mouseMoveHandler(e));
 
     c.addEventListener("touchstart", () => this.mouseDown = true);
-    c.addEventListener("touchmove", (e) => this.mouseMoveHandler(e));
     c.addEventListener("touchend", () => this.mouseDown = false);
+    c.addEventListener("touchmove", (e) => this.touchMoveHandler(e));
     
     c.width = window.innerWidth - 10;
     c.height = window.innerHeight - 10;
-
     const nc = document.getElementById("normal_canvas");
     nc.width = window.innerWidth - 10;
     nc.height = window.innerHeight - 10;
@@ -208,12 +214,64 @@ module.exports = class Cut {
       this.update();
     }
   }
+  touchMoveHandler(e) {
+    const tmp = this.getTouchPosition(e);
+    console.log(tmp);
+    if(tmp) {
+      const cur = {
+        x: tmp.x,
+        y: tmp.y
+      };
+      if(this.mouseDown) {
+        if(!this.lastAddedTimestamp) { this.lastAddedTimestamp = new Date().getTime()}
+        const t = new Date().getTime();
+        if( (t - this.lastAddedTimestamp) > (1000 / this.framerate) ) {
+          if(this.erasing) {
+            for(let i = 0; i < this.touchpoints.length; i++) {
+              const iter = this.touchpoints[i]
+              const d = Math.sqrt( Math.pow((iter.x-cur.x), 2) + Math.pow((iter.y-cur.y), 2) );
+              if(d < options.slack) {
+
+                let angle = Math.atan2(iter.y - this.centerpoint.y, this.centerpoint.x - iter.x) * ( 180 / Math.PI );
+                angle = angle < 0 ? angle + 360 : angle; 
+                angle -= 90;
+                const cd = Math.sqrt( Math.pow((this.centerpoint.x - iter.x), 2) + Math.pow((this.centerpoint.y - iter.y), 2) );
+
+                // //console.log(angle , cd)
+
+                const nx = this.centerpoint.x + (cd - options.eraserStrength) * Math.sin(angle * (Math.PI / 180));
+                const ny = this.centerpoint.y + (cd - options.eraserStrength) * Math.cos(angle * (Math.PI / 180) );
+
+                // //console.log(Math.round(nx), Math.round(ny))
+
+                // this.touchpoints.splice(i, 1);
+                this.touchpoints[i] = {x: nx, y: ny}
+              }
+            }
+          } else {
+              this.touchpoints.push(cur)
+          }
+          this.lastAddedTimestamp = t;
+        }
+        this.update();
+      }
+    }
+  }
   getCursorPosition(e) {
     const canvas = document.getElementById('cutCanvas')
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (window.innerWidth / rect.width) - 5;
     const y = (e.clientY - rect.top) * (window.innerHeight / rect.height) - 5;
     return { x, y }
+  }
+  getTouchPosition(e) {
+    const canvas = document.getElementById('cutCanvas')
+    const rect = canvas.getBoundingClientRect();
+    const tp = touchPosition(e);
+    const x = (tp.x - rect.left) * (window.innerWidth / rect.width) - 5;
+    const y = (tp.y - rect.top) * (window.innerHeight / rect.height) - 5;
+    return { x, y }
+    
   }
   b64ToUint8Array(b64Image) {
     const img = atob(b64Image.split(',')[1]);

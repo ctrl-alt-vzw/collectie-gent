@@ -3,6 +3,7 @@ const  {
   dist,
   dist3D,
   mousePosition,
+  touchPosition,
   millis,
   mapValues: map
 } = require('./helpers.js')
@@ -86,9 +87,10 @@ class Place {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    document.getElementById('placeCanvas').addEventListener("touchstart", (e) => this.mouseDownEvent(e), false);
-    document.getElementById('placeCanvas').addEventListener("touchmove", (e) => this.mouseMoveEvent(e), false);
-    document.getElementById('placeCanvas').addEventListener("touchend", (e) => this.mouseUpEvent(e), false);
+    document.getElementById('placeCanvas').addEventListener("touchstart", (e) => this.touchDownEvent(e), false);
+    document.getElementById('placeCanvas').addEventListener("touchmove", (e) => this.touchMoveEvent(e), false);
+    document.getElementById('placeCanvas').addEventListener("touchend", (e) => this.touchUpEvent(e), false);
+
     document.getElementById('placeCanvas').addEventListener("mousedown", (e) => this.mouseDownEvent(e), {passive:false})
     document.getElementById('placeCanvas').addEventListener("mouseup", (e) => this.mouseUpEvent(e), {passive:false})
     document.getElementById('placeCanvas').addEventListener("mousemove", (e) => this.mouseMoveEvent(e), {passive:false})
@@ -151,8 +153,33 @@ class Place {
     }
   }
   mouseUpEvent(e) {
-    this.dragging = false;
+    this.dragging = false
+  }
+  touchMoveEvent(e) {
+    if(this.itemToDrop && this.dragging) {
+      this.itemToDrop.x = touchPosition(e).x
+      this.itemToDrop.y = touchPosition(e).y + this.offset
 
+      this.socket.send(JSON.stringify({
+        type: "itemMove",
+        payload: {
+          item: this.itemToDrop,
+          x: this.itemToDrop.x / this.scale,
+          y: this.itemToDrop.y / this.scale
+        }
+      }))
+
+      this.render();
+    }
+  }
+  touchDownEvent(e) {
+    const touchPos = touchPosition(e);
+    if(this.itemToDrop.clicked(touchPos)) {
+      this.dragging = true;
+    }
+  }
+  touchUpEvent(e) {
+    this.dragging = false
   }
 }
 

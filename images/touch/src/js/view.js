@@ -3,6 +3,7 @@ const  {
   dist,
   dist3D,
   mousePosition,
+  touchPosition,
   millis,
   mapValues: map
 } = require('./helpers.js')
@@ -70,9 +71,9 @@ class View {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    document.getElementById('viewCanvas').addEventListener("touchstart", (e) => this.mouseDownEvent(e), {passive:false});
-    document.getElementById('viewCanvas').addEventListener("touchmove", (e) => this.mouseMoveEvent(e), {passive:false});
-    document.getElementById('viewCanvas').addEventListener("touchend", (e) => this.mouseUpEvent(e), {passive:false});
+    document.getElementById('viewCanvas').addEventListener("touchstart", (e) => this.touchDownEvent(e), {passive:false});
+    document.getElementById('viewCanvas').addEventListener("touchmove", (e) => this.touchMoveEvent(e), {passive:false});
+    document.getElementById('viewCanvas').addEventListener("touchend", (e) => this.touchUpEvent(e), {passive:false});
 
     document.getElementById('viewCanvas').addEventListener("mousedown", (e) => this.mouseDownEvent(e))
     document.getElementById('viewCanvas').addEventListener("mouseup", (e) => this.mouseUpEvent(e))
@@ -114,6 +115,30 @@ class View {
     this.dragging = true;
   }
   mouseUpEvent(e) {
+    this.dragging = false;
+
+  }
+  touchMoveEvent(e) {
+    if(this.dragging) {      
+      const touchPos = touchPosition(e);
+      const scalar = 1;
+      this.draggedOffset.x -= (this.lastMousePosition.x - touchPos.x) * scalar;
+      this.draggedOffset.y -= (this.lastMousePosition.y - touchPos.y) * scalar;
+
+      if(this.draggedOffset.x < -maxXDrag) { this.draggedOffset.x = -maxXDrag;}
+      if(this.draggedOffset.x > maxXDrag) { this.draggedOffset.x = maxXDrag;}
+
+      
+      this.lastMousePosition = touchPos;
+      this.render();
+    }
+  }
+  touchDownEvent(e) {
+    const touchPos = touchPosition(e);
+    this.lastMousePosition = touchPos;
+    this.dragging = true;
+  }
+  touchUpEvent(e) {
     this.dragging = false;
 
   }

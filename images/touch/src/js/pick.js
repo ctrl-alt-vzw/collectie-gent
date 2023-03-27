@@ -2,6 +2,7 @@ const {
   dist,
   dist3D,
   mousePosition,
+  touchPosition,
   millis,
   mapValues: map
 } = require('./helpers.js')
@@ -32,7 +33,15 @@ let zay = 0;
 let mouseDown = false;
 let mouseStart = { x: -1, y: -1};
 let mouseDifference = { x: 0, y: 0 };
+
+let touchDown = false;
+let touchStart = { x: -1, y: -1};
+let touchDifference = { x: 0, y: 0 };
+let touchLastPosition = { x: 0, y: 0 };
+
+
 let ticking = false;
+
 let mousewheelMillis = millis();
 let adjustScale = false;
 let containerWidth = 2000;
@@ -119,13 +128,65 @@ let numImagesLoading = 0;
     //   e.preventDefault();
     // }, {passive:false})
 
-    document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.mouseDownEvent(e), {passive:false});
-    document.getElementById("pickCanvas").addEventListener("touchmove", (e) => this.mouseMoveEvent(e), {passive:false});
-    document.getElementById("pickCanvas").addEventListener("touchend", (e) => this.mouseUpEvent(e), {passive:false});
+    document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.touchDownEvent(e));
+    document.getElementById("pickCanvas").addEventListener("touchmove", (e) => this.touchMoveEvent(e));
+    document.getElementById("pickCanvas").addEventListener("touchend", (e) => this.touchUpEvent(e));
     document.getElementById("pickCanvas").addEventListener("mousedown", (e) => this.mouseDownEvent(e))
     document.getElementById("pickCanvas").addEventListener("mouseup", (e) => this.mouseUpEvent(e))
     document.getElementById("pickCanvas").addEventListener("mousemove", (e) => this.mouseMoveEvent(e))
   }
+
+  touchMoveEvent(e) {
+    touchLastPosition = touchPosition(e);
+    console.log('moving', touchLastPosition, ticking)
+      window.requestAnimationFrame(() => {
+        console.log("adjusting")
+        this.adjustPosition(e);
+      });
+  }
+  touchUpEvent(e) {
+    const mp = touchLastPosition;
+    const c = document.getElementById("infoContainer");
+    const rect = c.getBoundingClientRect();
+
+    if(mp.x > rect.left && mp.y < rect.bottom) { 
+      console.log('over overlay')
+    } else {
+       
+      e.preventDefault();
+      touchDown = false;
+      vpx = vpx + svpx;
+      vpy = vpy + svpy;
+
+      lax = lax - svpx;
+      lay = lay - svpy;
+      
+      if(Math.abs(touchDifference.x + touchDifference.y) < 10) {
+        console.log('isClick')
+        this.handleClick(mp)
+      }
+      touchStart = {x: -1, y:-1};
+      touchDifference = { x: 0, y: 0 };
+ 
+    }
+  }
+  touchDownEvent(e) {
+    console.log('down', touchPosition(e))
+
+    const mp = touchPosition(e);
+    const c = document.getElementById("infoContainer");
+    const rect = c.getBoundingClientRect();
+
+    if(mp.x > rect.left && mp.y < rect.bottom) { 
+    } else {
+      e.preventDefault();
+      touchDown = true;
+      svpx = 0;
+      svpy = 0;
+ 
+    }
+  }
+
   mouseMoveEvent(e) {
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -197,11 +258,11 @@ let numImagesLoading = 0;
       }
     })
     if(options.length > 0) {
-      //console.log(options)
+      console.log(options)
       highlighted = options[options.length - 1]
       this.renderInformation(highlighted);
     } else {
-      //console.log("nothing to select")
+      console.log("nothing to select")
       document.getElementById("infoContainer").innerHTML = `        
         <p id="loaded"></p> 
         <img src="#" id="infoImage"/>
@@ -278,6 +339,19 @@ let numImagesLoading = 0;
 
       svpx = mouseDifference.x * scalar;
       svpy = mouseDifference.y * scalar;
+
+      this.render();
+    }
+    if(touchDown) {
+      const tp = touchPosition(e);
+      console.log('handling touch move'. tp)
+      const scalar = 0.15;
+      if(touchStart.y < 0 && touchStart.x < 0) { touchStart = tp }
+      touchDifference.x = tp.x - touchStart.x;
+      touchDifference.y = tp.y - touchStart.y;
+
+      svpx = touchDifference.x * scalar;
+      svpy = touchDifference.y * scalar;
 
       this.render();
     }
@@ -373,6 +447,13 @@ let numImagesLoading = 0;
     mouseDown = false;
     mouseStart = { x: -1, y: -1};
     mouseDifference = { x: 0, y: 0 };
+
+    touchDown = false;
+    touchStart = { x: -1, y: -1};
+    touchDifference = { x: 0, y: 0 };
+    touchLastPosition = { x: 0, y: 0 };
+
+
     ticking = false;
     mousewheelMillis = millis();
     adjustScale = false;

@@ -11,6 +11,16 @@ function mousePosition(e) {
     return { x: posX, y: posY}
 }
 
+function touchPosition(e) {
+  if(e.touches.length > 0) {
+    const touch = e.touches[0]
+    var posX = touch.clientX;
+    var posY = touch.clientY;
+    // console.log(posX, posY)
+    return { x: posX, y: posY}
+  }
+}
+
 function millis() {
   return new Date().getTime();
 }
@@ -23,6 +33,7 @@ module.exports =  {
   dist,
   dist3D,
   mousePosition,
+  touchPosition,
   millis,
   mapValues
 }
