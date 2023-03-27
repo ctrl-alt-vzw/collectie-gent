@@ -62,6 +62,7 @@ let numImagesLoading = 0;
   init() {
     const canvas = document.getElementById('pickCanvas');
     document.getElementById("selectionBtn").addEventListener('click', e => this.clickHandler(e))
+    document.getElementById("selectionBtn").addEventListener('touchend', e => this.clickHandler(e))
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
