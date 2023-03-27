@@ -15,7 +15,7 @@ const maxXDrag = 100;
 class View {
   constructor(selected, CTACB) {
     this.renderHTML();
-    this.scale = window.innerWidth / 2000;
+    this.scale = window.innerWidth / 1000;
     this.collage = [];
     this.fetchData();
 
