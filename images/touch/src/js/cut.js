@@ -21,6 +21,11 @@ let scaleFactor = 1;
 module.exports = class Cut {
   constructor(selected, cutDoneCallback, panic) {
     //console.log(selected)
+
+    if(!selected) {
+      panic();
+    }
+
     this.mouseDown = false;
     this.touchpoints = [];
     this.outlinePoints = [];

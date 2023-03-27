@@ -3,6 +3,12 @@ const Cut = require("./js/cut.js");
 const Place = require('./js/place.js');
 const View  = require('./js/view.js');
 
+
+let countDown = setTimeout(() => {
+
+  panic();
+}, 1000 * 60 * 5);
+
 const states = {
   PICK: 0,
   CUT: 1,
@@ -13,6 +19,17 @@ const states = {
 console.log("Render");
 window.addEventListener('DOMContentLoaded', (event) => {
   render();
+
+
+  document.getElementById("canvasContainer").addEventListener("click", (e) => {
+    console.log("touched")
+    clearTimeout(countDown)
+    countDown = setTimeout(() => {
+
+      panic();
+    }, 1000 * 60 * 5);
+
+  })
 });
 
 function selectionDone(selection) {

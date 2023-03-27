@@ -52,9 +52,15 @@ let numImagesLoading = 0;
   
   init() {
     const canvas = document.getElementById('pickCanvas');
+    document.getElementById("selectionBtn").addEventListener('click', e => this.clickHandler(e))
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+
     this.initMovements();
+    
+
     if(items.length == 0) { 
       if(document.getElementById("loading")) {
         document.getElementById("loading").style.display = "block"
@@ -97,27 +103,11 @@ let numImagesLoading = 0;
 
     const ratio = innerWidth / containerWidth;
 
-    vpx = 0;
-    vpy = 0;
+    vpx = Math.round(Math.random() * 1000) - 500;
+    vpy = Math.round(Math.random() * 1000) - 500;
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
     vzl = 1;
-
-    // check if render is needed
-    
-    // window.addEventListener("wheel", (e) => {
-    //   mousewheelMillis = millis();
-
-    //   adjustScale = true;
-    //   vzl += e.deltaY * -0.01;
-    //   vzl = Math.min(Math.max(.1, vzl), 10);
-      
-    //   SCALE = vzl;
-    //   SIZE = 200 * SCALE;
-    //   // RANGE = map(vzl, 0.1, 10, 200, 20);
-    //   this.render();
-    //   e.preventDefault();
-    // }, {passive:false})
 
     document.getElementById("pickCanvas").addEventListener("touchstart", (e) => this.mouseDownEvent(e), {passive:false});
     document.getElementById("pickCanvas").addEventListener("touchmove", (e) => this.mouseMoveEvent(e), {passive:false});
@@ -180,6 +170,7 @@ let numImagesLoading = 0;
 
   handleClick(e) {
     if(highlighted) {
+      console.log("used to be ", highlighted)
       highlighted = null;
     }
     const threshold = 20;
@@ -205,7 +196,8 @@ let numImagesLoading = 0;
       document.getElementById("infoContainer").innerHTML = `        
         <p id="loaded"></p> 
         <img src="#" id="infoImage"/>
-        <h1 id="infoTitle"></h1>
+        <h1 id="infoTitle"></h1>        
+        <p id="firstInfo"><i>Hier kan je alle items terugvinden die de digitale collecties bevatten. Door te slepen kan je heen en weer bewegen, door op een item te drukken krijg je meer informatie en kan je deze selecteren om toe te voegen aan de collage door de zwarte knop.</i></p>
         <p id="infoParagraph">Duid een item aan om meer te weten te komen</p>
         <button id="selectionBtn">Selecteer</button>
     `;  
@@ -216,15 +208,10 @@ let numImagesLoading = 0;
   }
 
   renderInformation(h) {
+    document.getElementById("firstInfo").style.display = 'none';    
     if(h) {
         document.getElementById("infoImage").style.display= `block`;
         document.getElementById("selectionBtn").style.display=  `block`;
-
-        document.getElementById("selectionBtn").addEventListener('click', (e) => {
-          e.preventDefault()
-          this.cleanup();
-          this.selectionDone(h)
-        } )
     }
     fetch("https://api.collage.gent/annotation/"+h.id)
       .then((r) => r.json())
@@ -235,8 +222,20 @@ let numImagesLoading = 0;
       .catch((err) => {
         console.error(err)
       })
-    document.getElementById("infoImage").src=  `https://media.collage.gent/pictograms/${h.imageURL}`;
+    const image = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
+    document.getElementById("infoImage").src= image;
     document.getElementById("infoTitle").innerHTML=  "loading";
+  }
+
+  clickHandler(e) {
+    console.log("clicked")
+    e.preventDefault()
+
+    let h = highlighted;
+    this.cleanup();
+
+    console.log(h)
+    this.selectionDone(h)
   }
 
   fetchData() {
@@ -335,6 +334,7 @@ let numImagesLoading = 0;
         <p id="loaded"></p> 
         <img src="#" id="infoImage"/>
         <h1 id="infoTitle"></h1>
+        <p id="firstInfo"><i>Hier kan je alle items terugvinden die de digitale collecties bevatten. Door te slepen kan je heen en weer bewegen, door op een item te drukken krijg je meer informatie en kan je deze selecteren om toe te voegen aan de collage door de zwarte knop.</i></p>
         <p id="infoParagraph">Duid een item aan om meer te weten te komen</p>
         <button id="selectionBtn">Selecteer</button>
     `;  
@@ -350,7 +350,6 @@ let numImagesLoading = 0;
     document.getElementById("infoContainer").style.display = "none";
     document.getElementById("infoContainer").innerHTML = "";
 
-    document.getElementById("loading").style.display = "none"
 
     c = {}
 
@@ -359,7 +358,8 @@ let numImagesLoading = 0;
     SIZE = 200 * SCALE;
     RANGE = 1000;
 
-    vpx, vpy, vzl = 1;
+
+    vpx,vpy = 0
     svpx = 0;
     svpy = 0;
     lax = 0;
