@@ -180,6 +180,8 @@ let numImagesLoading = 0;
     const c = document.getElementById("infoContainer");
     const rect = c.getBoundingClientRect();
 
+
+
     if(mp.x > rect.left && mp.y < rect.bottom) { 
     } else {
       e.preventDefault();
@@ -187,6 +189,9 @@ let numImagesLoading = 0;
       svpx = 0;
       svpy = 0;
  
+      touchLastPosition = touchPosition(e);
+      this.adjustPosition(e);
+    
     }
   }
 
