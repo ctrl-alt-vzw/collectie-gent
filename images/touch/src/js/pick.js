@@ -290,9 +290,9 @@ let numImagesLoading = 0;
 
     // document.getElementById("loaded").innerHTML = numImagesLoading;
 
-    ctx.beginPath();
-    ctx.fillStyle = "red"
-    ctx.fillRect(lax + vpx, lay + vpy, 10, 10); 
+    // ctx.beginPath();
+    // ctx.fillStyle = "red"
+    // ctx.fillRect(lax + vpx, lay + vpy, 10, 10); 
 
 
     if(adjustScale) {
@@ -330,7 +330,7 @@ let numImagesLoading = 0;
   }
 
   renderHTML() {
-    document.getElementById("canvasContainer").insertAdjacentHTML("beforeend", `<div id="loading">LOADING</div>`)
+    // document.getElementById("canvasContainer").insertAdjacentHTML("beforeend", `<div id="loading">LOADING</div>`)
     document.getElementById("infoContainer").innerHTML = `
         <p id="loaded"></p> 
         <img src="#" id="infoImage"/>

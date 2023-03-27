@@ -49,7 +49,7 @@ class Item {
             this.width = 200 * r * this.scale;
             this.height = 200 * this.scale;
           }
-          app.render()
+          // app.render()
         }, false);
         this.img.addEventListener('error', () => {
           this.img = null;
