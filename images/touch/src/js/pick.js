@@ -62,7 +62,7 @@ let numImagesLoading = 0;
   init() {
     const canvas = document.getElementById('pickCanvas');
     document.getElementById("selectionBtn").addEventListener('click', e => this.clickHandler(e))
-    document.getElementById("selectionBtn").addEventListener('touchend', e => this.clickHandler(e))
+    // document.getElementById("selectionBtn").addEventListener('touchstart', e => this.clickHandler(e))
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -113,8 +113,8 @@ let numImagesLoading = 0;
 
     const ratio = innerWidth / containerWidth;
 
-    vpx = 0;
-    vpy = 0;
+    vpx = Math.round(Math.random() * 1000) - 500;
+    vpy = Math.round(Math.random() * 1000) - 500;
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
     vzl = 1;
