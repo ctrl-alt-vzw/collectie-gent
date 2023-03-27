@@ -112,9 +112,10 @@ let numImagesLoading = 0;
     const innerWidth = window.innerWidth;
 
     const ratio = innerWidth / containerWidth;
-
-    vpx = 0;
-    vpy = 0;
+    // vpx = 0;
+    // vpy = 0;
+    vpx = Math.round(Math.random() * 2000) - 1000;
+    vpy = Math.round(Math.random() * 2000) - 1000;
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
     vzl = 1;
