@@ -11,7 +11,7 @@ body {
   position:  absolute;
   width: 100vw;
   height: 100vh;
-  background-color: #eee;
+  background-color: #000000;
   border:  1px solid #000;
 }
 
@@ -19,61 +19,6 @@ body {
   width:  100%;
   height: 100%;
   float:  left;
-}
-#loading {
-  width: 100vw;
-  position: fixed;
-  top: calc(50vh - 20px);
-  left: 0px;
-  height: 40px;
-  line-height: 40px;
-  background-color: #fff;
-  text-align: center;
-}
-#infoContainer {
-  width: 400px;
-  display: none;
-  background-color: #fff;
-  position: fixed;
-  left: calc(100vw - 450px);
-  top: 50px;
-  border: 1px solid #eee;
-  box-sizing: border-box;
-  padding: 20px;
-}
-#infoContainer > img {
-  width: 100%;
-  display: none;
-  margin-bottom: 10px;
-}
-#infoContainer > h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-#infoContainer > p {
-  font-size: 1em;
-  margin-bottom: 10px;
-}
-
-button {
-  width: 100%;
-  background: #000;
-  color: #fff;
-  border: 0px;
-  padding: 20px;
-  height: 60px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
-#selectionBtn {
-  display: none;
-}
-
-
-body {
-  background-color: #0000;
-  overflow-x: hidden;
 }
 
 
@@ -121,7 +66,7 @@ button {
 /* cutter */
 
 .canvas {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 #normal_canvas {
@@ -195,6 +140,12 @@ button {
 #normal_canvas,
 #hiddenCanvasContainer {
   display: none;
+}
+
+#canvasContainer {
+  position: absolute;
+  width: 800px;
+  left: 400px;
 }
 
 

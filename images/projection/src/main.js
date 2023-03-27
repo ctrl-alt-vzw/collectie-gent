@@ -5,6 +5,7 @@ const View  = require('./js/view.js');
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
+  console.log("loaded")
   render();
 });
 

@@ -12,12 +12,17 @@ const  Item = require('./Item.js')
 const maxXDrag = 100;
 
 
+
 class View {
   constructor() {
     this.renderHTML();
-    this.scale = window.innerWidth / 2100;
+    console.log(document.getElementById("canvasContainer"))
+    this.scale = document.getElementById("canvasContainer").clientWidth / 2100;
+    console.log(this.scale)
     this.collage = [];
+
     this.fetchData();
+    
     this.draggedOffset = { x:50, y: 0}
 
     this.activeItem = null;
@@ -34,21 +39,24 @@ class View {
     // Listen for messages
     this.socket.addEventListener('message', (event) => {
       try {
-        // console.log(event.data);
-        const pa = JSON.parse(event.data);
-        this.manageNewItem(JSON.parse(event.data));
+        if(event.data !== "pong" ) {
+          console.log(event.data);
+          const pa = JSON.parse(event.data);
+          this.manageNewItem(JSON.parse(event.data));
+        }
       }
       catch(e) {
         console.log(e);
       }
     });
+
+
+    setInterval(() => this.renderClippings(), 1000)
     
   }
   manageNewItem(item) {
 
     if(this.activeItem) {
-      // console.log(this.activeItem.UUID);
-      // console.log(item);
       if(this.activeItem.UUID == item.payload.item.UUID) {
         this.activeItem.updatePos(item.payload.x, item.payload.y)
       } else {
@@ -60,7 +68,7 @@ class View {
             this.maxY = i.y * this.scale; 
           }
         })
-        this.offset = this.maxY - (window.innerHeight/2) - 100;
+        this.offset = this.maxY - (document.getElementById("canvasContainer").innerHeight/2) - 100;
 
         const i = new Item(item.payload.item, this.scale, this.offset);
         i.loadImage(this, true);
@@ -80,7 +88,7 @@ class View {
     fetch("https://api.collage.gent/clipping")
       .then((r) => r.json())
       .then((data) => {
-        //console.log(data)
+        console.log(data)
         data.sort((a, b) => {
           return b.id - a.id
         })
@@ -90,21 +98,22 @@ class View {
             this.maxY = i.y * this.scale; 
           }
         })
-        this.offset = this.maxY - (window.innerHeight/2) - 100;
+        this.offset = this.maxY - (document.getElementById("canvasContainer").clientHeight/2) - 100;
 
         data.forEach((item, key) => {
           const i = new Item(item, this.scale, this.offset);
           i.loadImage(this, true);
           this.collage.push(i);
         })
-        this.render();
+        this.renderClippings();
       })
 
   }
-  render() {
+  renderClippings() {
     const canvas = document.getElementById('viewCanvas');
     const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -121,7 +130,7 @@ class View {
   componentDidMount( ) {
     const canvas = document.getElementById('viewCanvas');
     canvas.style.display = "block";
-    canvas.width = window.innerWidth;
+    canvas.width = document.getElementById("canvasContainer").clientWidth + 50;
     canvas.height = window.innerHeight;
 
   }

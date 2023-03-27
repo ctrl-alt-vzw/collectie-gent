@@ -232,3 +232,8 @@ button {
 }
 
 
+i {
+  font-style: italic;
+  line-height: 1.3em;
+  color: #aaa;
+}
