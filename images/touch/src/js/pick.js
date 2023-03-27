@@ -115,18 +115,18 @@ let numImagesLoading = 0;
     vpx = 0;
     vpy = 0;
     
-    svpx = Math.round(Math.random() * 2000) - 1000;
-    svpy = Math.round(Math.random() * 2000) - 1000;
+    svpx = Math.round(Math.random() * 1000) - 500;
+    svpy = Math.round(Math.random() * 1000) - 500;
     
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
     vzl = 1;
 
-vpx = vpx + svpx;
-      vpy = vpy + svpy;
+    vpx = vpx + svpx;
+    vpy = vpy + svpy;
 
-      lax = lax - svpx;
-      lay = lay - svpy;
+    lax = lax - svpx;
+    lay = lay - svpy;
       
 	  
 
@@ -296,7 +296,9 @@ vpx = vpx + svpx;
       .catch((err) => {
         console.error(err)
       })
-    const image = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
+    const image = `https://media.collage.gent/uploads/200/${h.imageURL}`;
+
+    // const image = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
     document.getElementById("infoImage").src= image;
     document.getElementById("infoTitle").innerHTML=  "loading";
   }
