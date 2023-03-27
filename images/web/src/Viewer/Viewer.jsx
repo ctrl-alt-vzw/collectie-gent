@@ -13,7 +13,7 @@ function Viewer(props) {
   const [data, setData] = useState([]);
   const [useCards, setUseCards] = useState(getCookie("useCards"));
   const [yOffset, setYOffset] = useState([]);
-  const [scale, setScale] = useState((window.innerWidth - margin*2) / 2000)
+  const [scale, setScale] = useState((window.innerWidth - margin*2) / 1300)
   const [xOffset, ] = useState(margin)
 
   useEffect(() => {
