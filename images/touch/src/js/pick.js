@@ -305,9 +305,15 @@ let numImagesLoading = 0;
         console.error(err)
       })
     const image = `https://media.collage.gent/pictograms/${h.imageURL}`;
-    // const image = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
     document.getElementById("infoImage").src= image;
-    document.getElementById("infoTitle").innerHTML=  "loading";
+    
+    const highRes = new Image();
+    highRes.src = `https://api.collectie.gent/iiif/imageiiif/3/${h.imageURL}/full/^1000,/0/default.jpg`
+    highRes.onload = function() {
+      console.log("loaded")
+      document.getElementById("infoImage").src= highRes.src;
+
+    }
   }
 
   clickHandler(e) {
