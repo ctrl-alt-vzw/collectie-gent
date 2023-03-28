@@ -21,7 +21,7 @@ function Viewer(props) {
     fetch(`https://api.collage.gent/clipping`)
       .then(r => r.json())
       .then((data) => {
-        setYOffset(calculateOffset(data)) 
+        setYOffset(calculateOffset(data) + 300) 
         const sorted = data.sort((a,b) => b.id - a.id)
         setData(sorted)
       })

@@ -41,6 +41,7 @@ module.exports = class Cut {
     this.erasing = false;
     const image = `https://api.collectie.gent/iiif/imageiiif/3/${selected.imageURL}/full/^1000,/0/default.jpg`
     
+    
     this.imageURI = image;
     this.originID = selected.received.originID;
     this.collection = selected.received.collection;

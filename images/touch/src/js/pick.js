@@ -6,7 +6,7 @@ const {
   millis,
   mapValues: map
 } = require('./helpers.js')
-const  vertices = require('./data/vertex.js')
+const  vertices = require('./data/vertex2D.js')
 
 
 let items = [];
@@ -326,13 +326,16 @@ let numImagesLoading = 0;
     // fetch("./data/vertex.json")
     //   .then(r => r.json())
     //   .then((data) => {
+
+      console.log(vertices)
+
         const data = vertices;
         const capture = [];
-        data.rows.forEach((item, index) => {
+        data.forEach((item, index) => {
           const c = new Item(item);
           capture.push(c);
 
-          if(index == data.rows.length-1) {
+          if(index == data.length-1) {
             items = capture.sort((a, b) => b.sortID - a.sortID);
             sorted = items;
             
@@ -488,9 +491,8 @@ class Item {
     this.vertexID = data.UUID;
     this.id = data.annotationUUID;
     this.annotation = data.annotation;
-    this.bx = data.x * 100;
-    this.by = data.y * 100;
-    this.bz = data.z * 100;
+    this.bx = data.x * 50;
+    this.by = data.y * 50;
     this.w = data.width;
     this.h = data.height;
     this.imageURL = data.gentImageURI;
@@ -501,7 +503,7 @@ class Item {
     // this.getImage();
     this.updateStats();
     this.inView = false;
-    this.colordata = data.colordata.colors[0];
+    this.colordata = JSON.parse(data.colordata).colors[0];
 
 
   }
