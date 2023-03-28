@@ -48,6 +48,15 @@ let containerWidth = 2000;
 
 let highlighted = null;
 
+const baseInfoBox = `
+    <p id="loaded"></p> 
+    <img src="#" id="infoImage"/>
+    <h1 id="AIInfoTitle"></h1>
+    <h1 id="infoTitle"></h1>
+    <p id="firstInfo"><i>Hier kan je alle items terugvinden die de digitale collecties bevatten. Door te slepen kan je heen en weer bewegen, door op een item te drukken krijg je meer informatie en kan je deze selecteren om toe te voegen aan de collage door de zwarte knop.</i></p>
+    <p id="infoParagraph">Duid een item aan om meer te weten te komen</p>
+    <button id="selectionBtn">Selecteer</button>
+`
 
 let numImagesLoading = 0;
  class Pick {
@@ -272,14 +281,7 @@ let numImagesLoading = 0;
       this.renderInformation(highlighted);
     } else {
       console.log("nothing to select")
-      document.getElementById("infoContainer").innerHTML = `        
-        <p id="loaded"></p> 
-        <img src="#" id="infoImage"/>
-        <h1 id="infoTitle"></h1>        
-        <p id="firstInfo"><i>Hier kan je alle items terugvinden die de digitale collecties bevatten. Door te slepen kan je heen en weer bewegen, door op een item te drukken krijg je meer informatie en kan je deze selecteren om toe te voegen aan de collage door de zwarte knop.</i></p>
-        <p id="infoParagraph">Duid een item aan om meer te weten te komen</p>
-        <button id="selectionBtn">Selecteer</button>
-    `;  
+      document.getElementById("infoContainer").innerHTML = baseInfoBox;  
     }
     this.render();
 
@@ -296,7 +298,8 @@ let numImagesLoading = 0;
       .then((r) => r.json())
       .then((data) => {
         document.getElementById("infoTitle").innerHTML=  data[0].originalAnnotation;
-        document.getElementById("infoParagraph").innerHTML= `${data[0].collection}:${data[0].originID}`
+        document.getElementById("AIInfoTitle").innerHTML=  `<mark>${data[0].annotation}</mark>`;
+        document.getElementById("infoParagraph").innerHTML= `collectie: ${data[0].collection}<br />ID:${data[0].originID}`
       })
       .catch((err) => {
         console.error(err)
@@ -426,14 +429,7 @@ let numImagesLoading = 0;
 
   renderHTML() {
     // document.getElementById("canvasContainer").insertAdjacentHTML("beforeend", `<div id="loading">LOADING</div>`)
-    document.getElementById("infoContainer").innerHTML = `
-        <p id="loaded"></p> 
-        <img src="#" id="infoImage"/>
-        <h1 id="infoTitle"></h1>
-        <p id="firstInfo"><i>Hier kan je alle items terugvinden die de digitale collecties bevatten. Door te slepen kan je heen en weer bewegen, door op een item te drukken krijg je meer informatie en kan je deze selecteren om toe te voegen aan de collage door de zwarte knop.</i></p>
-        <p id="infoParagraph">Duid een item aan om meer te weten te komen</p>
-        <button id="selectionBtn">Selecteer</button>
-    `;  
+    document.getElementById("infoContainer").innerHTML = baseInfoBox;  
     document.getElementById("infoContainer").style.display = "block";
     document.getElementById("pickCanvas").style.display = "block";
 

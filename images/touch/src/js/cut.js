@@ -66,9 +66,9 @@ module.exports = class Cut {
       <div id="hiddenCanvasContainer"></div>
     `);
     document.getElementById("headerContainer").innerHTML = `
-      <button id="saveBtn">Save</button>
-      <button id="restartBtn">Restart</button>
-      <button id="backBtn">Back</button>`;
+      <button id="saveBtn">Klaar!</button>
+      <button id="restartBtn">Opnieuw</button>
+      <button id="backBtn">Terug</button>`;
   }
   cleanup() {
     const canvas = document.getElementById("cutCanvas");

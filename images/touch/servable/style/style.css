@@ -44,23 +44,38 @@ body {
   width: 100%;
   display: none;
   margin-bottom: 10px;
+  height: 350px;
+  object-fit: cover;
 }
 #infoContainer > h1 {
   font-size: 2em;
   margin-bottom: 10px;
+
+
 }
 #infoContainer > p {
   font-size: 1em;
+  color: #aaa;
   margin-bottom: 10px;
+  line-height: 20px;
 }
 
+#infoTitle {
+  font-size: 2em;
+}
+#AIInfoTitle {
+  color: #000;
+  font-size: 1em!important;
+  margin-bottom: 20px;
+/*  background-color: #FFF447;*/
+}
 button {
   width: 100%;
   background: #000;
   color: #fff;
   border: 0px;
-  padding: 20px;
-  height: 60px;
+  padding: 10px 20px;
+  height: 40px;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
@@ -237,11 +252,13 @@ i {
   line-height: 1.3em;
   color: #aaa;
 }
+
 #panicBtn {
   position: fixed;
   top: 20px;
   left: 20px;
-  background-color: #aaa;
+/*  background-color: #eee;*/
+  opacity: 0.5;
   color: #fff;
   padding: 10px 20px;
   box-sizing: border-box;
