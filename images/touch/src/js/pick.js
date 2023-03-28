@@ -6,7 +6,7 @@ const {
   millis,
   mapValues: map
 } = require('./helpers.js')
-const  vertices = require('./data/vertex2D.js')
+const  vertices = require('./data/vertex50.js')
 
 
 let items = [];
