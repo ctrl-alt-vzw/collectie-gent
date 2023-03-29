@@ -32,17 +32,19 @@ class View {
     this.socket = new WebSocket("wss://socket.collage.gent");
     // Connection opened
     this.socket.addEventListener('open', (event) => {
-      console.log("opened");
+        console.log("opened");
         this.socket.send("ping");
     });
 
     // Listen for messages
     this.socket.addEventListener('message', (event) => {
       try {
-        if(event.data !== "pong" ) {
-          console.log(event.data);
+        if(event.data.substring(0, 8) !== "clipping" && event.data !== "pong" ) {
           const pa = JSON.parse(event.data);
           this.manageNewItem(JSON.parse(event.data));
+        }
+        if(event.data.substring(0, 8) == "clipping" ) {
+          console.log("clipping added")
         }
       }
       catch(e) {
@@ -68,11 +70,14 @@ class View {
             this.maxY = i.y * this.scale; 
           }
         })
-        this.offset = this.maxY - (document.getElementById("canvasContainer").innerHeight/2) - 100;
+        // this.offset = this.maxY - (document.getElementById("canvasContainer").innerHeight/2) - 100;
+
+        console.log("new item")
 
         const i = new Item(item.payload.item, this.scale, this.offset);
         i.loadImage(this, true);
         this.activeItem = i;
+
       }
     } else {
       const i = new Item(item.payload.item, this.scale, this.offset);
@@ -80,7 +85,7 @@ class View {
       this.activeItem = i;
     }
 
-    this.render();
+    this.renderClippings();
 
 
   }
@@ -88,7 +93,7 @@ class View {
     fetch("https://api.collage.gent/clipping")
       .then((r) => r.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         data.sort((a, b) => {
           return b.id - a.id
         })
