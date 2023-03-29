@@ -41,13 +41,13 @@ class Item {
         // this.img.setAttribute('crossOrigin', 'Anonymous'); 
         this.img.addEventListener('load', () => {
           if(this.img.height > this.img.width) {
+            const r = this.img.width / this.img.height;
+            this.width = 200 * r * this.scale;
+            this.height = 200  * this.scale;
+          } else {
             const r = this.img.height / this.img.width;
             this.width = 200 * this.scale;
             this.height = 200 * r * this.scale;
-          } else {
-            const r = this.img.width / this.img.height;
-            this.width = 200 * r * this.scale;
-            this.height = 200 * this.scale;
           }
           // app.render()
         }, false);
