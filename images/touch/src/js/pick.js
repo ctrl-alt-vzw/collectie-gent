@@ -59,14 +59,15 @@ const baseInfoBox = `
 `
 
 let numImagesLoading = 0;
-
-const minimap = new Minimap();
+let minimap;
 class Pick {
   constructor(selectionEvent, panic) {
     this.selectionDone = selectionEvent;
     this.renderHTML()
     this.init()
     this.panic = panic;
+
+    
 
   }
   
@@ -78,6 +79,7 @@ class Pick {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    minimap = new Minimap();
 
     this.initMovements();
     
@@ -454,6 +456,10 @@ class Pick {
 
     document.getElementById("infoContainer").style.display = "none";
     document.getElementById("infoContainer").innerHTML = "";
+
+    document.getElementById("minimap").style.display = "none";
+    document.getElementById("marker").style.display = "none";
+    
 
 
     c = {}

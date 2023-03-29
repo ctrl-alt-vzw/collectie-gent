@@ -271,10 +271,12 @@ i {
   position: fixed;
   left: calc(100vw - 150px);
   top:  calc(100vh - 150px);
+  display: none;
 }
 #marker {
   background-color: #FFF447;
   border: 1px solid #aaa;
+  display: none;
   width: 4px;
   height: 4px;
   margin-left: -2px;
