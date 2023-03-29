@@ -7,7 +7,7 @@ const {
   mapValues: map
 } = require('./helpers.js')
 const  vertices = require('./data/vertex50.js')
-
+const Minimap = require('./Components/Minimap')
 
 let items = [];
 let sorted = [];
@@ -59,7 +59,9 @@ const baseInfoBox = `
 `
 
 let numImagesLoading = 0;
- class Pick {
+
+const minimap = new Minimap();
+class Pick {
   constructor(selectionEvent, panic) {
     this.selectionDone = selectionEvent;
     this.renderHTML()
@@ -124,8 +126,8 @@ let numImagesLoading = 0;
     vpx = 0;
     vpy = 0;
     
-    svpx = Math.round(Math.random() * 1000) - 500;
-    svpy = Math.round(Math.random() * 1000) - 500;
+    svpx = Math.round(Math.random() * 7500) - 3250;
+    svpy = Math.round(Math.random() * 7500) - 3250;
     
     lax = window.innerWidth / 2
     lay = window.innerHeight / 2;
@@ -414,6 +416,7 @@ let numImagesLoading = 0;
     }
     c.x = (lax+vpx);
     c.y = (lay+vpy);
+
     // only render the ones in view
     items.forEach((item) => { 
       if(dist(item, c) < RANGE * SCALE) {
@@ -431,6 +434,10 @@ let numImagesLoading = 0;
         item.renderImages(ctx);
       }
     });
+
+
+
+    minimap.updatePosition(vpx + svpx, vpy + svpy);
   }
 
   renderHTML() {
@@ -588,6 +595,5 @@ class Item {
     }
   }
 }
-
 
 module.exports = Pick;

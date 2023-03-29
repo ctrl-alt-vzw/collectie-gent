@@ -263,3 +263,21 @@ i {
   padding: 10px 20px;
   box-sizing: border-box;
 }
+
+#minimap {
+  background-color: #fafafa;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  left: calc(100vw - 150px);
+  top:  calc(100vh - 150px);
+}
+#marker {
+  background-color: #FFF447;
+  border: 1px solid #aaa;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  margin-top: -2px;
+  position: absolute;
+}
