@@ -120,4 +120,21 @@ export default async function createTables(pg) {
     }
   })
 
+  pg.schema.hasTable('logs').then(function(exists) {
+    if (!exists) {
+      return pg.schema.createTable('logs', function(t) {
+        t.increments('id').primary();
+        t.string('UUID', 1000);
+        t.string('service', 100);
+        t.string('message', 1000);
+        t.integer("validated").defaultTo(0);
+        t.timestamps(true, true);
+      })
+
+    } else {
+      console.log("tables logs exist")
+
+    }
+  })
+
 };

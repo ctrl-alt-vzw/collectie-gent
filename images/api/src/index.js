@@ -11,6 +11,7 @@ import error from './routes/error.js';
 import vertex from './routes/vertex.js';
 import vertex2D from './routes/vertex2D.js';
 import approval from './routes/approval.js';
+import logs from './routes/logs.js';
 
 import MQTTClient from './mqttClient.js';
 
@@ -67,6 +68,11 @@ app.get("/", async (req, res) => {
         "DELETE /error/[UUID]": "Delete a record",
         "POST /error": "Add a record, needs { originID, collection, x, y, imageURI }"
       },
+      "errors": {
+        "GET /logs": "display all records",
+        "DELETE /log/[UUID]": "Delete a record",
+        "POST /log": "Add a record, needs { service, message }"
+      },
       "vertex": {
         "GET /vertex": "display all records",
         "DELETE /vertex/[UUID]": "Delete a record",
@@ -88,7 +94,7 @@ app.get("/", async (req, res) => {
         "POST /approvals": "Add a record, needs { originID, annotationUUID, workerID, collection, approved (bool)}",
       }
     },
-    "version": "0.4"
+    "version": "1.0"
   })
 })
 
@@ -97,6 +103,7 @@ clipping(app, pg, mqttClient);
 error(app, pg);
 vertex(app, pg);
 vertex2D(app, pg);
+logs(app, pg);
 approval(app, pg, mqttClient);
 
 app.listen(port, () => {

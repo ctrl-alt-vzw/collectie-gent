@@ -90,6 +90,8 @@ services:
     ports:
       - 8086:3000
       - 8085:80
+    command: ["npm", "run", "serve"]
+
 
   mechanical:
     image: "$OWNER/collagemechanical:$VERSION"
