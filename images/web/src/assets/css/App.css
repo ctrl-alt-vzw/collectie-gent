@@ -162,6 +162,18 @@ body {
 
 .logoContainer {
   margin-top: 50px;
+  text-align: center;
+}
+
+.logoContainer > h1 {
+
+  display: block;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9em;
+}
+.logoContainer > img {
+  max-height: 70px;
 }
 .ctaContainer {
   text-align: center;
@@ -188,4 +200,14 @@ body {
   font-size: .8em;
   text-decoration: none;
 
+}
+
+ @media only screen and (min-width: 600px) {
+  #menuOverlay {
+    width: 400px;
+    left: calc(100vw - 400px);
+    border: 1px solid #eee;
+    height: auto;
+    top: 49px;
+  }
 }

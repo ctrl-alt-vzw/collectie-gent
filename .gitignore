@@ -3,6 +3,7 @@
 /_volumes
 /_uploads
 /_items
+/_pictograms
 /_logs
 .env
 .VSCodeCounter/
@@ -11,7 +12,6 @@ package-*.json
 scripts/ai/*/_volumes
 tools/storeImageInformation
 tools/fillOriginalInfo
-/_pictograms
 
 images/touch/out/
 images/touch/servable/local

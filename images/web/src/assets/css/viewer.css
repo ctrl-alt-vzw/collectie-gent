@@ -71,10 +71,10 @@
 #overlay {
   position: fixed;
   top: calc(100vh - 70px);
+  left: 0px;
   width: auto;
   height:70px;
   box-sizing: border-box;
-  left: 0px;
   text-align: center;
   padding: 25px 10px;
 /*  background-color: #fff;*/

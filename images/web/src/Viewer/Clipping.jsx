@@ -10,7 +10,7 @@ function Clipping(props) {
   const [metr, setMetr] = useState({})
   
 
-  console.log(props.clipping_data)
+  // console.log(props.clipping_data)
   useEffect(() => {
     let height = props.clipping_data.height;
     let width = props.clipping_data.width;
@@ -45,7 +45,7 @@ function Clipping(props) {
           width: `${metr.width}px`,
           height: `${metr.height}px`
         }}
-        alt={"clipped piece from a user in a collage"}
+        alt={"A clipping from a user, done on "+new Date(props.clipping_data.created_at).toLocaleDateString('nl-NL')}
       />
     </div>
   )

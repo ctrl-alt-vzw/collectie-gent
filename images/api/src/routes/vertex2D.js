@@ -3,20 +3,20 @@ import { generateUUID } from './../helpers.js'
 
 
 export default function vertex2D(app, pg) {
-  app.delete("/vertex2D/:uuid", async (req, res) => {
-    pg.delete().table("vertex2D").where({UUID: req.params.uuid}).returning("id").then((d) => {
-      if(d.length > 0) {
-        res.send({
-          message: "deleted",
-          id: d[0]
-        })
-      } else {
-        res.send({
-          message: "not found"
-        })
-      }
-    })
-  })
+  // app.delete("/vertex2D/:uuid", async (req, res) => {
+  //   pg.delete().table("vertex2D").where({UUID: req.params.uuid}).returning("id").then((d) => {
+  //     if(d.length > 0) {
+  //       res.send({
+  //         message: "deleted",
+  //         id: d[0]
+  //       })
+  //     } else {
+  //       res.send({
+  //         message: "not found"
+  //       })
+  //     }
+  //   })
+  // })
 
 
   app.post("/vertex2D", async(req, res) => {

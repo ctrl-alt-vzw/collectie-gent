@@ -2,20 +2,20 @@ import { generateUUID } from './../helpers.js'
 
 
 export default function annotation(app, pg) {
-  app.delete("/annotation/:uuid", async (req, res) => {
-    pg.delete().table("annotations").where({UUID: req.params.uuid}).returning("id").then((d) => {
-      if(d.length > 0) {
-        res.send({
-          message: "deleted",
-          id: d[0]
-        })
-      } else {
-        res.send({
-          message: "not found"
-        })
-      }
-    })
-  })
+  // app.delete("/annotation/:uuid", async (req, res) => {
+  //   pg.delete().table("annotations").where({UUID: req.params.uuid}).returning("id").then((d) => {
+  //     if(d.length > 0) {
+  //       res.send({
+  //         message: "deleted",
+  //         id: d[0]
+  //       })
+  //     } else {
+  //       res.send({
+  //         message: "not found"
+  //       })
+  //     }
+  //   })
+  // })
 
 
   app.get("/annotation/random", async (req, res) => {

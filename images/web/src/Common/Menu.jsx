@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
+import logod9 from './../assets/images/logod9.png';
+import logouia from './../assets/images/logouia.png';
+
 function Menu(props) {
   const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -24,7 +27,9 @@ function Menu(props) {
             <a target="_blanc" href={`https://collectie.gent`} className="cta">Bekijk de volledige collectie</a>
           </div>
           <div className="logoContainer">
-            Logos
+            <h1>Met de steun van: </h1>
+            <img src={logod9} />
+            <img src={logouia} />
           </div>
         </div>
       : null }

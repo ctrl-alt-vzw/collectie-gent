@@ -12,20 +12,20 @@ import { generateUUID } from './../helpers.js'
 // t.timestamps(true, true);
 
 export default function clipping(app, pg, mqttClient) {
-  app.delete("/clipping/:uuid", async (req, res) => {
-    pg.delete().table("clippings").where({UUID: req.params.uuid}).returning("id").then((d) => {
-      if(d.length > 0) {
-        res.send({
-          message: "deleted",
-          id: d[0]
-        })
-      } else {
-        res.send({
-          message: "not found"
-        })
-      }
-    })
-  })
+  // app.delete("/clipping/:uuid", async (req, res) => {
+  //   pg.delete().table("clippings").where({UUID: req.params.uuid}).returning("id").then((d) => {
+  //     if(d.length > 0) {
+  //       res.send({
+  //         message: "deleted",
+  //         id: d[0]
+  //       })
+  //     } else {
+  //       res.send({
+  //         message: "not found"
+  //       })
+  //     }
+  //   })
+  // })
   // update the thing?
   
   app.put("/clipping/:uuid", async(req, res) => {
