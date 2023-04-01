@@ -23,6 +23,7 @@ class View {
     this.ctaCallBack = CTACB;
 
     this.draggedOffset = {x: 0, y:0}
+    log("view: entered");
     
   }
   fetchData() {
@@ -88,6 +89,7 @@ class View {
     })
   }
   cleanup() {
+    log("view: cleaning up");
     const oldCanvas = document.getElementById("viewCanvas");
     const newCanvas = oldCanvas.cloneNode(true);
     oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);

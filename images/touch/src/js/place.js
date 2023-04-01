@@ -32,7 +32,10 @@ class Place {
     // Connection opened
     this.socket.addEventListener('open', (event) => {
       console.log("opened");
+      log("place: socket opened");
     });
+
+    log("place: entered");
 
 
   }
@@ -123,6 +126,7 @@ class Place {
     })
       .then(r => r.json())
       .then((data) => {
+        log("place: saved and exited "+this.itemToDrop.UUID);
         //console.log(data)
         this.collage = [];
 

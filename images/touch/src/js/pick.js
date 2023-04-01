@@ -62,7 +62,7 @@ const baseInfoBox = `
 let numImagesLoading = 0;
  class Pick {
   constructor(selectionEvent, panic) {
-    log("pick started")
+    log("pick: started")
     this.selectionDone = selectionEvent;
     this.renderHTML()
     this.init()
@@ -73,7 +73,7 @@ let numImagesLoading = 0;
   init() {
     const canvas = document.getElementById('pickCanvas');
     document.getElementById("selectionBtn").addEventListener('click', e => {
-      log("select item for cut " + highlighted.id)
+      log("pick: select item for cut " + highlighted.id)
       this.clickHandler(e)
     })
     // document.getElementById("selectionBtn").addEventListener('touchstart', e => this.clickHandler(e))
@@ -155,7 +155,7 @@ let numImagesLoading = 0;
 
   touchMoveEvent(e) {
     touchLastPosition = touchPosition(e);
-    console.log('moving', touchLastPosition, ticking)
+    // console.log('moving', touchLastPosition, ticking)
       window.requestAnimationFrame(() => {
         console.log("adjusting")
         this.adjustPosition(e);
@@ -294,7 +294,7 @@ let numImagesLoading = 0;
   }
 
   renderInformation(h) {
-    log("selected item " + h.id);
+    log("pick: selected item " + h.id);
     document.getElementById("firstInfo").style.display = 'none';    
     if(h) {
         document.getElementById("infoImage").style.display= `block`;
@@ -309,6 +309,7 @@ let numImagesLoading = 0;
       })
       .catch((err) => {
         console.error(err)
+        log("pick: error loading info of "+h.id)
       })
     const image = `https://media.collage.gent/pictograms/${h.imageURL}`;
     document.getElementById("infoImage").src= image;
@@ -342,7 +343,7 @@ let numImagesLoading = 0;
     //   .then(r => r.json())
     //   .then((data) => {
 
-      console.log(vertices)
+      // console.log(vertices)
 
         const data = vertices;
         const capture = [];
@@ -546,6 +547,7 @@ class Item {
             numImagesLoading -= 1;
           }, false);
           this.img.addEventListener('error', () => {
+            log("pick: error loading "+this.img.src)
             this.img = "#";
           }, false);
           this.img.src = `https://media.collage.gent/pictograms/${this.imageURL}`
@@ -553,6 +555,7 @@ class Item {
       }
       catch(e) {
         this.img = false;
+        log("pick: error loading "+this.img.src)
         //console.log("cuaght error", e)
       }
     
@@ -584,6 +587,7 @@ class Item {
         ctx.drawImage(this.img, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
       } 
       catch(e) {
+        log("pick: could not load "+this.img.url);
         //console.log("issue")
         this.img = false;
       }

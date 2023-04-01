@@ -29,7 +29,7 @@ let scaleFactor = 1;
 module.exports = class Cut {
   constructor(selected, cutDoneCallback, panic) {
     //console.log(selected)
-    log("cut started");
+    log("cut: entered");
     if(!selected) {
       panic();
     }
@@ -58,6 +58,7 @@ module.exports = class Cut {
     this.touchpoints = []; 
     this.cutting = false;
     this.update();
+    log("view: restarted");
   }
   renderHTML() {
     const canvas = document.getElementById("cutCanvas");
@@ -165,6 +166,10 @@ module.exports = class Cut {
       this.update();
       // //console.log("loaded")
     }, false);
+    img.addEventListener('error', () => {
+
+      log("cut: error loading "+this.imageURI);
+    })
     img.src = this.imageURI; // Set source path
   }
   calculateCircumference() {
@@ -376,7 +381,8 @@ module.exports = class Cut {
     })
       .then(r => r.json())
       .then((data) => {
-        //console.log(data)
+        console.log(data)
+        log("cut: uploaded image "+JSON.stringify(data));
 
         const toSend = {
           imageURI: data["full"],
@@ -410,6 +416,7 @@ module.exports = class Cut {
         })
         .then(r=>r.json())
         .then((data) => {
+          log("cut: saved adn clipping created"+data[0].UUID);
           this.cleanup()
           this.clippingcreated(data[0])
         })

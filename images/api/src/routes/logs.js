@@ -60,7 +60,7 @@ export default function error(app, pg) {
 
 
   app.get("/logs", async (req, res) => {
-    await pg.select("*").table("logs").orderBy("id", "ASC").then((data) => {
+    await pg.select("*").table("logs").orderBy("id", "DESC").then((data) => {
       res.send(data)
     })
     .catch((e) => {
