@@ -262,10 +262,10 @@ let numImagesLoading = 0;
   }
 
   handleClick(e) {
-    if(highlighted) {
-      console.log("used to be ", highlighted)
-      highlighted = null;
-    }
+    // if(highlighted) {
+    //   console.log("used to be ", highlighted)
+    //   highlighted = null;
+    // }
     const threshold = 20;
     const options = items.filter((item) => {
       if(item.width) {
