@@ -52,6 +52,8 @@ module.exports = class Cut {
     this.clippingcreated = cutDoneCallback;
 
     this.panicCTA = panic;
+    document.getElementById("infoContainer").style.display = "block"
+    document.getElementById("infoContainer").innerHTML = "Teken rond de figuur die je graag zou uitsnijden, en duw op \"klaar!\" om het bij de collage te plaatsen. Het blauwe vlak duid de uitgesneden vorm aan."
   }
   restart(){
     this.outlinePoints = []; 

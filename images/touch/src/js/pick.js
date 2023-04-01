@@ -68,6 +68,8 @@ let numImagesLoading = 0;
     this.init()
     this.panic = panic;
 
+    
+
   }
   
   init() {

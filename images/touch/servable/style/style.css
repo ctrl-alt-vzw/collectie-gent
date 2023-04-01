@@ -37,6 +37,7 @@ body {
   left: calc(100vw - 450px);
   top: 50px;
   border: 1px solid #eee;
+  line-height: 1.3em;
   box-sizing: border-box;
   padding: 20px;
 }
@@ -50,6 +51,7 @@ body {
 #infoContainer > h1 {
   font-size: 2em;
   margin-bottom: 10px;
+  line-height: 1em;
 
 
 }
@@ -57,7 +59,7 @@ body {
   font-size: 1em;
   color: #aaa;
   margin-bottom: 10px;
-  line-height: 20px;
+  line-height: 1.4em;
 }
 
 #infoTitle {
@@ -262,4 +264,14 @@ i {
   color: #fff;
   padding: 10px 20px;
   box-sizing: border-box;
+}
+
+#instructionContainer {
+  position: absolute;
+  left: 50px;
+  top: calc(100vh - 130px);
+  background-color: #fff;
+  padding: 20px 40px;
+  width: 400px;
+  line-height: 1.5em;
 }
