@@ -37,7 +37,11 @@ class Place {
 
     log("place: entered");
     document.getElementById("infoContainer").style.display = "block";
-    document.getElementById("infoContainer").innerHTML = "Sleep je selectie op de juiste plaats bij de collage en druk op de knop onderaan het scherm"
+    document.getElementById("infoContainer").innerText = `Sleep je selectie op de juiste plaats bij de collage en druk op de knop onderaan het scherm.
+
+    Hierna zal de printer je toevoeging afprinten. 
+    scheur de sticker af door deze naar linksboven te trekken.
+    `
   }
   fetchData() {
     fetch("https://api.collage.gent/clipping")
