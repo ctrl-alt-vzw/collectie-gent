@@ -284,10 +284,7 @@ let numImagesLoading = 0;
       console.log(options)
       highlighted = options[options.length - 1]
       this.renderInformation(highlighted);
-    } else {
-      console.log("nothing to select")
-      document.getElementById("infoContainer").innerHTML = baseInfoBox;  
-    }
+    } 
     this.render();
 
     // window.setTimeout(() => render(), 1000)
