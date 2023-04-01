@@ -39,7 +39,7 @@ export default function error(app, pg) {
     // console.log("saving")
     const b = req.body;
 
-    if(b.uri) {
+    if(b.service && b.message) {
       const toInsert = {
         UUID: generateUUID(),
         service: b.service,

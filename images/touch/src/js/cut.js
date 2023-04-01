@@ -6,7 +6,8 @@ const {
   mousePosition,
   touchPosition,
   millis,
-  mapValues: map
+  mapValues: map,
+  logToServer: log
 } = require('./helpers.js')
 
 
@@ -28,7 +29,7 @@ let scaleFactor = 1;
 module.exports = class Cut {
   constructor(selected, cutDoneCallback, panic) {
     //console.log(selected)
-
+    log("cut started");
     if(!selected) {
       panic();
     }

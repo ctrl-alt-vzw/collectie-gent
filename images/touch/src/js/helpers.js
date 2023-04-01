@@ -21,6 +21,27 @@ function touchPosition(e) {
   }
 }
 
+function logToServer(message) {
+
+  fetch("https://api.collage.gent/log", {
+    body: JSON.stringify({
+      service: "touch",
+      message: message
+    }),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    method: "POST",
+
+  })
+    .then(r => r.json())
+    .then((data) => {
+      console.log(data)
+    })
+  
+}
+
 function millis() {
   return new Date().getTime();
 }
@@ -35,5 +56,6 @@ module.exports =  {
   mousePosition,
   touchPosition,
   millis,
-  mapValues
+  mapValues,
+  logToServer
 }

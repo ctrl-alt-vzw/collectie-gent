@@ -5,7 +5,8 @@ const  {
   mousePosition,
   touchPosition,
   millis,
-  mapValues: map
+  mapValues: map,
+  logToServer: log
 } = require('./helpers.js')
 
 const  Item = require('./Item.js')

@@ -4,7 +4,8 @@ const {
   mousePosition,
   touchPosition,
   millis,
-  mapValues: map
+  mapValues: map,
+  logToServer: log
 } = require('./helpers.js')
 const  vertices = require('./data/vertex50.js')
 
@@ -61,6 +62,7 @@ const baseInfoBox = `
 let numImagesLoading = 0;
  class Pick {
   constructor(selectionEvent, panic) {
+    log("pick started")
     this.selectionDone = selectionEvent;
     this.renderHTML()
     this.init()
@@ -70,7 +72,10 @@ let numImagesLoading = 0;
   
   init() {
     const canvas = document.getElementById('pickCanvas');
-    document.getElementById("selectionBtn").addEventListener('click', e => this.clickHandler(e))
+    document.getElementById("selectionBtn").addEventListener('click', e => {
+      log("select item for cut " + highlighted.id)
+      this.clickHandler(e)
+    })
     // document.getElementById("selectionBtn").addEventListener('touchstart', e => this.clickHandler(e))
 
     canvas.width = window.innerWidth;
@@ -289,6 +294,7 @@ let numImagesLoading = 0;
   }
 
   renderInformation(h) {
+    log("selected item " + h.id);
     document.getElementById("firstInfo").style.display = 'none';    
     if(h) {
         document.getElementById("infoImage").style.display= `block`;
