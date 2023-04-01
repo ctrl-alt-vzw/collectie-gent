@@ -22,44 +22,10 @@ body {
 }
 
 
-#container {
-  height: 800px;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
 .item {
   max-width: 200px;
   padding: 10px;
   box-sizing: border-box;
-}
-
-.imageContainer {
-  width: 180px;
-  height: 180px;
-  overflow: hidden;
-}
-
-.imageContainer>img {
-  width: 100%;
-  max-height: 200px;
-}
-
-.item>h1 {
-  width: 100%;
-  font-size: 1.2em;
-}
-
-button {
-  width: 100%;
-  background: #000;
-  color: #fff;
-  border: 0px;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
 }
 
 
@@ -69,118 +35,36 @@ button {
   width: 100%;
   height: 100vh;
 }
-#normal_canvas {
-  display: none
-}
-
-#collectieImages {
-  position: absolute;
-  background-color: #000;
-  top: 10px;
-  left: 50%;
-  width: 200px;
-  margin-left: -100px;
-  border: 1px solid #000;
-}
-
-#collectieImages>.preview {
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-#collectieImages>.preview>img {
-  width: 70px;
-}
-
-#collectieImages>.preview>button {
-  height: 40px;
-  float: right
-}
-
-.draggable {
-  position: absolute;
-}
-
-.clippingItem {
-  position: absolute;
-  /*  -webkit-filter: grayscale(1);  Google Chrome, Safari 6+ & Opera 15+ 
-  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
-}
-
-#headerContainer {
-  position: fixed;
-  display: flex;
-  top: calc(100% - 70px);
-  left: calc(50% - 200px);
-  width: 400px;
-}
-
-.loader {
-  position: fixed;
-  top: 50%;
-  left: calc(50% - 100px);
-  background-color: #000;
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-  width: 200px;
-  margin-top: -20px;
-}
-
-#tooltip {
-
-  position: fixed;
-  top: 10px;
-  left: calc(50% - 200px);
-  text-align: center;
-  width: 400px;
-}
-
-#normal_canvas,
-#hiddenCanvasContainer {
-  display: none;
-}
 
 #canvasContainer {
   position: absolute;
   width: 800px;
-  left: 800px;
+  left: 850px;
 }
 
 
-.dropActions {
-  position: fixed;
-  background-blend-mode: multiply;
-  left: calc(50% - 150px);
-  top: calc(100% - 75px);
-  width: 300px;
-  padding: 25px 50px;
-  box-sizing: border-box;
-  height: 75px;
-  background-color: #fff;
+
+#ctaText {
+  position: absolute;
+  width: 800px;
+  left: 850px;
+  color: #fff;
+  top: calc(100vh - 220px);
   text-align: center;
-}
 
-.inactive {
-  opacity: .2;
 }
+#ctaText > h1{
 
-.active {
-  opacity: 1;
+  font-family: monospace, sans-serif;
+  font-size: 1.5em;
 }
-
-#pickCanvas{
-  display: none;
-}
-#cutCanvas{
-  display: none;
-}
-#placeCanvas{
-  display: none;
-}
-#viewCanvas{
-  display: none;
-}
+#ctaText > p {
+  color: #aaa;
+  font-size: 1.2em;
+  width: 500px;
+  margin: auto;
+  margin-top: 30px;
+  line-height: 1.4em;
 
 
+}
