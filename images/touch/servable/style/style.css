@@ -180,6 +180,7 @@ button {
 
 #headerContainer {
   position: fixed;
+  text-align: center;
   display: flex;
   top: calc(100% - 70px);
   left: calc(50% - 200px);
@@ -267,11 +268,13 @@ i {
 }
 
 #instructionContainer {
+  display: none;
   position: absolute;
-  left: 50px;
-  top: calc(100vh - 130px);
   background-color: #fff;
   padding: 20px 40px;
-  width: 400px;
+  width: 500px;
   line-height: 1.5em;
+  left: calc(50vw - 250px);
+  box-sizing: border-box;
+  top: calc(50vh - 100px);
 }

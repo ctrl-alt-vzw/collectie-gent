@@ -52,8 +52,8 @@ module.exports = class Cut {
     this.clippingcreated = cutDoneCallback;
 
     this.panicCTA = panic;
-    document.getElementById("infoContainer").style.display = "block"
-    document.getElementById("infoContainer").innerHTML = "Teken rond de figuur die je graag zou uitsnijden, en duw op \"klaar!\" om het bij de collage te plaatsen. Het blauwe vlak duid de uitgesneden vorm aan."
+    document.getElementById("instructionContainer").style.display = "block"
+    document.getElementById("instructionContainer").innerHTML = "Teken rond de figuur die je graag zou uitsnijden, en duw op \"klaar!\" om het bij de collage te plaatsen. Het blauwe vlak duid de uitgesneden vorm aan."
   }
   restart(){
     this.outlinePoints = []; 
@@ -85,8 +85,14 @@ module.exports = class Cut {
   }
   componentDidMount() {
     const c = document.getElementById("cutCanvas");
-    c.addEventListener("mousedown", () => this.mouseDown = true);
-    c.addEventListener("mouseup", () => this.mouseDown = false);
+    c.addEventListener("mousedown", () => {
+      document.getElementById("instructionContainer").style.display = "none";
+      this.mouseDown = true;
+    });
+    c.addEventListener("mouseup", () => {
+      document.getElementById("instructionContainer").style.display = "none";
+      this.mouseDown = false
+    });
     c.addEventListener("mousemove", (e) => this.mouseMoveHandler(e));
 
     c.addEventListener("touchstart", () => this.mouseDown = true);

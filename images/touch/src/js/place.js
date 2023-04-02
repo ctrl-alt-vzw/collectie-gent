@@ -36,8 +36,8 @@ class Place {
     });
 
     log("place: entered");
-    document.getElementById("infoContainer").style.display = "block";
-    document.getElementById("infoContainer").innerText = `Sleep je selectie op de juiste plaats bij de collage en druk op de knop onderaan het scherm.
+    document.getElementById("instructionContainer").style.display = "block";
+    document.getElementById("instructionContainer").innerText = `Sleep je selectie op de juiste plaats bij de collage en druk op de knop onderaan het scherm.
 
     Hierna zal de printer je toevoeging afprinten. 
     scheur de sticker af door deze naar linksboven te trekken.
@@ -156,6 +156,7 @@ class Place {
     }
   }
   mouseDownEvent(e) {
+    document.getElementById("instructionContainer").style.display = "none";
     const mousePos = mousePosition(e);
     if(this.itemToDrop.clicked(mousePos)) {
       this.dragging = true;
@@ -182,6 +183,9 @@ class Place {
     }
   }
   touchDownEvent(e) {
+
+    document.getElementById("instructionContainer").style.display = "none";
+
     const touchPos = touchPosition(e);
     if(this.itemToDrop.clicked(touchPos)) {
       this.dragging = true;
