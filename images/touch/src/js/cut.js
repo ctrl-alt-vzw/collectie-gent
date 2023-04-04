@@ -70,9 +70,9 @@ module.exports = class Cut {
       <div id="hiddenCanvasContainer"></div>
     `);
     document.getElementById("headerContainer").innerHTML = `
-      <button id="saveBtn">Klaar!</button>
-      <button id="restartBtn">Opnieuw</button>
-      <button id="backBtn">Terug</button>`;
+      <button class="secundary" id="backBtn">Terug</button>
+      <button class="primary" id="saveBtn">Klaar!</button>
+      <button class="secundary" id="restartBtn">Opnieuw</button>`;
   }
   cleanup() {
     const canvas = document.getElementById("cutCanvas");

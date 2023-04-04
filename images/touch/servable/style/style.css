@@ -278,3 +278,11 @@ i {
   box-sizing: border-box;
   top: calc(50vh - 100px);
 }
+
+#headerContainer > button {
+  margin: 10px;
+}
+.secundary {
+  background-color: #FFF;
+  color: #888;
+}
