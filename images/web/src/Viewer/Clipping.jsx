@@ -17,16 +17,25 @@ function Clipping(props) {
     let x = props.clipping_data.x * scale + props.xOffset;
     let y = props.clipping_data.y * scale;
 
-
-    if(width < height) {
+    if(height > width) {
+      const r = width / height;
+      width = 200 * r * scale;
+      height = 200  * scale;
+    } else {
       const r = height / width;
       width = 200 * scale;
       height = 200 * r * scale;
-    } else {
-      const r = width / height;
-      height = 200 * scale;
-      width = 200 * r  * scale;
     }
+
+    // if(width < height) {
+    //   const r = height / width;
+    //   width = 200 * scale;
+    //   height = 200 * r * scale;
+    // } else {
+    //   const r = width / height;
+    //   height = 200 * scale;
+    //   width = 200 * r  * scale;
+    // }
 
     x = x - (width/2);
     y = y - (height/2);

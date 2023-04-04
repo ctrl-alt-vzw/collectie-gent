@@ -23,7 +23,7 @@ class Place {
     this.scale = window.innerWidth / 1300;
     this.collage = [];
     this.fetchData();
-    this.maxY = 0;
+    this.maxY = 1200;
     this.itemToDrop = null;
     this.dragging = false;
     this.selected = selected;
@@ -52,7 +52,8 @@ class Place {
           return b.id - a.id
         })
         data.forEach((i) => { if(i.y * this.scale > this.maxY) { this.maxY = i.y * this.scale; }})
-        this.offset = this.maxY - ((window.innerHeight / 2));
+        console.log(this.maxY)
+        this.offset = this.maxY/2 - ((window.innerHeight / 2));
 
         //console.log(this.offset)
         data.forEach((item, key) => {
