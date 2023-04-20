@@ -52,7 +52,7 @@ export default function clipping(app, pg, mqttClient) {
         UUID: generateUUID(),
         originID: b.originID,
         collection: b.collection,
-        placedAt: "Huis van Alijn",
+        placedAt: "Industriemuseum",
         x: b.x,
         y: b.y,
         width: b.width,
