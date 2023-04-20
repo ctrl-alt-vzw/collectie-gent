@@ -399,7 +399,7 @@ module.exports = class Cut {
           collection: this.collection,
           x: -1000,
           y: -1000,
-          placedAt: "Huis van Alijn",
+          placedAt: "Industriemuseum",
           height: clippingHeight,
           width: clippingWidth,
           clippingData: {
