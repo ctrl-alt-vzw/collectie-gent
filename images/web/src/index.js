@@ -19,6 +19,11 @@ import './assets/css/App.css';
 import reportWebVitals from './reportWebVitals';
 
 
+import ReactGA from 'react-ga';
+const TRACKING_ID = "G-JK69YFSZYW"; // OUR_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
+
+  
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([

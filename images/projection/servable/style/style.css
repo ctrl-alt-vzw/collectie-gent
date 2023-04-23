@@ -39,7 +39,7 @@ body {
 #canvasContainer {
   position: absolute;
   width: 800px;
-  left: 50px;
+  left: calc(50vw - 400px);
 }
 
 
@@ -47,7 +47,7 @@ body {
 #ctaText {
   position: absolute;
   width: 800px;
-  left: 850px;
+  left: calc(50vw - 400px);
   color: #fff;
   top: calc(100vh - 220px);
   text-align: center;
