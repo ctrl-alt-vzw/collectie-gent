@@ -51,9 +51,13 @@ class Place {
         data.sort((a, b) => {
           return b.id - a.id
         })
-        data.forEach((i) => { if(i.y * this.scale > this.maxY) { this.maxY = i.y * this.scale; }})
-        console.log(this.maxY)
-        this.offset = this.maxY - ((window.innerHeight / 2));
+        this.maxY = 0;
+        data.forEach((i) => { 
+          if(i.y * this.scale > this.maxY) { 
+            this.maxY = i.y * this.scale; 
+          }
+        })
+        this.offset = this.maxY - (window.innerHeight/2) - 100;
 
         //console.log(this.offset)
         data.forEach((item, key) => {

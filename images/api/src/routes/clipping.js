@@ -41,6 +41,18 @@ export default function clipping(app, pg, mqttClient) {
     })    
   })
 
+  app.put("/clipping/:uuid/silent", async(req, res) => {
+    const b = req.body;
+    const uuid = req.params.uuid;
+
+    await pg.update({x: b.x, y: b.y}).table("clippings").where({UUID: uuid}).returning("*").then((d) => {
+      res.send({mode: "silent", ...d});
+    }).catch((e) => {
+        console.log(e)
+        res.status(401).send()
+    })    
+  })
+
   app.post("/clipping", async(req, res) => {
     // console.log("saving")
     const b = req.body;
